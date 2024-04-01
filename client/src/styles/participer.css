@@ -1,0 +1,50 @@
+.containerCB {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e874c7;
+}
+
+.contentBox{
+    height: 250px;
+    width: 320px;
+    border-radius: 10px;
+    background-color: #3b98f5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    align-items: center;
+
+}
+
+.buttonCB{
+    background-color: #ff5500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.buttonCB:hover{
+    background-color: #ff908a;
+}
+
+.btnCB{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+}
+
+.ulCB {
+    display: inline-block;
+  align-self: flex-start;
+  background-color: #e874c7;
+  }

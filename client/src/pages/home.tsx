@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import fdcLogo from '../assets/fdc-logo.png'
 import '../App.css'
 
 function Home() {
@@ -7,11 +6,6 @@ function Home() {
 
   return (
     <>
-      <div>
-        <a href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel" target="_blank">
-          <img src={fdcLogo} className="logo fdc" alt="fdc logo" />
-        </a>
-      </div>
       <h1>Force Du Coeur</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 999999)}>
