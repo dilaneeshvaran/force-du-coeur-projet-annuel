@@ -1,0 +1,16 @@
+.navbar {
+    font-family:'Times New Roman', Times, serif
+}
+
+.container {
+    list-style-type: none;
+    padding: 10;
+}
+
+.navbar-item {
+    display: inline;
+    margin-right: 70px;
+}
+.is-active {
+    color: red;
+  }

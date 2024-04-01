@@ -1,32 +1,22 @@
-import { useState } from 'react'
-import fdcLogo from './assets/fdc-logo.png'
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css'
+import Navbar from './components/Navbar';
+import Home from './pages/home'
+import Contact from './pages/contact';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel" target="_blank">
-          <img src={fdcLogo} className="logo fdc" alt="fdc logo" />
-        </a>
+    <BrowserRouter>
+      <Navbar />
+      <div className="container mt-2" style={{ marginTop: 40 }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+
+        </Routes>
       </div>
-      <h1>Force Du Coeur</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 999999)}>
-          dons : {count} $
-        </button>
-        <p>
-          ce <code>client web app</code> est en cours de construction
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the logo to access the git repo
-      </p>
-    </>
-  )
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
