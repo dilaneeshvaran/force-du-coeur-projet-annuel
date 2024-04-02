@@ -3,11 +3,17 @@ import { NavLink, useLocation } from "react-router-dom";
 import '../styles/navbar.css'
 import fdcLogo from '../assets/fdc-logo.png'
 
-
-
 interface NavbarProps {
   className?: string;
 }
+//rejoignez nous : bénévole (inscription avec les infos de contact et, formulation de dossier en attente de validation:)
+//la demande est accessible dans le backoffice pour validation par un admin, le benevole recoit les infos de login (mot de passe à reinitialiser)  par mail
+//il peux modifier le mot de passe
+//FAIRE UN DON  : poncutel ou mensuel
+//ADHESION : 10€/mois ADHesion
+//30€/mois ADHesion famille
+//50€/mois ADHesion soutien
+//100€/mois ADHesion bienfaiteur
 
 const Navbar: React.FC<NavbarProps> = ({ className }) => {
   const [isOpen, setOpen] = useState(false);
@@ -30,12 +36,31 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
               Home
             </NavLink>
 
+            <NavLink className={`navbar-item ${location.pathname === '/evenements' ? 'is-active' : ''}`} to="/evenements">
+            Evenements
+            </NavLink>
+
+            <NavLink className={`navbar-item ${location.pathname === '/missions' ? 'is-active' : ''}`} to="/missions">
+            Nos Missions
+            </NavLink>
+
+            <NavLink className={`navbar-item ${location.pathname === '/equipes' ? 'is-active' : ''}`} to="/equipes">
+            Nos équipes
+            </NavLink>
+
             <NavLink className={`navbar-item ${location.pathname === '/contact' ? 'is-active' : ''}`} to="/contact">
               Contact
             </NavLink>
 
-            <NavLink className={`navbar-item ${location.pathname === '/participer' ? 'is-active' : ''}`} to="/participer">
-            Participer
+            <NavLink className={`navbar-item ${location.pathname === '/soutenir' ? 'is-active' : ''}`} to="/soutenir">
+            Soutenir nos actions
+            </NavLink>
+            <NavLink className={`navbar-item ${location.pathname === '/rejoindre' ? 'is-active' : ''}`} to="/rejoindre">
+            Nous Rejoindre
+            </NavLink>
+
+            <NavLink className={`navbar-item ${location.pathname === '/espaceMembres' ? 'is-active' : ''}`} to="/espaceMembres">
+            Espace Membres
             </NavLink>
       </div>
     </nav>

@@ -1,10 +1,10 @@
-import '../styles/participer.css'
+import '../styles/soutenir.css'
 
-function Participer() {
+function Soutenir() {
 
   return (
     <>
-      <h1>Participez !</h1>
+      <h1>Soutenir nos actions</h1>
       <div className="containerCB">
           <div className='contentBox'>
             <h3>Adhérer à 'Force du Coeur'</h3>
@@ -33,4 +33,4 @@ function Participer() {
   )
 }
 
-export default Participer
+export default Soutenir

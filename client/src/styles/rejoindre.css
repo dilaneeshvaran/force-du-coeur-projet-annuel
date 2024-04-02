@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    background-color: #ff1717;
+    font-family: Arial, sans-serif;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .input-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .radio-group{
+    display: flex;
+    justify-content: center;
+  }
+
+  form {
+    width: 500px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  label {
+    margin-bottom: 10px;
+  }
+  
+  .inputRejoindre {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .submitRejoindre {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .submitRejoindre:hover {
+    background-color: #0056b3;
+  }
