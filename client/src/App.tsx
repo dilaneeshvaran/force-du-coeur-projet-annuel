@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes,useNavigate } from 'react-router-dom';
 import './App.css'
 import Navbar from './components/Navbar';
 import Home from './pages/home'
@@ -9,12 +9,32 @@ import Missions from './pages/missions';
 import Equipes from './pages/equipes';
 import Rejoindre from './pages/rejoindre';
 import EspaceMembres from './pages/espaceMembres';
+import { useState } from 'react';
 
+function Logout() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.setItem('isLoggedIn', 'false');
+    navigate('/espaceMembres');
+  };
+
+  return (
+    <button onClick={handleLogout}>Logout</button>
+  );
+}
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem('isLoggedIn', 'false');
+  };
+
   return (
     <BrowserRouter>
-      <Navbar className="navContainer" />
+      <Navbar className="navContainer" isLoggedIn={isLoggedIn} onLogout={handleLogout} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/evenements" element={<Evenements />} />
@@ -23,7 +43,7 @@ function App() {
           <Route path="/missions" element={<Missions />} />
           <Route path="/equipes" element={<Equipes />} />
           <Route path="/rejoindre" element={<Rejoindre />} />
-          <Route path="/espaceMembres" element={<EspaceMembres />} />
+          <Route path="/espaceMembres" element={<EspaceMembres isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         </Routes>
     </BrowserRouter>
   );

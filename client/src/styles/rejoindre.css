@@ -59,3 +59,9 @@ body {
   .submitRejoindre:hover {
     background-color: #0056b3;
   }
+
+  .checkbox-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }

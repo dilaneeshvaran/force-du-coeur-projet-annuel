@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import '../styles/navbar.css'
 import fdcLogo from '../assets/fdc-logo.png'
+import Logout from '../components/Logout';
 
 interface NavbarProps {
   className?: string;
+  isLoggedIn: boolean;
+  onLogout: () => void;
 }
 //rejoignez nous : bénévole (inscription avec les infos de contact et, formulation de dossier en attente de validation:)
 //la demande est accessible dans le backoffice pour validation par un admin, le benevole recoit les infos de login (mot de passe à reinitialiser)  par mail
@@ -15,7 +18,7 @@ interface NavbarProps {
 //50€/mois ADHesion soutien
 //100€/mois ADHesion bienfaiteur
 
-const Navbar: React.FC<NavbarProps> = ({ className }) => {
+const Navbar: React.FC<NavbarProps> = ({ className,isLoggedIn,onLogout }) => {
   const [isOpen, setOpen] = useState(false);
   const location = useLocation();
 
@@ -62,6 +65,13 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
             <NavLink className={`navbar-item ${location.pathname === '/espaceMembres' ? 'is-active' : ''}`} to="/espaceMembres">
             Espace Membres
             </NavLink>
+            {isLoggedIn && (
+      <div className={`navbar-item ${location.pathname === '/logout' ? 'is-active' : ''}`}>
+        <Logout onLogout={onLogout} />
+      </div>
+    )}
+
+            
       </div>
     </nav>
   );

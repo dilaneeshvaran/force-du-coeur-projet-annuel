@@ -9,6 +9,13 @@ function Rejoindre() {
   const [pays, setPays] = useState('');
   const [confirmed, setConfirmed] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState('');
+  const [option1, setOption1] = useState(false);
+const [option2, setOption2] = useState(false);
+const [option3, setOption3] = useState(false);
+
+const handleCheckboxChange = (setFunction: React.Dispatch<React.SetStateAction<boolean>>) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  setFunction(event.target.checked);
+};
 
   const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -72,11 +79,37 @@ function Rejoindre() {
           <input type="date" className='inputRejoindre' value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} max={new Date().toISOString().split("T")[0]} required />
         </div>
 
-        <div className="input-group">
+        <div className="checkbox-group">
+  <label>
+    Quel type de bénévolat vous correspond le mieux ? (vous pourrez évoluer vers un autre type):
+  </label>
+  <div>
+    <div className='checkbox-label'>
+  <label>
+  <input type="checkbox" checked={option1} onChange={handleCheckboxChange(setOption1)} value="missionCourte" />
+  Une mission courte sur un objectif précis (Réseau social/communication, événementiel, administratif, etc.)
+</label>
+</div>
+<div className='checkbox-label'>
+<label>
+  <input type="checkbox" checked={option2} onChange={handleCheckboxChange(setOption2)} value="missionLongue" />
+  Une mission plus longue (Voyage humanitaire, mission de plusieurs mois, etc.)
+</label>
+</div>
+<div className='checkbox-label'>
+<label>
+  <input type="checkbox" checked={option3} onChange={handleCheckboxChange(setOption3)} value="missionPonctuelle" />
+  Des missions ponctuelles pour soutenir les équipes (événements, collectes, etc.)
+</label>
+</div>
+  </div>
+</div>
+
+        <div className="radio-group">
         <label>
+        <input type="radio" checked={confirmed} onChange={() => setConfirmed(!confirmed)} required />
           Je confirm mes information pour devenir bénévole :
           </label>
-          <input type="radio" checked={confirmed} onChange={() => setConfirmed(!confirmed)} required />
           </div>
 
         <input type="submit" className='submitRejoindre' value="Submit" />
