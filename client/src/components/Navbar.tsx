@@ -70,8 +70,6 @@ const Navbar: React.FC<NavbarProps> = ({ className,isLoggedIn,onLogout }) => {
         <Logout onLogout={onLogout} />
       </div>
     )}
-
-            
       </div>
     </nav>
   );

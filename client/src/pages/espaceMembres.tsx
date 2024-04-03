@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import Logout from '../components/Logout';
+import Sidebar from '../components/Sidebar';
 
 interface EspaceMembresProps {
   isLoggedIn: boolean;
@@ -21,6 +22,7 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
     return (
       <div>
         <Logout />
+        <Sidebar />
         <h1>Welcome, {email}!</h1>
         {/* Your protected content goes here */}
       </div>
