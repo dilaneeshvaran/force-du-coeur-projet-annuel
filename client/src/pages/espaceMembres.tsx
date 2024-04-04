@@ -1,6 +1,8 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import Logout from '../components/Logout';
 import Sidebar from '../components/Sidebar';
+import { Routes, Route } from 'react-router-dom';
+import MonAssociation from './monAssociation';
 
 interface EspaceMembresProps {
   isLoggedIn: boolean;
@@ -10,6 +12,7 @@ interface EspaceMembresProps {
 const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [currentMenu, setCurrentMenu] = useState('monAssociation');
 
   const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -18,36 +21,37 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
     localStorage.setItem('isLoggedIn', 'true');
   };
 
-  if (isLoggedIn) {
-    return (
-      <div>
-        <Logout />
-        <Sidebar />
-        <h1>Welcome, {email}!</h1>
-        {/* Your protected content goes here */}
-      </div>
-    );
-  }
-
   return (
-    <div className="form-container">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label>
-            email:
-          </label>
-          <input type="text" className='inputRejoindre' value={email} onChange={e => setEmail(e.target.value)} required />
-        </div>
+    <div>
+      {
+        isLoggedIn ? <div>
+          <Logout />
+          <Sidebar setCurrentMenuParent={(menu) => { setCurrentMenu(menu) }} />
+          <div className="content-container">
+            {
+              currentMenu === 'monAssociation' && <MonAssociation />
+            }
+          </div>
+        </div> : <div className="form-container">
+          <h1>Login</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label>
+                email:
+              </label>
+              <input type="text" className='inputRejoindre' value={email} onChange={e => setEmail(e.target.value)} required />
+            </div>
 
-        <div className="input-group">
-          <label>
-            mot de passe:
-          </label>
-          <input type="password" className='inputRejoindre' value={password} onChange={e => setPassword(e.target.value)} required />
+            <div className="input-group">
+              <label>
+                mot de passe:
+              </label>
+              <input type="password" className='inputRejoindre' value={password} onChange={e => setPassword(e.target.value)} required />
+            </div>
+            <input type="submit" className='submitRejoindre' value="Submit" />
+          </form>
         </div>
-        <input type="submit" className='submitRejoindre' value="Submit" />
-      </form>
+      }
     </div>
   );
 };

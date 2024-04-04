@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import '../styles/navbar.css'
 import fdcLogo from '../assets/fdc-logo.png'
 import Logout from '../components/Logout';
+import Sidebar from "./Sidebar";
 
 interface NavbarProps {
   className?: string;
@@ -17,6 +18,10 @@ interface NavbarProps {
 //30€/mois ADHesion famille
 //50€/mois ADHesion soutien
 //100€/mois ADHesion bienfaiteur
+
+//todo
+//mot de passe oublié
+//backoffice
 
 const Navbar: React.FC<NavbarProps> = ({ className,isLoggedIn,onLogout }) => {
   const [isOpen, setOpen] = useState(false);
@@ -36,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({ className,isLoggedIn,onLogout }) => {
         </a>
       </div>
             <NavLink className={`navbar-item ${location.pathname === '/home' ? 'is-active' : ''}`} to="/">
-              Home
+              Accueil
             </NavLink>
 
             <NavLink className={`navbar-item ${location.pathname === '/evenements' ? 'is-active' : ''}`} to="/evenements">
@@ -70,6 +75,8 @@ const Navbar: React.FC<NavbarProps> = ({ className,isLoggedIn,onLogout }) => {
         <Logout onLogout={onLogout} />
       </div>
     )}
+          
+              
       </div>
     </nav>
   );
