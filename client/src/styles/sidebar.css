@@ -3,10 +3,10 @@
 }
 
 .container-sidebar {
-  width: 150px;
+  width: 200px;
   display: flex;
   flex-direction: column;
-  float:right;
+  float:left;
   background-color: aqua;
 }
 

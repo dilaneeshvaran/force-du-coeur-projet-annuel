@@ -23,7 +23,7 @@ body {
     justify-content: center;
   }
 
-  form {
+.register-form {
     width: 500px;
     padding: 20px;
     border: 1px solid #ddd;

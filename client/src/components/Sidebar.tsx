@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import '../styles/sidebar.css'
 
 interface SidebarProps {
   className?: string;
   setCurrentMenuParent: (menu: string) => void;
+}
+
+function formatMenu(menu: string) {
+  return menu
+    .replace(/([A-Z])/g, ' $1') // add space before capital letters
+    .replace(/^./, str => str.toUpperCase()); // uppercase for first letter of each word
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ setCurrentMenuParent, className }) => {
@@ -29,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setCurrentMenuParent, className }) =>
             <div style={
               {
                 backgroundColor: currentMenu === menu ? '#f5f5f5' : 'white',
-                borderLeft: currentMenu === menu ? '5px solid #3273dc' : '5px solid white',
+                borderLeft: currentMenu === menu ? '5px solid orange' : '5px solid white',
                 cursor: 'pointer'
               }
             }
@@ -40,8 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setCurrentMenuParent, className }) =>
               key={index}
               className="menu-item"
             >
-              <h6
-              >{menu}</h6>
+              <h6>{formatMenu(menu)}</h6>
             </div>
 
           ))

@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import Logout from '../components/Logout';
 import Sidebar from '../components/Sidebar';
-import { Routes, Route } from 'react-router-dom';
 import MonAssociation from './monAssociation';
+import '../styles/espaceMembres.css';
 
 interface EspaceMembresProps {
   isLoggedIn: boolean;
@@ -26,7 +26,7 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
       {
         isLoggedIn ? <div>
           <Logout />
-          <Sidebar setCurrentMenuParent={(menu) => { setCurrentMenu(menu) }} />
+          <div className='sidebarDiv'><Sidebar setCurrentMenuParent={(menu) => { setCurrentMenu(menu) }} /></div>
           <div className="content-container">
             {
               currentMenu === 'monAssociation' && <MonAssociation />
