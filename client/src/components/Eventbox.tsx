@@ -14,7 +14,7 @@ const EventBox: React.FC<EventBoxProps> = ({ event }) => {
     const [isParticipating, setIsParticipating] = useState(false);
 
     const handleParticipation = () => {
-        setIsParticipating(true);
+        setIsParticipating(!isParticipating);
     };
 
     return (

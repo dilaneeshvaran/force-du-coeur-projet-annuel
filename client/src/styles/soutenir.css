@@ -48,3 +48,9 @@
   align-self: flex-start;
   background-color: #e874c7;
   }
+
+  .btnContainer {
+    display: flex;
+    margin-top: auto;
+    bottom: 0;
+}

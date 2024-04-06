@@ -1,4 +1,3 @@
-import React from 'react';
 import VoteBox from '../components/Votebox';
 import '../styles/monAssociation.css';
 import EventBox from '../components/Eventbox';
@@ -21,15 +20,10 @@ function MonAssociation() {
     description: 'This is an upcoming event.',
     date: new Date('2022-02-01'),
   };
-  //voir les evenements / votes / sondages en cours/terminés
-  //comme des blocks de posts : avec 2 options, valider/croix pour annuler
-  //voir les resultats pour les votes/sondages terminés
-  //participer/annuler la participation
 
   return (
     <>
-      <h1>Mon Association</h1>
-      <p>email : fdc@fdc.com</p>
+
       <div className='parent'>
         <div className='box'>
           <VoteBox vote={vote} />

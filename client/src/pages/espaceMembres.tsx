@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import Logout from '../components/Logout';
 import Sidebar from '../components/Sidebar';
 import MonAssociation from './monAssociation';
+import MesDocuments from './mesDocuments';
 import '../styles/espaceMembres.css';
 
 interface EspaceMembresProps {
@@ -30,6 +31,9 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
           <div className="content-container">
             {
               currentMenu === 'monAssociation' && <MonAssociation />
+            }
+            {
+              currentMenu === 'mesDocuments' && <MesDocuments />
             }
           </div>
         </div> : <div className="form-container">
