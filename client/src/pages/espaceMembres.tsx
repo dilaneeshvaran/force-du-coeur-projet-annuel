@@ -3,6 +3,7 @@ import Logout from '../components/Logout';
 import Sidebar from '../components/Sidebar';
 import MonAssociation from './monAssociation';
 import MesDocuments from './mesDocuments';
+import Messages from './messages';
 import '../styles/espaceMembres.css';
 
 interface EspaceMembresProps {
@@ -34,6 +35,9 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
             }
             {
               currentMenu === 'mesDocuments' && <MesDocuments />
+            }
+            {
+              currentMenu === 'messages' && <Messages />
             }
           </div>
         </div> : <div className="form-container">

@@ -1,0 +1,37 @@
+.message-box{
+    clear: both;
+    margin-top: 150px;
+    background-color: aquamarine;
+    width: 1200px;
+    height: 500px;
+    display:flex;
+}
+
+.nav-message{
+    position: relative;
+    top: 30px;
+    background-color: brown;
+    height: 120px;
+    width: 150px;
+}
+
+.nav-message-link{
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    }
+
+
+.message-list{
+    position: relative;
+    background-color: white;
+    height: 400px;
+    width: 1000px;
+    margin-left: 30px;
+    margin-right: 60px;
+    padding: 10px;
+    top:30px;
+}
