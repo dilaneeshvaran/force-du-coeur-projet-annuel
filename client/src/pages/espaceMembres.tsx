@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar';
 import MonAssociation from './monAssociation';
 import MesDocuments from './mesDocuments';
 import Messages from './messages';
+import MesTaches from './mesTaches';
 import '../styles/espaceMembres.css';
 
 interface EspaceMembresProps {
@@ -38,6 +39,9 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
             }
             {
               currentMenu === 'messages' && <Messages />
+            }
+            {
+              currentMenu === 'mesTaches' && <MesTaches />
             }
           </div>
         </div> : <div className="form-container">
