@@ -1,0 +1,30 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const routers_1 = require("./routers");
+const middlewares_1 = require("./middlewares");
+require("./global.data");
+const app = (0, express_1.default)();
+const port = process.env.PORT || 8088;
+app.use(middlewares_1.timeZoneFormatter);
+app.use(middlewares_1.logger);
+app.use('/contact', routers_1.contactRouter);
+app.use('/equipes', routers_1.equipesRouter);
+app.use('/espaceMembres', routers_1.espaceMembresRouter);
+app.use('/evenements', routers_1.evenementsRouter);
+app.use('/health', routers_1.healthRouter);
+app.use('/home', routers_1.homeRouter);
+app.use('/mesDocuments', routers_1.mesDocumentsRouter);
+app.use('/messages', routers_1.messagesRouter);
+app.use('/mesTaches', routers_1.mesTachesRouter);
+app.use('/missions', routers_1.missionsRouter);
+app.use('/monAssociation', routers_1.monAssociationRouter);
+app.use('/rejoindre', routers_1.rejoindreRouter);
+app.use('/soutenir', routers_1.soutenirRouter);
+app.use(middlewares_1.errorHandler);
+app.listen(port, () => {
+    console.log(`Port http://localhost:${port}`);
+});
