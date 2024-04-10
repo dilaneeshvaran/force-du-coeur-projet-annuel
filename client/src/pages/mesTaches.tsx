@@ -6,21 +6,26 @@ interface Tache {
     name: string;
     description?: string;
     type: 'todo' | 'done';
+    assignedDate: Date;
+    doneDate?: Date;
 }
 
 function MesTaches() {
     const [taches, setTaches] = useState<Tache[]>([
         {
             id: 1,
-            name: 'reunion',
-            description: 'description ici.....',
+            name: 'tache 1',
+            description: 'description.....',
             type: 'todo',
+            assignedDate: new Date(),
         },
         {
             id: 2,
-            name: 'changement de lieu de reunion',
+            name: 'tache 2',
             description: 'description....',
             type: 'done',
+            assignedDate: new Date(),
+            doneDate: new Date(),
         }
     ]);
 
@@ -28,6 +33,10 @@ function MesTaches() {
 
     const handleTypeClick = (type: string) => {
         setSelectedType(type);
+    };
+
+    const handleCheckboxChange = (id: number) => {
+        setTaches(taches.map(tache => tache.id === id ? { ...tache, type: tache.type === 'todo' ? 'done' : 'todo', doneDate: tache.type === 'todo' ? new Date() : undefined } : tache));
     };
 
     return (
@@ -41,6 +50,9 @@ function MesTaches() {
                     <div key={tache.id}>
                         <h2>{tache.name}</h2>
                         <p>{tache.description}</p>
+                        <p>Assigned: {tache.assignedDate.toLocaleDateString()}</p>
+                        {tache.doneDate && <p>Done: {tache.doneDate.toLocaleDateString()}</p>}
+                        <input type="checkbox" checked={tache.type === 'done'} onChange={() => handleCheckboxChange(tache.id)} /> Done
                     </div>
                 ))}
             </div>
