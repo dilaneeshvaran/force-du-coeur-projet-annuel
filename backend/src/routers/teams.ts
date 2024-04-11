@@ -3,7 +3,7 @@
  */
 
 import express, { Router, Request, Response } from "express";
-import { creerEquipe, recupererEquipeParId,recupererEquipes, mettreAJourEquipe, supprimerEquipe } from '../controllers';
+import { createTeam, getAllTeams, getTeamById, updateTeam, deleteTeam } from '../controllers';
 import { isAuth } from "../middlewares";
 
 export const router = Router();
@@ -16,8 +16,8 @@ export const router = Router();
   //res.send( { message: 'OK'} );
 //}) --> récupérer une équipe précise
 
-router.post('/', isAuth, creerEquipe); // besoin d'être authentifié pour faire ça
-router.get('/', recupererEquipes);
-router.get('/:id', recupererEquipeParId);
-router.put('/:id', isAuth, mettreAJourEquipe);
-router.delete('/:id', isAuth, supprimerEquipe);
+router.post('/', isAuth, createTeam);
+router.get('/', getAllTeams);
+router.get('/:id', getTeamById);
+router.put('/:id', isAuth, updateTeam);
+router.delete('/:id', isAuth, deleteTeam);

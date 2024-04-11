@@ -8,5 +8,5 @@ export const router = Router();
 
 
 router.get('/', (req: Request, res: Response) => {
-  res.send( { message: 'OK home' } );
+  res.send( { message: 'OK votes' } );
 })

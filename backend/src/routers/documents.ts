@@ -8,5 +8,6 @@ export const router = Router();
 
 
 router.get('/', (req: Request, res: Response) => {
-  res.send( { message: 'OK mes tâches' } );
+  res.send( { message: 'OK mes Documents' } );
 })
+
