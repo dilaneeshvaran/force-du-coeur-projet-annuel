@@ -10,7 +10,6 @@ interface Document {
 }
 
 function MesDocuments() {
-    //const [documents, setDocuments] = useState<Document[]>([]);
     const [documents, setDocuments] = useState<Document[]>([
         {
             id: 1,
@@ -20,18 +19,13 @@ function MesDocuments() {
             file: new File(["content"], "sample.txt"),
         },
         {
-            id: 1,
+            id: 2,
             title: 'planning event',
             content: 'test archive',
             isArchived: true,
             file: new File(["content"], "sample.txt"),
         }
     ]);
-
-
-    const deleteDocument = (id: number) => {
-        setDocuments(documents.filter(document => document.id !== id));
-    };
 
     const archiveDocument = (id: number) => {
         setDocuments(documents.map(document => document.id === id ? { ...document, isArchived: true } : document));
@@ -71,6 +65,7 @@ function MesDocuments() {
                                 Download {document.file.name}
                             </a>
                         )}
+                        <input type="checkbox" checked={document.isArchived} onChange={() => document.isArchived ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archive
                     </div>
                 ))}
             </div>

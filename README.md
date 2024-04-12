@@ -1,3 +1,14 @@
+# FORCE DU COEUR
+
+Ce projet comprend un client, un backoffice et un backend.
+
+## Installation
+
+Pour installer le projet, exécutez la commande suivante :
+
+```bash
+npm run dev
+
 --------------------------------------CLIENT------------------------------------------------
 TODO
 //voir les evenements / votes / sondages en cours/terminés
@@ -13,8 +24,6 @@ TODO
 //50€/mois ADHesion soutien
 //100€/mois ADHesion bienfaiteur
 //mot de passe oublié
-
-//GED
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
