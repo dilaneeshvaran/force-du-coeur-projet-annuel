@@ -4,20 +4,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const body_parser_1 = __importDefault(require("body-parser"));
 const routers_1 = require("./routers");
 const middlewares_1 = require("./middlewares");
 require("./global.data");
 const app = (0, express_1.default)();
+// utiliser la variable d'environnement PORT si elle est définie, sinon utiliser le port 8088
 const port = process.env.PORT || 8088;
+// analyser le corps de requêtes en JSON
+app.use(body_parser_1.default.json());
 app.use(middlewares_1.timeZoneFormatter);
-app.use(middlewares_1.logger);
+app.use(middlewares_1.winston);
 app.use('/choices', routers_1.choicesRouter);
 app.use('/documents', routers_1.documentsRouter);
 app.use('/donations', routers_1.donationsRouter);
 app.use('/events', routers_1.eventsRouter);
 app.use('/health', routers_1.healthRouter);
 app.use('/members', routers_1.membersRouter);
-app.use('/membership', routers_1.membershipRouter);
+app.use('/memberships', routers_1.membershipsRouter);
 app.use('/messages', routers_1.messagesRouter);
 app.use('/missions', routers_1.missionsRouter);
 app.use('/resources', routers_1.resourcesRouter);

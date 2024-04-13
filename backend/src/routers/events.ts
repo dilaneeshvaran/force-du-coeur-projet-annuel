@@ -9,7 +9,7 @@ import { isAuth } from "../middlewares";
 export const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
-  res.send( { message: 'OK'} );
+  res.send( { message: 'OK events'} );
 })
 router.post('/', isAuth, createEvent); 
 router.get('/', getAllEvents);

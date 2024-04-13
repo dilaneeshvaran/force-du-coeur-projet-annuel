@@ -1,6 +1,6 @@
 "use strict";
 /**
- * Routes pour les différentes tâches.
+ * Routes pour gérer les différentes tâches.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;

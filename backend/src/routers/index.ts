@@ -5,7 +5,7 @@
 
 export { router as healthRouter } from './health';
 export { router as teamsRouter } from './teams';
-export { router as membershipRouter } from './membership';
+export { router as membershipsRouter } from './memberships';
 export { router as eventsRouter } from './events';
 export { router as membersRouter } from './members';
 export { router as documentsRouter } from './documents';

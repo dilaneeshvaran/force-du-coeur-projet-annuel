@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isNotAuth = void 0;
 const isNotAuth = (req, res, next) => {
-    //if(req.session.connected && req.session.user) { --> variable de session ?
-    //res.redirect("/")
+    //if(req.session.connected && req.session.user) { --> variable de session ? ou utilisation des tokkens ?
+    res.redirect("/");
     //}
     //else {
     //next()

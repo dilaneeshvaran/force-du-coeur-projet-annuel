@@ -1,16 +1,19 @@
-import express, { Request, Response } from "express";
-import { documentsRouter, teamsRouter, membershipRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter, missionsRouter, membersRouter, resourcesRouter, useOfResourcesRouter, choicesRouter, votesRouter, donationsRouter } from './routers';
-import { errorHandler, logger, timeZoneFormatter } from "./middlewares";
+import express from "express";
+import bodyParser from "body-parser";
+
+import { documentsRouter, teamsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter, missionsRouter, membersRouter, resourcesRouter, useOfResourcesRouter, choicesRouter, votesRouter, donationsRouter } from './routers';
+import { errorHandler, logger, timeZoneFormatter, winston } from "./middlewares";
 import './global.data';
 
 const app = express();
+
+// utiliser la variable d'environnement PORT si elle est définie, sinon utiliser le port 8088
 const port = process.env.PORT || 8088;
 
+// analyser le corps de requêtes en JSON
+app.use(bodyParser.json());
 app.use(timeZoneFormatter);
-
-
-
-app.use(logger);
+app.use(winston);
 
 app.use('/choices', choicesRouter);
 app.use('/documents', documentsRouter);
@@ -18,7 +21,7 @@ app.use('/donations', donationsRouter);
 app.use('/events', eventsRouter);
 app.use('/health', healthRouter);
 app.use('/members', membersRouter);
-app.use('/membership', membershipRouter);
+app.use('/memberships', membershipsRouter);
 app.use('/messages', messagesRouter);
 app.use('/missions', missionsRouter);
 app.use('/resources', resourcesRouter);
@@ -28,7 +31,6 @@ app.use('/useOfResources', useOfResourcesRouter);
 app.use('/votes', votesRouter);
 
 app.use(errorHandler);
-
 
 app.listen(port, () => {
   console.log(`Port http://localhost:${port}`);

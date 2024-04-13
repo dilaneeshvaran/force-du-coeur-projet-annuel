@@ -1,6 +1,4 @@
 import express, { Request, Response } from 'express';
-import db from '../database/config';
-
 
 const createTeam = (req: Request, res: Response) => {
   // TODO

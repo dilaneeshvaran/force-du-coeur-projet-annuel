@@ -1,5 +1,5 @@
 /**
- * Routes pour les évènements de Force du Coeur.
+ * Routes pour les gérer les équipes composées de plusieurs membres.
  */
 
 import express, { Router, Request, Response } from "express";

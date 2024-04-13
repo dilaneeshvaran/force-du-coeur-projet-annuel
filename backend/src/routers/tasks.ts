@@ -1,5 +1,5 @@
 /**
- * Routes pour les différentes tâches.
+ * Routes pour gérer les différentes tâches.
  */
 
 import express, { Router, Request, Response } from "express";

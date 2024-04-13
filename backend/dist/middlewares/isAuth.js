@@ -1,15 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isAuth = void 0;
-/**
- *
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- */
 const isAuth = (req, res, next) => {
-    //if(!req.session.connected && !req.session.user) { --> créer une variable de session ?
-    res.redirect("/user/login");
+    //if(!req.session.connected && !req.session.user) { --> créer une variable de session ? ou plutôt utiliser des tokkens
+    res.redirect("/members/login");
     //}
     //else {
     //next()

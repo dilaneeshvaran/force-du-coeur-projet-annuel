@@ -9,7 +9,7 @@ const controllers_1 = require("../controllers");
 const middlewares_1 = require("../middlewares");
 exports.router = (0, express_1.Router)();
 exports.router.get('/', (req, res) => {
-    res.send({ message: 'OK' });
+    res.send({ message: 'OK events' });
 });
 exports.router.post('/', middlewares_1.isAuth, controllers_1.createEvent);
 exports.router.get('/', controllers_1.getAllEvents);

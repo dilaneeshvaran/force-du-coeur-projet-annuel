@@ -1,6 +1,6 @@
 "use strict";
 /**
- * Routes pour les évènements de Force du Coeur.
+ * Routes pour les gérer les équipes composées de plusieurs membres.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
