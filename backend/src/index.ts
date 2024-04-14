@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 
-import { documentsRouter, teamsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter, missionsRouter, membersRouter, resourcesRouter, useOfResourcesRouter, choicesRouter, votesRouter, donationsRouter } from './routers';
+import { documentsRouter, teamsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter,    membersRouter, resourcesRouter, useOfResourcesRouter, choicesRouter, votesRouter, donationsRouter } from './routers';
 import { errorHandler, logger, timeZoneFormatter, winston } from "./middlewares";
 import './global.data';
 
@@ -23,7 +23,6 @@ app.use('/health', healthRouter);
 app.use('/members', membersRouter);
 app.use('/memberships', membershipsRouter);
 app.use('/messages', messagesRouter);
-app.use('/missions', missionsRouter);
 app.use('/resources', resourcesRouter);
 app.use('/tasks', tasksRouter);
 app.use('/teams', teamsRouter);
