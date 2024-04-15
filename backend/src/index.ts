@@ -1,33 +1,36 @@
-import express, { Request, Response } from "express";
-import { contactRouter, equipesRouter, espaceMembresRouter, evenementsRouter, healthRouter, homeRouter, mesDocumentsRouter, messagesRouter, mesTachesRouter, missionsRouter, monAssociationRouter, rejoindreRouter, soutenirRouter } from './routers';
-import { errorHandler, logger, timeZoneFormatter } from "./middlewares";
+import express from "express";
+import bodyParser from "body-parser";
+
+import { documentsRouter, teamsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter, missionsRouter, membersRouter, resourcesRouter, useOfResourcesRouter, choicesRouter, votesRouter, donationsRouter } from './routers';
+import { errorHandler, logger, timeZoneFormatter, winston } from "./middlewares";
 import './global.data';
 
 const app = express();
+
+// utiliser la variable d'environnement PORT si elle est définie, sinon utiliser le port 8088
 const port = process.env.PORT || 8088;
 
+// analyser le corps de requêtes en JSON
+app.use(bodyParser.json());
 app.use(timeZoneFormatter);
+app.use(winston);
 
-
-
-app.use(logger);
-
-app.use('/contact', contactRouter);
-app.use('/equipes', equipesRouter);
-app.use('/espaceMembres', espaceMembresRouter);
-app.use('/evenements', evenementsRouter);
+app.use('/choices', choicesRouter);
+app.use('/documents', documentsRouter);
+app.use('/donations', donationsRouter);
+app.use('/events', eventsRouter);
 app.use('/health', healthRouter);
-app.use('/home', homeRouter);
-app.use('/mesDocuments', mesDocumentsRouter);
+app.use('/members', membersRouter);
+app.use('/memberships', membershipsRouter);
 app.use('/messages', messagesRouter);
-app.use('/mesTaches', mesTachesRouter);
 app.use('/missions', missionsRouter);
-app.use('/monAssociation', monAssociationRouter);
-app.use('/rejoindre', rejoindreRouter);
-app.use('/soutenir', soutenirRouter);
+app.use('/resources', resourcesRouter);
+app.use('/tasks', tasksRouter);
+app.use('/teams', teamsRouter);
+app.use('/useOfResources', useOfResourcesRouter);
+app.use('/votes', votesRouter);
 
 app.use(errorHandler);
-
 
 app.listen(port, () => {
   console.log(`Port http://localhost:${port}`);

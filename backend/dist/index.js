@@ -4,26 +4,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const body_parser_1 = __importDefault(require("body-parser"));
 const routers_1 = require("./routers");
 const middlewares_1 = require("./middlewares");
 require("./global.data");
 const app = (0, express_1.default)();
+// utiliser la variable d'environnement PORT si elle est définie, sinon utiliser le port 8088
 const port = process.env.PORT || 8088;
+// analyser le corps de requêtes en JSON
+app.use(body_parser_1.default.json());
 app.use(middlewares_1.timeZoneFormatter);
-app.use(middlewares_1.logger);
-app.use('/contact', routers_1.contactRouter);
-app.use('/equipes', routers_1.equipesRouter);
-app.use('/espaceMembres', routers_1.espaceMembresRouter);
-app.use('/evenements', routers_1.evenementsRouter);
+app.use(middlewares_1.winston);
+app.use('/choices', routers_1.choicesRouter);
+app.use('/documents', routers_1.documentsRouter);
+app.use('/donations', routers_1.donationsRouter);
+app.use('/events', routers_1.eventsRouter);
 app.use('/health', routers_1.healthRouter);
-app.use('/home', routers_1.homeRouter);
-app.use('/mesDocuments', routers_1.mesDocumentsRouter);
+app.use('/members', routers_1.membersRouter);
+app.use('/memberships', routers_1.membershipsRouter);
 app.use('/messages', routers_1.messagesRouter);
-app.use('/mesTaches', routers_1.mesTachesRouter);
 app.use('/missions', routers_1.missionsRouter);
-app.use('/monAssociation', routers_1.monAssociationRouter);
-app.use('/rejoindre', routers_1.rejoindreRouter);
-app.use('/soutenir', routers_1.soutenirRouter);
+app.use('/resources', routers_1.resourcesRouter);
+app.use('/tasks', routers_1.tasksRouter);
+app.use('/teams', routers_1.teamsRouter);
+app.use('/useOfResources', routers_1.useOfResourcesRouter);
+app.use('/votes', routers_1.votesRouter);
 app.use(middlewares_1.errorHandler);
 app.listen(port, () => {
     console.log(`Port http://localhost:${port}`);
