@@ -9,7 +9,7 @@ Pour installer le projet, exécutez la commande suivante :
 ```bash
 npm run dev
 
---------------------------------------CLIENT------------------------------------------------
+--------------------------------------CLIENT---------------------------------------------------
 TODO
 //voir les evenements / votes / sondages en cours/terminés
 //comme des blocks de posts : avec 2 options, valider/croix pour annuler
@@ -27,3 +27,20 @@ TODO
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
+  //home>performance>Data Visualizations>revenue, member acquisition, website traffic, or inventory levels.
+  //contents>activités/evenements/campaign(vote/sondage)
+  //members
+  //tasks management>create and assign task/deadlines
+  //ressources>inventory management/used
+  //finnance >donnation reports/balance sheets, and cash flow statements
+  //messages>sent/recieved
+  //backoffice user management > permissions, and access levels.
+  //settings????????
+  //Alerts and Notifications??>critical events like low inventory levels, unusual website traffic, or overdue tasks.
+
+--------------------------------------BACKEND--------------------------------------------------
+
+
+
+
+--------------------------------------JAVA--------------------------------------------------
