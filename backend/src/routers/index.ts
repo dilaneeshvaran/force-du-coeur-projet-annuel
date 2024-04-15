@@ -11,7 +11,6 @@ export { router as membersRouter } from './members';
 export { router as documentsRouter } from './documents';
 export { router as messagesRouter } from './messages';
 export { router as tasksRouter } from './tasks';
-export { router as missionsRouter } from './missions';
 export { router as resourcesRouter } from './resources';
 export { router as useOfResourcesRouter } from './useOfResources';
 export { router as choicesRouter } from './choices';

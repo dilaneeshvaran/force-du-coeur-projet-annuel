@@ -1,6 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { AutoIncrement } from "sequelize-typescript";
 
 export class Member extends Model {
   public memberId! : number;
@@ -39,7 +38,6 @@ Member.init({
   role: {
     type: DataTypes.ENUM('admin', 'member'),
     allowNull: false
-    
   }, 
   memberSince: {
     type: DataTypes.DATE,
