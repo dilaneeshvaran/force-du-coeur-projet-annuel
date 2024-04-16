@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css'
 import Menu from './components/Menu';
+import Inventory from './pages/inventory';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,6 +18,7 @@ function App() {
     <BrowserRouter>
       <Menu className="navContainer" isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
+        <Route path="/inventory" element={<Inventory />} />
       </Routes>
     </BrowserRouter>
   )
