@@ -8,11 +8,14 @@ import { isAuth } from "../middlewares";
 export const router = Router();
 
 
-router.get('/', (req: Request, res: Response) => {
-  res.send( { message: 'OK choices' } );
-})
-router.post('/', isAuth, createChoice); 
+//router.get('/', (req: Request, res: Response) => {
+//  res.send( { message: 'OK choices' } );
+//})
+//router.post('/', isAuth, createChoice); 
+router.post('/', createChoice); 
 router.get('/', getAllChoices);
 router.get('/:id', getChoiceById);
-router.put('/:id', isAuth, updateChoice);
-router.delete('/:id', isAuth, deleteChoice);
+router.put('/:id', updateChoice);
+//router.put('/:id', isAuth, updateChoice);
+router.delete('/:id', deleteChoice);
+//router.delete('/:id', isAuth, deleteChoice);

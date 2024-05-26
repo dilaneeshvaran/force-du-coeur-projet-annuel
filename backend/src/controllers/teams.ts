@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 
 const createTeam = (req: Request, res: Response) => {
-  // TODO
+  
 }
 
 const getAllTeams = (req: Request, res: Response) => {

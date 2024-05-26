@@ -6,13 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = require("express");
 const controllers_1 = require("../controllers");
-const middlewares_1 = require("../middlewares");
 exports.router = (0, express_1.Router)();
-exports.router.get('/', (req, res) => {
-    res.send({ message: 'OK memberships' });
-});
-exports.router.post('/', middlewares_1.isAuth, controllers_1.createMembership);
+//router.get('/', (req: Request, res: Response) => {
+//  res.send( { message: 'OK memberships' } );
+//})
+//router.post('/', isAuth, createMembership); 
+exports.router.post('/', controllers_1.createMembership);
 exports.router.get('/', controllers_1.getAllMemberships);
 exports.router.get('/:id', controllers_1.getMembershipById);
-exports.router.put('/:id', middlewares_1.isAuth, controllers_1.updateMembership);
-exports.router.delete('/:id', middlewares_1.isAuth, controllers_1.deleteMembership);
+//router.put('/:id', isAuth, updateMembership);
+exports.router.put('/:id', controllers_1.updateMembership);
+//router.delete('/:id', isAuth, deleteMembership);
+exports.router.delete('/:id', controllers_1.deleteMembership);
