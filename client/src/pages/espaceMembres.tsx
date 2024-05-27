@@ -6,6 +6,7 @@ import MesDocuments from './mesDocuments';
 import Messages from './messages';
 import MesTaches from './mesTaches';
 import '../styles/espaceMembres.css';
+import ManageAccount from './manageAccount';
 
 interface EspaceMembresProps {
   isLoggedIn: boolean;
@@ -42,6 +43,9 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
             }
             {
               currentMenu === 'mesTaches' && <MesTaches />
+            }
+            {
+              currentMenu === 'gestionDeMonCompteEtDossier' && <ManageAccount />
             }
           </div>
         </div> : <div className="form-container">
