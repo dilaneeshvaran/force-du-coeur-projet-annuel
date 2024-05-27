@@ -9,10 +9,11 @@ import { isAuth } from "../middlewares";
 export const router = Router();
 
 
-router.get('/', (req: Request, res: Response) => {
-  res.send( { message: 'OK documents' } );
-})
-router.post('/', isAuth, createDocument); 
+//router.get('/', (req: Request, res: Response) => {
+//  res.send( { message: 'OK documents' } );
+//})
+//router.post('/', isAuth, createDocument);
+router.post('/', createDocument);
 router.get('/', getAllDocuments);
 router.get('/:id', getDocumentById);
 router.put('/:id', isAuth, updateDocument);

@@ -1,17 +1,13 @@
 /**
- * Routes pour gérer les donations et cotisations.
+ * Routes pour gérer les dons.
  */
 import express, { Router, Request, Response } from "express";
-import { createDonation, deleteDonation, getAllDonations, getDonationById, updateDonation } from '../controllers';
+import { createDonation, getAllDonations, getDonationById } from '../controllers';
 import { isAuth } from "../middlewares";
 
 export const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-  res.send( { message: 'OK donations'} );
-})
-router.post('/', isAuth, createDonation); 
+//router.post('/', isAuth, createDonation); 
+router.post('/', createDonation); 
 router.get('/', getAllDonations);
 router.get('/:id', getDonationById);
-router.put('/:id', isAuth, updateDonation);
-router.delete('/:id', isAuth, deleteDonation);

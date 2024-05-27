@@ -15,3 +15,15 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./member.model"), exports);
+__exportStar(require("./task.model"), exports);
+__exportStar(require("./event.model"), exports);
+__exportStar(require("./vote.model"), exports);
+__exportStar(require("./vote-choice.model"), exports);
+__exportStar(require("./choice.model"), exports);
+__exportStar(require("./message.model"), exports);
+__exportStar(require("./document.model"), exports);
+__exportStar(require("./donation.model"), exports);
+__exportStar(require("./membership.model"), exports);
+__exportStar(require("./resource.model"), exports);
+__exportStar(require("./member-resource.model"), exports);
+__exportStar(require("./useOfResource.model"), exports);

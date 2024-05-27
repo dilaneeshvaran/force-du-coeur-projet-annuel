@@ -23,7 +23,6 @@ app.use('/health', routers_1.healthRouter);
 app.use('/members', routers_1.membersRouter);
 app.use('/memberships', routers_1.membershipsRouter);
 app.use('/messages', routers_1.messagesRouter);
-app.use('/missions', routers_1.missionsRouter);
 app.use('/resources', routers_1.resourcesRouter);
 app.use('/tasks', routers_1.tasksRouter);
 app.use('/teams', routers_1.teamsRouter);

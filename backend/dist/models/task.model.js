@@ -16,12 +16,12 @@ Task.init({
     title: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        unique: true
+        //unique: true
     },
     description: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        unique: true
+        //unique: true
     },
     startDate: {
         type: sequelize_1.DataTypes.DATE,

@@ -23,7 +23,7 @@ Document.init({
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   }, 
   creationDate: {
     type: DataTypes.DATE,

@@ -1,11 +1,13 @@
 import express, { Request, Response } from 'express';
 import { validateMember } from '../validation';
 import { Member } from '../models';
+import bcrypt from "bcrypt";
+import { logger } from '../middlewares';
 
 const createMember = async (req: Request, res: Response) => {
   const { error, value } = validateMember(req.body);
   if (error) {
-    res.status(400).json({ message: error.details[0].message });
+    res.status(400).json({ message: logger.error(error.details[0].message) });
   }
   
   try {
@@ -16,12 +18,13 @@ const createMember = async (req: Request, res: Response) => {
     }
 
     const roleByDefault = role || 'member';
+    const hashedPassword = await bcrypt.hash(value.password, 12);
 
     const newMember = await Member.create({
       name,
       firstName,
       email,
-      password,
+      password: hashedPassword,
       role: roleByDefault,
       memberSince,
       dateOfBirth: new Date(dateOfBirth)
@@ -99,8 +102,6 @@ const deleteMember = async (req: Request, res: Response) => {
     } else {
       res.status(404).json({ message: "Membre non retrouvé"});
     }
-    
-    
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Erreur rencontré en essayant de supprimer le membre"});

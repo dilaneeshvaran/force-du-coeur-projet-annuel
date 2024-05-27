@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTeam = exports.updateTeam = exports.getTeamById = exports.getAllTeams = exports.createTeam = void 0;
 const createTeam = (req, res) => {
-    // TODO
 };
 exports.createTeam = createTeam;
 const getAllTeams = (req, res) => {

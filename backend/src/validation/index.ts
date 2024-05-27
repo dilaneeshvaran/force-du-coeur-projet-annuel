@@ -8,5 +8,6 @@ export * from './message.validation';
 export * from './document.validation';
 export * from './donation.validation';
 export * from './membership.validation';
-//export * from './resource.validation';
-//export * from './useOfResource.validation';
+export * from './resource.validation';
+export * from './member-resource.validation';
+export * from './useOfResource.validation';

@@ -6,7 +6,6 @@ export * from './members';
 export * from './memberships';
 export * from './documents';
 export * from './messages';
-export * from './missions';
 export * from './resources';
 export * from './votes';
 export * from './choices';

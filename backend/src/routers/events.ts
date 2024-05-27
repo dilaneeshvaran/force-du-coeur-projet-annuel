@@ -8,12 +8,12 @@ import { isAuth } from "../middlewares";
 
 export const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-  res.send( { message: 'OK events'} );
-})
-router.post('/', isAuth, createEvent); 
+//router.post('/', isAuth, createEvent);
+router.post('/', createEvent); 
 router.get('/', getAllEvents);
 router.get('/:id', getEventById);
 router.put('/:id', isAuth, updateEvent);
-router.delete('/:id', isAuth, deleteEvent);
+//router.delete('/:id', isAuth, deleteEvent);
+router.delete('/:id', deleteEvent);
+
 
