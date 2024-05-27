@@ -1,6 +1,11 @@
 import '../styles/soutenir.css'
+import { Link } from 'react-router-dom';
 
-function Soutenir() {
+interface SoutenirProps {
+  isLoggedIn?: boolean;
+}
+
+function Soutenir({ isLoggedIn }: SoutenirProps) {
 
   return (
     <>
@@ -16,7 +21,13 @@ function Soutenir() {
               <li>Recevez des sourires</li>
             </ul>
           </div>
-          <div className='btnCB'><button className='buttonCB'>Adhérer</button></div>
+          <div className='btnCB'>
+            {isLoggedIn ? (
+              <Link to="/manageAccount?selectedType=membership" className='buttonCB'>Adhérer</Link>
+            ) : (
+              <Link to="/espaceMembres" className='buttonCB'>Adhérer</Link>
+            )}
+          </div>
         </div>
 
         <div className='contentBox'>
@@ -28,7 +39,13 @@ function Soutenir() {
           </div>
           <div className='btnContainer'>
             <div className='btnCB'><button className='buttonCB'>Ponctuel</button></div>
-            <div className='btnCB'><button className='buttonCB'>Mensuel</button></div>
+            <div className='btnCB'>
+              {isLoggedIn ? (
+                <Link to="/manageAccount?selectedType=donation" className='buttonCB'>Périodique</Link>
+              ) : (
+                <Link to="/espaceMembres" className='buttonCB'>Périodique</Link>
+              )}
+            </div>
           </div>
         </div>
       </div>

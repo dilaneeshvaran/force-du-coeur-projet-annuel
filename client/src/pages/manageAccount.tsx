@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Membership from '../components/Membership';
 import Account from '../components/Account';
 import Donation from '../components/Donation';
+import { useLocation } from 'react-router-dom';
 
 export interface Donation {
     amount: number | undefined;
@@ -22,9 +23,13 @@ function ManageAccount() {
         },
     ]);
 
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const initialSelectedType = queryParams.get('selectedType') || 'account';
+
     const [showMembershipOptions, setShowMembershipOptions] = useState(false);
 
-    const [selectedType, setSelectedType] = useState('account');
+    const [selectedType, setSelectedType] = useState(initialSelectedType);
 
     const handleTypeClick = (type: string) => {
         setSelectedType(type);
@@ -60,6 +65,7 @@ function ManageAccount() {
                 <a href='#' className='nav-taches-link' onClick={() => handleTypeClick('membership')}>Mon Adhesion</a>
                 <a href='#' className='nav-taches-link' onClick={() => handleTypeClick('donation')}>Mes Dons</a>
             </div>
+
             <div className='taches-list'>
                 {selectedType === 'account' && account.map((acc) => (
                     <Account account={acc} onAccountChange={handleAccountChange} />

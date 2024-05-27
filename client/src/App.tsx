@@ -10,6 +10,7 @@ import Equipes from './pages/equipes';
 import Rejoindre from './pages/rejoindre';
 import EspaceMembres from './pages/espaceMembres';
 import { useState } from 'react';
+import ManageAccount from './pages/manageAccount'; // Import the ManageAccount component
 
 function Logout() {
   const navigate = useNavigate();
@@ -39,11 +40,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/evenements" element={<Evenements />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/soutenir" element={<Soutenir />} />
+        <Route path="/soutenir" element={<Soutenir isLoggedIn={isLoggedIn} />} />
         <Route path="/missions" element={<Missions />} />
         <Route path="/equipes" element={<Equipes />} />
         <Route path="/rejoindre" element={<Rejoindre />} />
         <Route path="/espaceMembres" element={<EspaceMembres isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/manageAccount/*" element={<ManageAccount />} />
       </Routes>
     </BrowserRouter>
   );
