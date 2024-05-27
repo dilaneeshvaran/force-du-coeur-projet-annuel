@@ -35,7 +35,14 @@ TODO
   //Alerts and Notifications??>critical events like low inventory levels, unusual website traffic, or overdue tasks.
 
 --------------------------------------BACKEND--------------------------------------------------
-
+TODO
+  //routes > Authentification routes
+  //middlewares > process data before reaching controllers
+  //controllers > handle the authentification of the users
+  //services > handle logic and operations
+  //tests > unit, integration and end-to-end tests
+  //validation > data validations
 
 
 --------------------------------------JAVA--------------------------------------------------
+```

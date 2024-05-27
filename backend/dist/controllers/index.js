@@ -22,7 +22,6 @@ __exportStar(require("./members"), exports);
 __exportStar(require("./memberships"), exports);
 __exportStar(require("./documents"), exports);
 __exportStar(require("./messages"), exports);
-__exportStar(require("./missions"), exports);
 __exportStar(require("./resources"), exports);
 __exportStar(require("./votes"), exports);
 __exportStar(require("./choices"), exports);

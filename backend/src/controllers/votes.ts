@@ -1,24 +1,80 @@
 import express, { Request, Response } from 'express';
+import { validateVote } from '../validation';
+import { Vote } from '../models';
 
-const createVote = (req: Request, res: Response) => {
-  // TODO
+const createVote = async (req: Request, res: Response) => {
+  const { error, value } = validateVote(req.body);
+  if (error) {
+    res.status(400).json({ message: error.details[0].message});
+  }
+
+  try {
+    const { title, description, startDate, endDate, votingType, votingMethod, status } = value;
+
+    if (!title || !description || !startDate || !endDate || !votingType || !votingMethod || !status) {
+      res.status(400).json({ message: "Aucun champ ne doit être vide"});
+    }
+    
+    const newVote = await Vote.create({
+      title,
+      description,
+      startDate,
+      endDate,
+      votingType,
+      votingMethod,
+      status
+    });
+    return res.status(201).json(newVote);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur lors de la création d'un vote"});
+  }
 }
 
-const getAllVotes = (req: Request, res: Response) => {
-  // TODO
+const getAllVotes = async (req: Request, res: Response) => {
+  try {
+    const votes = await Vote.findAll();
+    return res.status(200).json(votes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des évènements"});
+  }
 }
 
-const getVoteById = (req: Request, res: Response) => {
-  // TODO
+const getVoteById = async (req: Request, res: Response) => {
+  try {
+    const voteId = req.params.id;
+    const vote = await Vote.findByPk(voteId);
+    if (vote !== null) {
+      res.status(200).json(vote);
+    } else {
+      res.status(404).json({ message: "Membre non retrouvé"});
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur lors de la recherche du membre"});
+  }
 }
 
 const updateVote = (req: Request, res: Response) => {
-  // TODO
+
 }
 
 
-const deleteVote = (req: Request, res: Response) => {
-  // TODO
+const deleteVote = async (req: Request, res: Response) => {
+  try {
+    const voteId = req.params.id;
+    const vote = await Vote.findByPk(voteId);
+    if (vote !== null) {
+      await vote.destroy();
+      res.status(200).json({ message: "Suppression du vote réussie"});
+    } else {
+      res.status(404).json({ message: "Vote non retrouvé"});
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur rencontrée en essayant de supprimer le vote"});
+  }
 }
 
 export { createVote, getAllVotes, getVoteById, updateVote, deleteVote };

@@ -16,8 +16,11 @@ export const router = Router();
   //res.send( { message: 'OK'} );
 //}) --> récupérer une équipe précise
 
-router.post('/', isAuth, createTeam);
+//router.post('/', isAuth, createTeam);
+router.post('/', createTeam);
 router.get('/', getAllTeams);
 router.get('/:id', getTeamById);
-router.put('/:id', isAuth, updateTeam);
-router.delete('/:id', isAuth, deleteTeam);
+//router.put('/:id', isAuth, updateTeam);
+router.put('/:id', updateTeam);
+//router.delete('/:id', isAuth, deleteTeam);
+router.delete('/:id', deleteTeam);

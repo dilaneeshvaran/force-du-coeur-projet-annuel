@@ -14,8 +14,10 @@ exports.router = (0, express_1.Router)();
 //router.get('/:id', (req: Request, res: Response) => {
 //res.send( { message: 'OK'} );
 //}) --> récupérer une équipe précise
-exports.router.post('/', middlewares_1.isAuth, controllers_1.createTask);
+//router.post('/', isAuth, createTask);
+exports.router.post('/', controllers_1.createTask);
 exports.router.get('/', controllers_1.getAllTasks);
 exports.router.get('/:id', controllers_1.getTaskById);
 exports.router.put('/:id', middlewares_1.isAuth, controllers_1.updateTask);
-exports.router.delete('/:id', middlewares_1.isAuth, controllers_1.deleteTask);
+//router.delete('/:id', isAuth, deleteTask);
+exports.router.delete('/:id', controllers_1.deleteTask);

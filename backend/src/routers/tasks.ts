@@ -16,8 +16,10 @@ export const router = Router();
   //res.send( { message: 'OK'} );
 //}) --> récupérer une équipe précise
 
-router.post('/', isAuth, createTask);
+//router.post('/', isAuth, createTask);
+router.post('/', createTask);
 router.get('/', getAllTasks);
 router.get('/:id', getTaskById);
 router.put('/:id', isAuth, updateTask);
-router.delete('/:id', isAuth, deleteTask);
+//router.delete('/:id', isAuth, deleteTask);
+router.delete('/:id', deleteTask);

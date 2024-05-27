@@ -45,5 +45,5 @@ Member.init({
     sequelize: services_1.sequelize,
     modelName: 'Member',
     tableName: 'members',
-    timestamps: false,
+    timestamps: false
 });

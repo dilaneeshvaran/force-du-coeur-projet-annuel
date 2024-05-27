@@ -1,7 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Vote } from ".";
-import { Choice } from ".";
+import { Vote, Choice } from ".";
 
 export class VoteChoice extends Model {
   public voteId!: number;
@@ -12,19 +11,24 @@ VoteChoice.init({
   voteId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: Vote,
+      key: 'voteId'
+    }
   },
   choiceId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: Choice,
+      key: 'choiceId'
+    }
   },
 }, {
   sequelize,
   modelName: 'VoteChoice',
-  tableName: 'votesChoices',
-  timestamps: false,
+  tableName: 'voteChoices',
+  timestamps: false
 })
-
-VoteChoice.belongsTo(Vote, { foreignKey: 'voteId' });
-VoteChoice.belongsTo(Choice, { foreignKey: 'choiceId' });

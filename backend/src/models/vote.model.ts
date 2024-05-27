@@ -52,7 +52,6 @@ Vote.init({
   sequelize,
   modelName: 'Vote',
   tableName: 'votes',
-  timestamps: false,
+  timestamps: false
 });
 
-Vote.hasMany(VoteChoice, { foreignKey: 'voteId' });

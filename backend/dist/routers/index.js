@@ -4,7 +4,7 @@
  * Les autres parties de l'app peuvent importer ces routeurs.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.donationsRouter = exports.votesRouter = exports.choicesRouter = exports.useOfResourcesRouter = exports.resourcesRouter = exports.missionsRouter = exports.tasksRouter = exports.messagesRouter = exports.documentsRouter = exports.membersRouter = exports.eventsRouter = exports.membershipsRouter = exports.teamsRouter = exports.healthRouter = void 0;
+exports.donationsRouter = exports.votesRouter = exports.choicesRouter = exports.useOfResourcesRouter = exports.resourcesRouter = exports.tasksRouter = exports.messagesRouter = exports.documentsRouter = exports.membersRouter = exports.eventsRouter = exports.membershipsRouter = exports.teamsRouter = exports.healthRouter = void 0;
 var health_1 = require("./health");
 Object.defineProperty(exports, "healthRouter", { enumerable: true, get: function () { return health_1.router; } });
 var teams_1 = require("./teams");
@@ -21,8 +21,6 @@ var messages_1 = require("./messages");
 Object.defineProperty(exports, "messagesRouter", { enumerable: true, get: function () { return messages_1.router; } });
 var tasks_1 = require("./tasks");
 Object.defineProperty(exports, "tasksRouter", { enumerable: true, get: function () { return tasks_1.router; } });
-var missions_1 = require("./missions");
-Object.defineProperty(exports, "missionsRouter", { enumerable: true, get: function () { return missions_1.router; } });
 var resources_1 = require("./resources");
 Object.defineProperty(exports, "resourcesRouter", { enumerable: true, get: function () { return resources_1.router; } });
 var useOfResources_1 = require("./useOfResources");

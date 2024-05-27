@@ -15,3 +15,15 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./member.validation"), exports);
+__exportStar(require("./task.validation"), exports);
+__exportStar(require("./event.validation"), exports);
+__exportStar(require("./vote.validation"), exports);
+__exportStar(require("./vote-choice.validation"), exports);
+__exportStar(require("./choice.validation"), exports);
+__exportStar(require("./message.validation"), exports);
+__exportStar(require("./document.validation"), exports);
+__exportStar(require("./donation.validation"), exports);
+__exportStar(require("./membership.validation"), exports);
+__exportStar(require("./resource.validation"), exports);
+__exportStar(require("./member-resource.validation"), exports);
+__exportStar(require("./useOfResource.validation"), exports);

@@ -8,11 +8,13 @@ import { isAuth } from "../middlewares";
 
 export const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-  res.send( { message: 'OK votes'} );
-})
-router.post('/', isAuth, createVote); 
+//router.get('/', (req: Request, res: Response) => {
+//  res.send( { message: 'OK votes'} );
+//})
+//router.post('/', isAuth, createVote); 
+router.post('/', createVote); 
 router.get('/', getAllVotes);
 router.get('/:id', getVoteById);
-router.put('/:id', isAuth, updateVote);
-router.delete('/:id', isAuth, deleteVote);
+router.put('/:id', updateVote);
+//router.put('/:id', isAuth, updateVote);
+router.delete('/:id', deleteVote);
