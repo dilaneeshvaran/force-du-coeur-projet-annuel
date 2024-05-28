@@ -15,6 +15,7 @@ import ManageAccount from './pages/manageAccount'; // Import the ManageAccount c
 function Logout() {
   const navigate = useNavigate();
 
+
   const handleLogout = () => {
     localStorage.setItem('isLoggedIn', 'false');
     navigate('/espaceMembres');

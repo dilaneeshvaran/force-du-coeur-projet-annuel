@@ -1,27 +1,36 @@
 import '../styles/soutenir.css'
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { AdhererForm } from '../components/AdhererForm';
+import { DonationForm } from '../components/DonationForm';
+import { Link } from 'react-router-dom';
 
 interface SoutenirProps {
   isLoggedIn?: boolean;
+  onMembershipChange?: (id: any, newStatus: string, amount: any) => void;
 }
 
 function Soutenir({ isLoggedIn }: SoutenirProps) {
   const [isPonctuelClicked, setPonctuelClicked] = useState(false);
+  const [isAdhererClicked, setAdhererClicked] = useState(false);
 
   const handlePonctuelClick = () => {
     setPonctuelClicked(true);
   }
 
+  const handleAdhererClick = () => {
+    setAdhererClicked(true);
+  }
+
   const handleCloseClick = () => {
     setPonctuelClicked(false);
+    setAdhererClicked(false);
   }
 
   return (
     <>
       <h1>Soutenir nos actions</h1>
       <div className="containerCB">
-        {!isPonctuelClicked ? (
+        {!isPonctuelClicked && !isAdhererClicked ? (
           <>
             <div className='contentBox'>
               <h3>Adhérer à 'Force du Coeur'</h3>
@@ -35,9 +44,13 @@ function Soutenir({ isLoggedIn }: SoutenirProps) {
               </div>
               <div className='btnCB'>
                 {isLoggedIn ? (
-                  <Link to="/manageAccount?selectedType=membership" className='buttonCB'>Adhérer</Link>
+                  <Link to="/manageAccount?selectedType=membership" className='buttonCB'>
+                    Adhérer
+                  </Link>
                 ) : (
-                  <Link to="/espaceMembres" className='buttonCB'>Adhérer</Link>
+                  <button onClick={handleAdhererClick} className='buttonCB'>
+                    Adhérer
+                  </button>
                 )}
               </div>
             </div>
@@ -61,28 +74,12 @@ function Soutenir({ isLoggedIn }: SoutenirProps) {
               </div>
             </div>
           </>
+        ) : isPonctuelClicked ? (
+          <DonationForm handleCloseClick={handleCloseClick} />
         ) : (
-          <div className='contentBox'>
-            <h3>Faire un don</h3>
-            <form>
-              <label>
-                Name:
-                <input type="text" name="name" required />
-              </label><br></br>
-              <label>
-                Amount:
-                <input type="number" name="amount" required />
-              </label><br></br>
-              <label>
-                Email:
-                <input type="email" name="email" required />
-              </label><br></br>
-              <input type="submit" value="Submit" />
-            </form>
-            <button onClick={handleCloseClick}>Close</button>
-          </div>
+          <AdhererForm handleCloseClick={handleCloseClick} />
         )}
-      </div >
+      </div>
     </>
   )
 }

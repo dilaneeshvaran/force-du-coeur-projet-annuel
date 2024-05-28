@@ -3,30 +3,44 @@ import Account from './Account'
 
 interface MembershipProps {
     account: Account;
-    onMembershipChange: (id: number, newStatus: string, amount: number) => void;
+    onMembershipChange: (id: number, newStatus: 'active' | 'inactive', amount: number) => void;
 }
 
-const Membership: React.FC<MembershipProps> = ({ account, onMembershipChange }) => {
+const Membership: React.FC<MembershipProps> = ({ account }) => {
     const [showMembershipOptions, setShowMembershipOptions] = useState(false);
+    const [membershipStatus, setMembershipStatus] = useState(account.membershipStatus);
+    const [membershipAmount, setMembershipAmount] = useState(account.membershipAmount);
+
+    const onMembershipChange = (newStatus: string, amount: number) => {
+        setMembershipStatus(newStatus);
+        setMembershipAmount(amount);
+    };
 
     return (
         <div key={account.id}>
             <p>
-                Membership Status: {account.membershipStatus}
-                {account.membershipStatus === 'active' && account.membershipAmount && `(${account.membershipAmount}€/mois)`}
-                {account.membershipStatus === 'active' && account.membershipStartDate && `Adhéré depuis ${account.membershipStartDate.toLocaleDateString()}`}
+                Membership Status: {membershipStatus}
+                {membershipStatus === 'active' && membershipAmount && `(${membershipAmount}€/mois)`}
+                {membershipStatus === 'active' && account.membershipStartDate && `Adhéré depuis ${account.membershipStartDate.toLocaleDateString()}`}
             </p>
             <button onClick={() => setShowMembershipOptions(!showMembershipOptions)}>
-                {account.membershipStatus === 'inactive' ? 'Adherer' : 'Changer Adhesion'}
+                {membershipStatus === 'inactive' ? 'Adherer' : 'Changer Adhesion'}
             </button>
             {showMembershipOptions && (
-                <>
-                    <button onClick={() => onMembershipChange(account.id, 'active', 10)}>10€/mois ADHesion</button>
-                    <button onClick={() => onMembershipChange(account.id, 'active', 30)}>30€/mois ADHesion famille</button>
-                    <button onClick={() => onMembershipChange(account.id, 'active', 50)}>50€/mois ADHesion soutien</button>
-                    <button onClick={() => onMembershipChange(account.id, 'active', 100)}>100€/mois ADHesion bienfaiteur</button>
-                    <button onClick={() => onMembershipChange(account.id, 'inactive', 0)}>Deactivate Membership</button>
-                </>
+                <label>
+                    Membership:
+                    <select onChange={(e) => {
+                        const value = e.target.value;
+                        const newStatus = value === '0' ? 'inactive' : 'active';
+                        onMembershipChange(newStatus, Number(value));
+                    }}>
+                        <option value="0">Deactivate Membership</option>
+                        <option value="10">10€/mois ADHesion</option>
+                        <option value="30">30€/mois ADHesion famille</option>
+                        <option value="50">50€/mois ADHesion soutien</option>
+                        <option value="100">100€/mois ADHesion bienfaiteur</option>
+                    </select>
+                </label>
             )}
         </div>
     );
