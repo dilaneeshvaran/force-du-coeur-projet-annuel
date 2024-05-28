@@ -11,27 +11,22 @@ npm run dev
 
 --------------------------------------CLIENT---------------------------------------------------
 TODO
-//voir les evenements / votes / sondages en cours/terminés
-//comme des blocks de posts : avec 2 options, valider/croix pour annuler
-//voir les resultats pour les votes/sondages terminés
-//participer/annuler la participation
-//rejoignez nous : bénévole (inscription avec les infos de contact et, formulation de dossier en attente de validation:)
-//la demande est accessible dans le backoffice pour validation par un admin, le benevole recoit les infos de login (mot de passe à reinitialiser)  par mail
-//il peux modifier le mot de passe
+//voir les evenements / votes / sondages (blocks de posts/affiche le resultat si vote/sondage terminé)
 //mot de passe oublié
-//FAIRE UN DON  : poncutel
+//connect stripe to payment
+//GED : recherche & le classement
+//Chatbot (réponses automatique)
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
-  //home>performance>Data Visualizations>revenue, member acquisition, website traffic, or inventory levels.
-  //contents>activités/evenements/campaign(vote/sondage)
-  //members
+  //home>performance>Data Visualizations>revenue(dons/cotisations), member acquisition, website traffic, or inventory levels(ressources).
+  //create/modify contents>activités/evenements/campaign(vote/sondage)
+  //manage members(ban/change role admin/member)
   //tasks management>create and assign task/deadlines
   //ressources>inventory management/used
-  //finnance >donnation reports/balance sheets, and cash flow statements
-  //messages>sent/recieved
-  //backoffice user management > permissions, and access levels.
-  //settings????????
+  //finnance>donnation reports/balance sheets, and cash flow statements
+  //messages>sent/send
+  //documents>sent/send
   //Alerts and Notifications??>critical events like low inventory levels, unusual website traffic, or overdue tasks.
 
 --------------------------------------BACKEND--------------------------------------------------
@@ -42,7 +37,8 @@ TODO
   //services > handle logic and operations
   //tests > unit, integration and end-to-end tests
   //validation > data validations
-
+ //participer à un evenement/annuler la participation (respect capacité evenement+gestion du quorum = nombre requis de participants pour que la réunion puisse se tenir )
+//Rappels (automatique) : prévenir un prochain payment mensuel
 
 --------------------------------------JAVA--------------------------------------------------
-```
+
