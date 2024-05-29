@@ -36,11 +36,11 @@ const Menu: React.FC<MenuProps> = ({ className, isLoggedIn, onLogout }) => {
                         <img src={fdcLogo} className="logofdc" alt="fdc logo" />
                     </a>
                 </div>
-                <NavLink className={`navbar-item ${location.pathname === '/home' ? 'is-active' : ''}`} to="/">
+                <NavLink className={`navbar-item ${location.pathname === '/performance' ? 'is-active' : ''}`} to="/performance">
                     <SpeedIcon />Performance
                 </NavLink>
 
-                <NavLink className={`navbar-item ${location.pathname === '/evenements' ? 'is-active' : ''}`} to="/evenements">
+                <NavLink className={`navbar-item ${location.pathname === '/contentManager' ? 'is-active' : ''}`} to="/contentManager">
                     <NewspaperIcon />Content Manage
                 </NavLink>
 

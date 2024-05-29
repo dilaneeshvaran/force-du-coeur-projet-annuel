@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css'
 import Menu from './components/Menu';
 import Inventory from './pages/inventory';
+import Performance from './pages/performance';
+import ContentManager from './pages/contentManager';
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -19,6 +22,8 @@ function App() {
       <Menu className="navContainer" isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
         <Route path="/inventory" element={<Inventory />} />
+        <Route path="/performance" element={<Performance />} />
+        <Route path="/contentManager" element={<ContentManager />} />
       </Routes>
     </BrowserRouter>
   )
