@@ -44,7 +44,7 @@ const Menu: React.FC<MenuProps> = ({ className, isLoggedIn, onLogout }) => {
                     <NewspaperIcon />Content Manage
                 </NavLink>
 
-                <NavLink className={`navbar-item ${location.pathname === '/missions' ? 'is-active' : ''}`} to="/missions">
+                <NavLink className={`navbar-item ${location.pathname === '/userManagement' ? 'is-active' : ''}`} to="/userManagement">
                     <Diversity1Icon /> Members
                 </NavLink>
 

@@ -1,75 +1,12 @@
 import React, { useState } from 'react';
-
-interface Event {
-    date: Date;
-    place: string;
-    description: string;
-    images: string[];
-}
-
-interface EventComponentProps {
-    event: Event;
-    onUpdate: (updatedEvent: Event) => void;
-}
-
-interface Vote {
-    title: string;
-    description: string;
-    options: string[];
-    deadline: Date;
-}
-
-interface VoteComponentProps {
-    vote: Vote;
-    onUpdate: (updatedVote: Vote) => void;
-}
-
-interface Survey {
-    title: string;
-    description: string;
-    deadline: Date;
-}
-
-interface SurveyComponentProps {
-    survey: Survey;
-    onUpdate: (updatedSurvey: Survey) => void;
-}
-
-function EventComponent({ event, onUpdate }: EventComponentProps) {
-    return (
-        <div>
-            <h2>{event.description}</h2>
-            <p>{event.place}</p>
-            <p>{event.date.toString()}</p>
-            <button onClick={() => onUpdate({ ...event, description: 'Updated description' })}>Update</button>
-        </div>
-    );
-}
-
-
-function VoteComponent({ vote, onUpdate }: VoteComponentProps) {
-    return (
-        <div>
-            <h2>{vote.title}</h2>
-            <p>{vote.description}</p>
-            <p>{vote.deadline.toString()}</p>
-            <button onClick={() => onUpdate({ ...vote, title: 'Updated title' })}>Update</button>
-        </div>
-    );
-}
-
-function SurveyComponent({ survey, onUpdate }: SurveyComponentProps) {
-    return (
-        <div>
-            <h2>{survey.title}</h2>
-            <p>{survey.description}</p>
-            <p>{survey.deadline.toString()}</p>
-            <button onClick={() => onUpdate({ ...survey, title: 'Updated title' })}>Update</button>
-        </div>
-    );
-}
+import "../styles/content.css"
+import Event from '../components/Event';
+import Vote from '../components/Vote';
+import Survey from '../components/Survey';
+import { createEvent, updateEvent, deleteEvent, createVote, updateVote, deleteVote, createSurvey, updateSurvey, deleteSurvey } from './contentFunctions';
 
 function ContentManager() {
+
     const [events, setEvents] = useState<Event[]>([
         { date: new Date(), place: 'Place 1', description: 'Event 1', images: ['image1.jpg'] },
         { date: new Date(), place: 'Place 2', description: 'Event 2', images: ['image2.jpg'] },
@@ -86,37 +23,43 @@ function ContentManager() {
     const [selectedOption, setSelectedOption] = useState<'events' | 'votes' | 'surveys'>('events');
 
     return (
-        <div>
+        <div className="contentBox">
             <div style={{ backgroundColor: 'red', display: 'flex' }}>
                 <div style={{ marginRight: '20px' }}>
                     <button onClick={() => setSelectedOption('events')}>Events</button>
                     <button onClick={() => setSelectedOption('votes')}>Votes</button>
                     <button onClick={() => setSelectedOption('surveys')}>Surveys</button>
                 </div>
-                <div>
+                <div className="content">
                     {selectedOption === 'events' && events.map((event, index) => (
-                        <EventComponent key={index} event={event} onUpdate={updatedEvent => {
-                            const newEvents = [...events];
-                            newEvents[index] = updatedEvent;
-                            setEvents(newEvents);
-                        }} />
+                        <Event
+                            key={index}
+                            event={event}
+                            onUpdate={(updatedEvent) => setEvents(prevEvents => updateEvent(prevEvents, updatedEvent, index))}
+                            onDelete={() => setEvents(prevEvents => deleteEvent(prevEvents, index))}
+                        />
                     ))}
                     {selectedOption === 'votes' && votes.map((vote, index) => (
-                        <VoteComponent key={index} vote={vote} onUpdate={updatedVote => {
-                            const newVotes = [...votes];
-                            newVotes[index] = updatedVote;
-                            setVotes(newVotes);
-                        }} />
+                        <Vote
+                            key={index}
+                            vote={vote}
+                            onUpdate={(updatedVote) => setVotes(prevVotes => updateVote(prevVotes, updatedVote, index))}
+                            onDelete={() => setVotes(prevVotes => deleteVote(prevVotes, index))}
+                        />
                     ))}
                     {selectedOption === 'surveys' && surveys.map((survey, index) => (
-                        <SurveyComponent key={index} survey={survey} onUpdate={updatedSurvey => {
-                            const newSurveys = [...surveys];
-                            newSurveys[index] = updatedSurvey;
-                            setSurveys(newSurveys);
-                        }} />
+                        <Survey
+                            key={index}
+                            survey={survey}
+                            onUpdate={(updatedSurvey) => setSurveys(prevSurveys => updateSurvey(prevSurveys, updatedSurvey, index))}
+                            onDelete={() => setSurveys(prevSurveys => deleteSurvey(prevSurveys, index))}
+                        />
                     ))}
                 </div>
             </div>
+            <button onClick={() => setEvents(prevEvents => createEvent(prevEvents, { date: new Date(), place: 'New Place', description: 'New Event', images: ['newImage.jpg'] }))}>Create Event</button>
+            <button onClick={() => setVotes(prevVotes => createVote(prevVotes, { title: 'New Vote', description: 'New Description', options: ['New Option 1', 'New Option 2'], deadline: new Date() }))}>Create Vote</button>
+            <button onClick={() => setSurveys(prevSurveys => createSurvey(prevSurveys, { title: 'New Survey', description: 'New Description', deadline: new Date() }))}>Create Survey</button>
         </div >
     );
 }
