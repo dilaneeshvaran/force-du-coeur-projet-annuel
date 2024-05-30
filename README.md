@@ -21,7 +21,6 @@ TODO
 TODO
   //home>performance>Data Visualizations>revenue(dons/cotisations), member acquisition, website traffic, or inventory levels(ressources).
   //create/modify contents>activités/evenements/campaign(vote/sondage)
-  //manage members(ban/change role admin/member)
   //tasks management>create and assign task/deadlines
   //ressources>inventory management/used
   //finnance>donnation reports/balance sheets, and cash flow statements
@@ -39,6 +38,8 @@ TODO
   //validation > data validations
  //participer à un evenement/annuler la participation (respect capacité evenement+gestion du quorum = nombre requis de participants pour que la réunion puisse se tenir )
 //Rappels (automatique) : prévenir un prochain payment mensuel
+  //manage members(ban/change role admin/member)
+    //Alerts and Notifications??>critical events like low inventory levels, unusual website traffic, or overdue tasks.
 
 --------------------------------------JAVA--------------------------------------------------
 
