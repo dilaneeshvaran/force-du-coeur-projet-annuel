@@ -19,9 +19,7 @@ TODO
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
-  //home>performance>Data Visualizations>revenue(dons/cotisations), member acquisition, website traffic, or inventory levels(ressources).
-  //create/modify contents>activités/evenements/campaign(vote/sondage)
-  //tasks management>create and assign task/deadlines
+  //replace fakedata with the database
   //ressources>inventory management/used
   //finnance>donnation reports/balance sheets, and cash flow statements
   //messages>sent/send
