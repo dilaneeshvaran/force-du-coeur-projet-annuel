@@ -6,6 +6,7 @@ import Inventory from './pages/inventory';
 import Performance from './pages/performance';
 import ContentManager from './pages/contentManager';
 import UserManagement from './pages/userManagement';
+import TaskManager from './pages/taskManage';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -25,6 +26,7 @@ function App() {
         <Route path="/performance" element={<Performance />} />
         <Route path="/contentManager" element={<ContentManager />} />
         <Route path="/userManagement" element={<UserManagement />} />
+        <Route path="/taskManage" element={<TaskManager />} />
       </Routes>
     </BrowserRouter>
   )
