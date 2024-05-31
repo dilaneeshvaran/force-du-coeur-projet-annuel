@@ -63,8 +63,8 @@ const Menu: React.FC<MenuProps> = ({ className, isLoggedIn, onLogout }) => {
                     <MailOutlineIcon /> Messages
                 </NavLink>
 
-                <NavLink className={`navbar-item ${location.pathname === '/espaceMembres' ? 'is-active' : ''}`} to="/espaceMembres">
-                    <VerifiedUserIcon />Manage Users
+                <NavLink className={`navbar-item ${location.pathname === '/settings' ? 'is-active' : ''}`} to="/settings">
+                    <VerifiedUserIcon />Settings
                 </NavLink>
                 <NavLink className={`navbar-item ${location.pathname === '/espaceMembres' ? 'is-active' : ''}`} to="/espaceMembres">
                     <CampaignIcon /> Alerts

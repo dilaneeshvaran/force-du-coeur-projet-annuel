@@ -8,6 +8,7 @@ import ContentManager from './pages/contentManager';
 import UserManagement from './pages/userManagement';
 import TaskManager from './pages/taskManage';
 import FinanceInformation from './pages/financeInformation';
+import Settings from './pages/settings';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -29,6 +30,7 @@ function App() {
         <Route path="/userManagement" element={<UserManagement />} />
         <Route path="/taskManage" element={<TaskManager />} />
         <Route path="/financeInformation" element={<FinanceInformation />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   )

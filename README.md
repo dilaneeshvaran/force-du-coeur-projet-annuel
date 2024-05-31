@@ -19,6 +19,7 @@ TODO
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
+  //create login page for backoffice & disconnect account button
   //replace fakedata with the database
   //ressources>inventory management/used
   //finnance>donnation reports/balance sheets, and cash flow statements
