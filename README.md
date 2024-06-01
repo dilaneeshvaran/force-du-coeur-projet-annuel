@@ -23,9 +23,6 @@ TODO
   //replace fakedata with the database
   //ressources>inventory management/used
   //finnance>donnation reports/balance sheets, and cash flow statements
-  //messages>sent/send
-  //documents>sent/send
-  //Alerts and Notifications??>critical events like low inventory levels, unusual website traffic, or overdue tasks.
 
 --------------------------------------BACKEND--------------------------------------------------
 TODO
