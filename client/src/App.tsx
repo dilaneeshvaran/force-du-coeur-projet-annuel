@@ -10,7 +10,7 @@ import Equipes from './pages/equipes';
 import Rejoindre from './pages/rejoindre';
 import EspaceMembres from './pages/espaceMembres';
 import { useState } from 'react';
-import ManageAccount from './pages/manageAccount'; // Import the ManageAccount component
+import ManageAccount from './pages/manageAccount';
 
 function Logout() {
   const navigate = useNavigate();

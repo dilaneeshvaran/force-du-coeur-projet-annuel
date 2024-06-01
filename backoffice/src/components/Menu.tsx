@@ -66,7 +66,7 @@ const Menu: React.FC<MenuProps> = ({ className, isLoggedIn, onLogout }) => {
                 <NavLink className={`navbar-item ${location.pathname === '/settings' ? 'is-active' : ''}`} to="/settings">
                     <VerifiedUserIcon />Settings
                 </NavLink>
-                <NavLink className={`navbar-item ${location.pathname === '/espaceMembres' ? 'is-active' : ''}`} to="/espaceMembres">
+                <NavLink className={`navbar-item ${location.pathname === '/alert' ? 'is-active' : ''}`} to="/alert">
                     <CampaignIcon /> Alerts
                 </NavLink>
             </div>
