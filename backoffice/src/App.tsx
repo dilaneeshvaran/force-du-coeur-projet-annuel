@@ -10,6 +10,7 @@ import TaskManager from './pages/taskManage';
 import FinanceInformation from './pages/financeInformation';
 import Settings from './pages/settings';
 import Alerts from './pages/alert';
+import Messages from './pages/message';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,6 +34,7 @@ function App() {
         <Route path="/financeInformation" element={<FinanceInformation />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/alert" element={<Alerts />} />
+        <Route path="/message" element={<Messages />} />
       </Routes>
     </BrowserRouter>
   )
