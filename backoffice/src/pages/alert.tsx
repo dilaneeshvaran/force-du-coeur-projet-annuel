@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { differenceInDays, parseISO } from 'date-fns';
+import AuthCheck from '../components/AuthCheck';
 import '../styles/alerts.css';
 import '../styles/content.css';
 
@@ -94,4 +95,4 @@ function Alerts() {
     );
 }
 
-export default Alerts;
+export default AuthCheck(Alerts);

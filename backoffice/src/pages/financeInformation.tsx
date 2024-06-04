@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Donation from '../components/Donation';
 import Membership from '../components/Membership';
+import AuthCheck from '../components/AuthCheck';
 
 type DonationType = {
     fullName: string;
@@ -81,4 +82,4 @@ function FinanceInformation() {
     );
 }
 
-export default FinanceInformation;
+export default AuthCheck(FinanceInformation);

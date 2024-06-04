@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 type AdminProps = {
     name: string;
     email: string;

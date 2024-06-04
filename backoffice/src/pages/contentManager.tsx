@@ -5,6 +5,7 @@ import Vote from '../components/Vote';
 import Survey from '../components/Survey';
 import { createEvent, updateEvent, deleteEvent, createVote, updateVote, deleteVote, createSurvey, updateSurvey, deleteSurvey } from './contentFunctions';
 import { Description } from '@mui/icons-material';
+import AuthCheck from '../components/AuthCheck';
 
 function ContentManager() {
 
@@ -101,4 +102,4 @@ function ContentManager() {
     );
 }
 
-export default ContentManager;
+export default AuthCheck(ContentManager);

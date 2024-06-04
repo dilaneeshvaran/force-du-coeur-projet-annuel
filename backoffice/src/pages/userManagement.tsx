@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import "../styles/content.css"
+import AuthCheck from '../components/AuthCheck';
 
 interface User {
     id: number;
@@ -72,4 +73,4 @@ function UserManagement() {
     );
 }
 
-export default UserManagement;
+export default AuthCheck(UserManagement);

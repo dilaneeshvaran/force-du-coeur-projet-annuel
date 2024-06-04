@@ -1,5 +1,7 @@
 import React from 'react';
 import Admin from '../components/Admin';
+import AuthCheck from '../components/AuthCheck';
+
 
 function Settings() {
     const handleEndMembership = () => {
@@ -23,4 +25,4 @@ function Settings() {
     );
 }
 
-export default Settings;
+export default AuthCheck(Settings);

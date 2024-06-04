@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Task from '../components/Task';
+import AuthCheck from '../components/AuthCheck';
 
 type TaskType = {
     title: string;
@@ -60,4 +61,4 @@ function TaskManager() {
     );
 }
 
-export default TaskManager;
+export default AuthCheck(TaskManager);

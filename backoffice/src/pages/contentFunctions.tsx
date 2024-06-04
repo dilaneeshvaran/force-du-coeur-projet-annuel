@@ -2,6 +2,7 @@ import Survey from "../components/Survey";
 import Vote from "../components/Vote";
 import Event from "../components/Event";
 
+
 export const createSurvey = (surveys: Survey[], newSurvey: Survey) => {
     return [...surveys, newSurvey];
 };

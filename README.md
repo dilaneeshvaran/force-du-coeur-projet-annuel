@@ -19,10 +19,9 @@ TODO
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
-  //create login page for backoffice & disconnect account button
+  //change email & password in admin settings
   //replace fakedata with the database
   //ressources>inventory management/used
-  //finnance>donnation reports/balance sheets, and cash flow statements
 
 --------------------------------------BACKEND--------------------------------------------------
 TODO

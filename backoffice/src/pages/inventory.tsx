@@ -1,6 +1,6 @@
 import { DataGridPro } from '@mui/x-data-grid-pro';
 import { useDemoData } from '@mui/x-data-grid-generator';
-
+import AuthCheck from '../components/AuthCheck';
 
 import '../App.css'
 import Box from '@mui/material/Box';
@@ -33,4 +33,4 @@ function Inventory() {
     )
 }
 
-export default Inventory
+export default AuthCheck(Inventory);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import AuthCheck from '../components/AuthCheck';
 
 function Performance() {
     const [donations, setDonations] = useState([
@@ -35,4 +36,4 @@ function Performance() {
     );
 }
 
-export default Performance;
+export default AuthCheck(Performance);

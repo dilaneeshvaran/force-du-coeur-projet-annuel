@@ -1,0 +1,21 @@
+.logout-div {
+    position: fixed;
+    display:flex;
+    bottom:60px;
+    margin-left:60px;
+  }
+
+  .logout-btn{
+    position: fixed;
+    z-index: 1000;
+  }
+
+.logout-logo{
+will-change: filter;
+  transition: filter 300ms;
+}
+
+  .logout-logo:hover{
+    filter: drop-shadow(0 0 2em #ff5900);
+    
+  }

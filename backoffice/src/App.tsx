@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css'
 import Menu from './components/Menu';
@@ -11,20 +10,13 @@ import FinanceInformation from './pages/financeInformation';
 import Settings from './pages/settings';
 import Alerts from './pages/alert';
 import Messages from './pages/message';
+import BackofficeHome from './pages/backofficeHome';
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.setItem('isLoggedIn', 'false');
-  };
 
   return (
     <BrowserRouter>
-      <Menu className="navContainer" isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+      <Menu className="navContainer" />
       <Routes>
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/performance" element={<Performance />} />
@@ -35,6 +27,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/alert" element={<Alerts />} />
         <Route path="/message" element={<Messages />} />
+        <Route path="/backofficeHome" element={<BackofficeHome />} />
       </Routes>
     </BrowserRouter>
   )

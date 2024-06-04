@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AuthCheck from '../components/AuthCheck';
 
 function Messages() {
     const [tab, setTab] = useState('send');
@@ -75,4 +76,4 @@ function Messages() {
     );
 }
 
-export default Messages;
+export default AuthCheck(Messages);
