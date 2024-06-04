@@ -92,8 +92,8 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
                         {<NavLink className={`navbar-item ${location.pathname === '/alert' ? 'is-active' : ''}`} to="/alert">
                             <CampaignIcon /> Alerts
                         </NavLink>}
-                        {<NavLink className={`navbar-item ${location.pathname === '/backofficeHome' ? 'is-active' : ''}`} to="/backofficeHome">
-                            <RiShutDownLine className="logout-logo" size={30} onClick={handleLogout} />
+                        {<NavLink className={`navbar-item ${location.pathname === '/backofficeHome' ? 'is-active' : ''}`} to="/backofficeHome" onClick={handleLogout}>
+                            <RiShutDownLine className="logout-logo" size={30} />
                         </NavLink>}
                     </>
                 ) : (
