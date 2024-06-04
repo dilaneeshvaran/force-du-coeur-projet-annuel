@@ -27,3 +27,4 @@ __exportStar(require("./membership.model"), exports);
 __exportStar(require("./resource.model"), exports);
 __exportStar(require("./member-resource.model"), exports);
 __exportStar(require("./useOfResource.model"), exports);
+__exportStar(require("./user.model"), exports);
