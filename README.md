@@ -25,12 +25,11 @@ TODO
 
 --------------------------------------BACKEND--------------------------------------------------
 TODO
-  //routes > Authentification routes
-  //middlewares > process data before reaching controllers
-  //controllers > handle the authentification of the users
-  //services > handle logic and operations
-  //tests > unit, integration and end-to-end tests
-  //validation > data validations
+  //routes > authentification des tokens pour les routes, routes associées aux tables jointes
+  //controllers pour les tables jointes
+  //services > gérer les envois d\'emails, les changements de mot passe, etc.
+  //tests > tests en tous genres
+  //validation > valider les données des cotisations
  //participer à un evenement/annuler la participation (respect capacité evenement+gestion du quorum = nombre requis de participants pour que la réunion puisse se tenir )
 //Rappels (automatique) : prévenir un prochain payment mensuel
   //manage members(ban/change role admin/member)
@@ -38,3 +37,4 @@ TODO
 
 --------------------------------------JAVA--------------------------------------------------
 
+```
