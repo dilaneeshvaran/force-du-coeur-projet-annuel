@@ -11,3 +11,4 @@ export * from './membership.model';
 export * from './resource.model';
 export * from './member-resource.model';
 export * from './useOfResource.model';
+export * from './user.model';

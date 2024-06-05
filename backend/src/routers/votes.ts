@@ -4,7 +4,6 @@
 
 import express, { Router, Request, Response } from "express";
 import { createVote, deleteVote, getAllVotes, getVoteById, updateVote } from '../controllers';
-import { isAuth } from "../middlewares";
 
 export const router = Router();
 

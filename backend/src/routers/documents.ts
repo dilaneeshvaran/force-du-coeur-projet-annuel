@@ -4,7 +4,6 @@
 
 import { Router, Request, Response } from "express";
 import { createDocument, deleteDocument, getAllDocuments, getDocumentById, updateDocument } from '../controllers';
-import { isAuth } from "../middlewares";
 
 export const router = Router();
 
@@ -16,5 +15,5 @@ export const router = Router();
 router.post('/', createDocument);
 router.get('/', getAllDocuments);
 router.get('/:id', getDocumentById);
-router.put('/:id', isAuth, updateDocument);
-router.delete('/:id', isAuth, deleteDocument);
+router.put('/:id', updateDocument);
+router.delete('/:id', deleteDocument);

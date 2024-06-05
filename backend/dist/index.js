@@ -25,9 +25,9 @@ app.use('/memberships', routers_1.membershipsRouter);
 app.use('/messages', routers_1.messagesRouter);
 app.use('/resources', routers_1.resourcesRouter);
 app.use('/tasks', routers_1.tasksRouter);
-app.use('/teams', routers_1.teamsRouter);
 app.use('/useOfResources', routers_1.useOfResourcesRouter);
 app.use('/votes', routers_1.votesRouter);
+app.use('/users', routers_1.usersRouter);
 app.use(middlewares_1.errorHandler);
 app.listen(port, () => {
     console.log(`Port http://localhost:${port}`);

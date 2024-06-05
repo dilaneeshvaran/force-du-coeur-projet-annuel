@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 
-import { documentsRouter, teamsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter,    membersRouter, resourcesRouter, useOfResourcesRouter, choicesRouter, votesRouter, donationsRouter } from './routers';
+import { documentsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter,    membersRouter, resourcesRouter, useOfResourcesRouter, choicesRouter, votesRouter, donationsRouter, usersRouter } from './routers';
 import { errorHandler, logger, timeZoneFormatter, winston } from "./middlewares";
 import './global.data';
 
@@ -25,9 +25,9 @@ app.use('/memberships', membershipsRouter);
 app.use('/messages', messagesRouter);
 app.use('/resources', resourcesRouter);
 app.use('/tasks', tasksRouter);
-app.use('/teams', teamsRouter);
 app.use('/useOfResources', useOfResourcesRouter);
 app.use('/votes', votesRouter);
+app.use('/users', usersRouter);
 
 app.use(errorHandler);
 

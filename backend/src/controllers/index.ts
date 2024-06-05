@@ -1,4 +1,3 @@
-export * from './teams';
 export * from './donations';
 export * from './events';
 export * from './tasks';
@@ -10,3 +9,4 @@ export * from './resources';
 export * from './votes';
 export * from './choices';
 export * from './useOfResources';
+export * from './users';

@@ -4,7 +4,6 @@
 
 import express, { Router, Request, Response } from "express";
 import { createTask, getAllTasks, getTaskById, updateTask, deleteTask } from '../controllers';
-import { isAuth } from "../middlewares";
 
 export const router = Router();
 
@@ -20,6 +19,6 @@ export const router = Router();
 router.post('/', createTask);
 router.get('/', getAllTasks);
 router.get('/:id', getTaskById);
-router.put('/:id', isAuth, updateTask);
+router.put('/:id', updateTask);
 //router.delete('/:id', isAuth, deleteTask);
 router.delete('/:id', deleteTask);

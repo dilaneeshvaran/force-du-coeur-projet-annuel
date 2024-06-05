@@ -15,33 +15,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteMember = exports.updateMember = exports.getMemberById = exports.getAllMembers = exports.createMember = void 0;
 const validation_1 = require("../validation");
 const models_1 = require("../models");
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const argon2_1 = __importDefault(require("argon2"));
 const middlewares_1 = require("../middlewares");
 const createMember = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateMember)(req.body);
     if (error) {
-        res.status(400).json({ message: middlewares_1.logger.error(error.details[0].message) });
+        middlewares_1.logger.error(error.details[0].message);
+        return res.status(400).json({ message: error.details[0].message });
     }
     try {
         const { name, firstName, email, password, role, memberSince, dateOfBirth } = value;
-        if (!name || !firstName || !email || !password || !memberSince || !dateOfBirth) {
-            res.status(400).json({ message: "Aucun champ ne doit être vide" });
-        }
-        const roleByDefault = role || 'member';
-        const hashedPassword = yield bcrypt_1.default.hash(value.password, 12);
+        const hashedPassword = yield argon2_1.default.hash(password);
         const newMember = yield models_1.Member.create({
             name,
             firstName,
             email,
             password: hashedPassword,
-            role: roleByDefault,
+            role: role || 'member',
             memberSince,
             dateOfBirth: new Date(dateOfBirth)
         });
         res.status(201).json(newMember);
     }
     catch (error) {
-        console.error(error);
+        middlewares_1.logger.error(error);
         res.status(500).json({ message: "Erreur lors de la création du membre." });
     }
 });

@@ -4,7 +4,6 @@
 
 import express, { Router, Request, Response } from "express";
 import { createMember, deleteMember, getAllMembers, getMemberById, updateMember } from '../controllers';
-import { isAuth } from "../middlewares";
 
 export const router = Router();
 

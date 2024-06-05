@@ -4,7 +4,6 @@
  */
 
 export { router as healthRouter } from './health';
-export { router as teamsRouter } from './teams';
 export { router as membershipsRouter } from './memberships';
 export { router as eventsRouter } from './events';
 export { router as membersRouter } from './members';
@@ -16,7 +15,6 @@ export { router as useOfResourcesRouter } from './useOfResources';
 export { router as choicesRouter } from './choices';
 export { router as votesRouter } from './votes';
 export { router as donationsRouter } from './donations';
-
-
-
+export { router as usersRouter } from './users';
+//export { router as authRouter } from './auth';
 

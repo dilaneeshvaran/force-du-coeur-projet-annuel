@@ -1,37 +1,33 @@
 import express, { Request, Response } from 'express';
 import { validateMember } from '../validation';
 import { Member } from '../models';
-import bcrypt from "bcrypt";
+import argon2 from "argon2";
 import { logger } from '../middlewares';
 
 const createMember = async (req: Request, res: Response) => {
   const { error, value } = validateMember(req.body);
   if (error) {
-    res.status(400).json({ message: logger.error(error.details[0].message) });
+    logger.error(error.details[0].message);
+    return res.status(400).json({ message: error.details[0].message });
   }
   
   try {
     const { name, firstName, email, password, role, memberSince, dateOfBirth } = value;
-    
-    if (!name || !firstName || !email || !password || !memberSince || !dateOfBirth) {
-      res.status(400).json({ message: "Aucun champ ne doit être vide"});
-    }
 
-    const roleByDefault = role || 'member';
-    const hashedPassword = await bcrypt.hash(value.password, 12);
+    const hashedPassword = await argon2.hash(password);
 
     const newMember = await Member.create({
       name,
       firstName,
       email,
       password: hashedPassword,
-      role: roleByDefault,
+      role: role || 'member',
       memberSince,
       dateOfBirth: new Date(dateOfBirth)
     });
     res.status(201).json(newMember);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ message: "Erreur lors de la création du membre."});
   }
 }

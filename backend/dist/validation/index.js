@@ -27,3 +27,4 @@ __exportStar(require("./membership.validation"), exports);
 __exportStar(require("./resource.validation"), exports);
 __exportStar(require("./member-resource.validation"), exports);
 __exportStar(require("./useOfResource.validation"), exports);
+__exportStar(require("./user.validation"), exports);
