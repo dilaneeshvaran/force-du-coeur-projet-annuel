@@ -4,8 +4,9 @@ Ce projet comprend un client, un backoffice et un backend.
 
 ## Installation
 
-Pour installer le projet, exécutez la commande suivante :
-
+Pour démarrer le projet, exécutez les commandes suivantes une après l'autre:
+```bash
+npm install
 ```bash
 npm run dev
 
