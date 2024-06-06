@@ -4,13 +4,12 @@ Ce projet comprend un client, un backoffice et un backend.
 
 ## Installation
 
-Pour démarrer le projet, exécutez les commandes suivantes une après l'autre:
+Pour démarrer le client/backoffice, exécutez les commandes suivantes une après l'autre:
 ```bash
-npm install
-```
-```bash
-npm run dev
-```
+1) npm install
+
+2) npm run dev
+
 --------------------------------------CLIENT---------------------------------------------------
 TODO
 //voir les evenements / votes / sondages (blocks de posts/affiche le resultat si vote/sondage terminé)
@@ -39,4 +38,5 @@ TODO
 
 --------------------------------------JAVA--------------------------------------------------
 
+```
 ```
