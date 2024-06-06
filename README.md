@@ -7,9 +7,10 @@ Ce projet comprend un client, un backoffice et un backend.
 Pour démarrer le projet, exécutez les commandes suivantes une après l'autre:
 ```bash
 npm install
+```
 ```bash
 npm run dev
-
+```
 --------------------------------------CLIENT---------------------------------------------------
 TODO
 //voir les evenements / votes / sondages (blocks de posts/affiche le resultat si vote/sondage terminé)
