@@ -24,7 +24,7 @@ const users_1 = require("../routers/users");
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateUser)(req.body);
     if (error) {
-        res.status(400).json({ message: error.details[0].message });
+        return res.status(400).json({ message: error.details[0].message });
     }
     try {
         const { username, password, email, firstname, lastname } = value;
@@ -83,10 +83,10 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.token;
     if (token) {
         users_1.tokenRevocationList.push(token);
-        res.status(200).json({ message: 'Deconnexion réussie' });
+        return res.status(200).json({ message: 'Deconnexion réussie' });
     }
     else {
-        res.status(400).json({ message: 'Pas de jeton fourni' });
+        return res.status(400).json({ message: 'Pas de jeton fourni' });
     }
 });
 exports.logout = logout;
@@ -95,10 +95,10 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const userId = req.params.id;
         const user = yield models_1.User.findByPk(userId);
         if (user !== null) {
-            res.status(200).json(user);
+            return res.status(200).json(user);
         }
         else {
-            res.status(404).json({ message: "utilisateur non retrouvé" });
+            return res.status(404).json({ message: "utilisateur non retrouvé" });
         }
     }
     catch (error) {

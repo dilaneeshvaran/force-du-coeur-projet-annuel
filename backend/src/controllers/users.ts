@@ -10,7 +10,7 @@ import { tokenRevocationList } from '../routers/users';
 const register = async (req: Request, res: Response) => {
   const { error, value } = validateUser(req.body);
   if (error) {
-    res.status(400).json({ message: error.details[0].message });
+    return res.status(400).json({ message: error.details[0].message });
   }
 
   try {
@@ -81,9 +81,9 @@ const logout = async (req: RequestWithUser, res: Response) => {
 
   if (token) {
     tokenRevocationList.push(token);
-    res.status(200).json({ message: 'Deconnexion réussie'});
+    return res.status(200).json({ message: 'Deconnexion réussie'});
   } else {
-    res.status(400).json({ message: 'Pas de jeton fourni'});
+    return res.status(400).json({ message: 'Pas de jeton fourni'});
   }
 }
 
@@ -92,9 +92,9 @@ const getUserById = async (req: Request, res: Response) => {
     const userId = req.params.id;
     const user = await User.findByPk(userId);
     if (user !== null) {
-      res.status(200).json(user);
+      return res.status(200).json(user);
     } else {
-      res.status(404).json({ message: "utilisateur non retrouvé"});
+      return res.status(404).json({ message: "utilisateur non retrouvé"});
     }
   } catch(error) {
     logger.error(error);

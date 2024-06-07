@@ -14,3 +14,4 @@
 {"code":"ERR_HTTP_HEADERS_SENT","level":"error","timestamp":"2024-06-07T11:49:36+02:00"}
 {"code":"ERR_HTTP_HEADERS_SENT","level":"error","timestamp":"2024-06-07T11:50:01+02:00"}
 {"code":"ERR_HTTP_HEADERS_SENT","level":"error","timestamp":"2024-06-07T11:50:51+02:00"}
+{"error":{"body":"{\r\n    \"username\": \"open\",\r\n    \"password\": \"open\",\r\n    \"email\": \"a@a.a\",\r\n    \"firstname\": \"a\",\r\n    \"lastname\": \"a\",\r\n  }","expose":true,"status":400,"statusCode":400,"type":"entity.parse.failed"},"level":"error","message":"Oups, une erreur : Expected double-quoted property name in JSON at position 123","timestamp":"2024-06-07T23:49:28+02:00"}

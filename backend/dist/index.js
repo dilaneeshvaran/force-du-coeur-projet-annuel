@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const cors = require('cors');
 const routers_1 = require("./routers");
 const middlewares_1 = require("./middlewares");
 require("./global.data");
@@ -15,6 +16,7 @@ const port = process.env.PORT || 8088;
 app.use(body_parser_1.default.json());
 app.use(middlewares_1.timeZoneFormatter);
 app.use(middlewares_1.winston);
+app.use(cors());
 app.use('/choices', routers_1.choicesRouter);
 app.use('/documents', routers_1.documentsRouter);
 app.use('/donations', routers_1.donationsRouter);
