@@ -52,7 +52,7 @@ exports.register = register;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateUserAuth)(req.body);
     if (error) {
-        res.status(400).json({ message: error.details[0].message });
+        return res.status(400).json({ message: error.details[0].message });
     }
     const { password, email } = value;
     try {

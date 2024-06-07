@@ -11,6 +11,7 @@ const createMember = async (req: Request, res: Response) => {
     return res.status(400).json({ message: error.details[0].message });
   }
   
+  
   try {
     const { name, firstName, email, password, role, memberSince, dateOfBirth } = value;
 

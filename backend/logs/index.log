@@ -211,3 +211,30 @@
 {"level":"info","message":"IP : ::ffff:127.0.0.1","timestamp":"2024-06-04T23:04:07+02:00"}
 {"level":"info","message":"IP : ::ffff:127.0.0.1","timestamp":"2024-06-04T23:04:56+02:00"}
 {"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:23:58+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:26:30+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:28:10+02:00"}
+{"level":"error","name":"SequelizeDatabaseError","original":{"code":"ER_NO_SUCH_TABLE","errno":1146,"sql":"SELECT `userId`, `username`, `password`, `email`, `firstname`, `lastname`, `verificationCode`, `passwordResetCode`, `verified` FROM `users` AS `User` WHERE `User`.`userId` = 'login';","sqlMessage":"Table 'force.users' doesn't exist","sqlState":"42S02"},"parameters":{},"parent":{"code":"ER_NO_SUCH_TABLE","errno":1146,"sql":"SELECT `userId`, `username`, `password`, `email`, `firstname`, `lastname`, `verificationCode`, `passwordResetCode`, `verified` FROM `users` AS `User` WHERE `User`.`userId` = 'login';","sqlMessage":"Table 'force.users' doesn't exist","sqlState":"42S02"},"sql":"SELECT `userId`, `username`, `password`, `email`, `firstname`, `lastname`, `verificationCode`, `passwordResetCode`, `verified` FROM `users` AS `User` WHERE `User`.`userId` = 'login';","timestamp":"2024-06-07T11:28:10+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:28:40+02:00"}
+{"level":"error","name":"SequelizeDatabaseError","original":{"code":"ER_NO_SUCH_TABLE","errno":1146,"sql":"SELECT `userId`, `username`, `password`, `email`, `firstname`, `lastname`, `verificationCode`, `passwordResetCode`, `verified` FROM `users` AS `User` WHERE `User`.`userId` = 'login';","sqlMessage":"Table 'force.users' doesn't exist","sqlState":"42S02"},"parameters":{},"parent":{"code":"ER_NO_SUCH_TABLE","errno":1146,"sql":"SELECT `userId`, `username`, `password`, `email`, `firstname`, `lastname`, `verificationCode`, `passwordResetCode`, `verified` FROM `users` AS `User` WHERE `User`.`userId` = 'login';","sqlMessage":"Table 'force.users' doesn't exist","sqlState":"42S02"},"sql":"SELECT `userId`, `username`, `password`, `email`, `firstname`, `lastname`, `verificationCode`, `passwordResetCode`, `verified` FROM `users` AS `User` WHERE `User`.`userId` = 'login';","timestamp":"2024-06-07T11:28:40+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:30:49+02:00"}
+{"level":"error","name":"SequelizeDatabaseError","original":{"code":"ER_NO_SUCH_TABLE","errno":1146,"sql":"SELECT `userId`, `username`, `password`, `email`, `firstname`, `lastname`, `verificationCode`, `passwordResetCode`, `verified` FROM `users` AS `User` WHERE `User`.`userId` = 'login';","sqlMessage":"Table 'force.users' doesn't exist","sqlState":"42S02"},"parameters":{},"parent":{"code":"ER_NO_SUCH_TABLE","errno":1146,"sql":"SELECT `userId`, `username`, `password`, `email`, `firstname`, `lastname`, `verificationCode`, `passwordResetCode`, `verified` FROM `users` AS `User` WHERE `User`.`userId` = 'login';","sqlMessage":"Table 'force.users' doesn't exist","sqlState":"42S02"},"sql":"SELECT `userId`, `username`, `password`, `email`, `firstname`, `lastname`, `verificationCode`, `passwordResetCode`, `verified` FROM `users` AS `User` WHERE `User`.`userId` = 'login';","timestamp":"2024-06-07T11:30:49+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:31:48+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:32:02+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:32:12+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:32:32+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:32:57+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:33:08+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:33:33+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:33:54+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:35:36+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:36:36+02:00"}
+{"code":"ERR_HTTP_HEADERS_SENT","level":"error","timestamp":"2024-06-07T11:36:36+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:46:17+02:00"}
+{"code":"ERR_HTTP_HEADERS_SENT","level":"error","timestamp":"2024-06-07T11:46:17+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:49:36+02:00"}
+{"code":"ERR_HTTP_HEADERS_SENT","level":"error","timestamp":"2024-06-07T11:49:36+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:50:01+02:00"}
+{"code":"ERR_HTTP_HEADERS_SENT","level":"error","timestamp":"2024-06-07T11:50:01+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T11:50:51+02:00"}
+{"code":"ERR_HTTP_HEADERS_SENT","level":"error","timestamp":"2024-06-07T11:50:51+02:00"}
+{"level":"info","message":"IP : ::1","timestamp":"2024-06-07T12:03:01+02:00"}

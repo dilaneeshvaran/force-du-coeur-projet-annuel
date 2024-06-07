@@ -42,7 +42,7 @@ const register = async (req: Request, res: Response) => {
 const login = async (req: RequestWithUser, res: Response) => {
   const { error, value } = validateUserAuth(req.body);
   if (error) {
-    res.status(400).json({ message: error.details[0].message });
+    return res.status(400).json({ message: error.details[0].message });
   }
 
   const { password, email } = value;
