@@ -3,7 +3,7 @@
  */
 
 import express, { Router, Request, Response } from "express";
-import { register, login, adminAccess, logout, getAllUsers, getUserById } from '../controllers';
+import { register, login, adminAccess, logout, getAllUsers, getUserById, deleteUser } from '../controllers';
 import { authenticateToken } from "../middlewares";
 
 export const router = Router();
@@ -16,5 +16,7 @@ router.post('/login', login);
 //router.get('/', authenticateToken, getAllUsers);
 router.get('/', getAllUsers);
 router.get('/:id', getUserById);
+router.delete('/:id', deleteUser);
+
 //router.get('/admin', authenticateToken, authorizeAdmin, adminAccess);
 //router.post('/logout', authenticateToken, logout);
