@@ -4,26 +4,39 @@ Ce projet comprend un client, un backoffice et un backend.
 
 ## Installation
 
-Pour installer le projet, exécutez la commande suivante :
-
+Pour démarrer le client/backoffice, exécutez les commandes suivantes une après l'autre:
 ```bash
-npm run dev
+1) npm install
 
---------------------------------------CLIENT------------------------------------------------
+2) npm run dev
+
+--------------------------------------CLIENT---------------------------------------------------
 TODO
-//voir les evenements / votes / sondages en cours/terminés
-//comme des blocks de posts : avec 2 options, valider/croix pour annuler
-//voir les resultats pour les votes/sondages terminés
-//participer/annuler la participation
-//rejoignez nous : bénévole (inscription avec les infos de contact et, formulation de dossier en attente de validation:)
-//la demande est accessible dans le backoffice pour validation par un admin, le benevole recoit les infos de login (mot de passe à reinitialiser)  par mail
-//il peux modifier le mot de passe
-//FAIRE UN DON  : poncutel ou mensuel
-//ADHESION : 10€/mois ADHesion
-//30€/mois ADHesion famille
-//50€/mois ADHesion soutien
-//100€/mois ADHesion bienfaiteur
+//voir les evenements / votes / sondages (blocks de posts/affiche le resultat si vote/sondage terminé)
 //mot de passe oublié
+//connect stripe to payment
+//GED : recherche & le classement
+//Chatbot (réponses automatique)
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
+  //change email & password in admin settings
+  //replace fakedata with the database
+  //ressources>inventory management/used
+
+--------------------------------------BACKEND--------------------------------------------------
+TODO
+  //routes > authentification des tokens pour les routes, routes associées aux tables jointes
+  //controllers pour les tables jointes
+  //services > gérer les envois d\'emails, les changements de mot passe, etc.
+  //tests > tests en tous genres
+  //validation > valider les données des cotisations
+ //participer à un evenement/annuler la participation (respect capacité evenement+gestion du quorum = nombre requis de participants pour que la réunion puisse se tenir )
+//Rappels (automatique) : prévenir un prochain payment mensuel
+  //manage members(ban/change role admin/member)
+    //Alerts and Notifications??>critical events like low inventory levels, unusual website traffic, or overdue tasks.
+
+--------------------------------------JAVA--------------------------------------------------
+
+```
+```

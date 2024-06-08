@@ -1,34 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css'
+import Menu from './components/Menu';
+import Inventory from './pages/inventory';
+import Performance from './pages/performance';
+import ContentManager from './pages/contentManager';
+import UserManagement from './pages/userManagement';
+import TaskManager from './pages/taskManage';
+import FinanceInformation from './pages/financeInformation';
+import Settings from './pages/settings';
+import Alerts from './pages/alert';
+import Messages from './pages/message';
+import BackofficeHome from './pages/backofficeHome';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter>
+      <Menu className="navContainer" />
+      <Routes>
+        <Route path="/inventory" element={<Inventory />} />
+        <Route path="/performance" element={<Performance />} />
+        <Route path="/contentManager" element={<ContentManager />} />
+        <Route path="/userManagement" element={<UserManagement />} />
+        <Route path="/taskManage" element={<TaskManager />} />
+        <Route path="/financeInformation" element={<FinanceInformation />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/alert" element={<Alerts />} />
+        <Route path="/message" element={<Messages />} />
+        <Route path="/backofficeHome" element={<BackofficeHome />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

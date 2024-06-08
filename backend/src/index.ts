@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-
+const cors = require('cors');
 import { documentsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter,    membersRouter, resourcesRouter, useOfResourcesRouter, choicesRouter, votesRouter, donationsRouter, usersRouter } from './routers';
 import { errorHandler, logger, timeZoneFormatter, winston } from "./middlewares";
 import './global.data';
@@ -14,6 +14,7 @@ const port = process.env.PORT || 8088;
 app.use(bodyParser.json());
 app.use(timeZoneFormatter);
 app.use(winston);
+app.use(cors());
 
 app.use('/choices', choicesRouter);
 app.use('/documents', documentsRouter);

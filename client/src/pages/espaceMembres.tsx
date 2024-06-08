@@ -6,6 +6,8 @@ import MesDocuments from './mesDocuments';
 import Messages from './messages';
 import MesTaches from './mesTaches';
 import '../styles/espaceMembres.css';
+import ManageAccount from './manageAccount';
+import '../styles/common.css';
 
 interface EspaceMembresProps {
   isLoggedIn: boolean;
@@ -16,12 +18,41 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [currentMenu, setCurrentMenu] = useState('monAssociation');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
+
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    //verify the user using a backend service
-    setIsLoggedIn(true);
-    localStorage.setItem('isLoggedIn', 'true');
+
+    try {
+      // Call the login API
+      const response = await fetch('http://localhost:8088/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+      console.log(":::::::::::::::" + JSON.stringify(response));
+
+      if (response.ok) {
+        const data = await response.json();
+
+        // Save the token in the local storage
+        localStorage.setItem('token', data.token);
+
+        setIsLoggedIn(true);
+        localStorage.setItem('isLoggedIn', 'true');
+        setErrorMessage('');
+      } else {
+        // Handle error
+        console.error('Failed to login');
+        setErrorMessage('Email or password is incorrect');
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+      setErrorMessage('An error occurred. Please try again.');
+    }
   };
 
   return (
@@ -43,6 +74,9 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
             {
               currentMenu === 'mesTaches' && <MesTaches />
             }
+            {
+              currentMenu === 'gestionDeMonCompteEtDossier' && <ManageAccount />
+            }
           </div>
         </div> : <div className="form-container">
           <h1>Login</h1>
@@ -62,6 +96,7 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
             </div>
             <input type="submit" className='submitRejoindre' value="Submit" />
           </form>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
       }
     </div>

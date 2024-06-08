@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes,useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css'
 import Navbar from './components/Navbar';
 import Home from './pages/home'
@@ -10,9 +10,11 @@ import Equipes from './pages/equipes';
 import Rejoindre from './pages/rejoindre';
 import EspaceMembres from './pages/espaceMembres';
 import { useState } from 'react';
+import ManageAccount from './pages/manageAccount';
 
 function Logout() {
   const navigate = useNavigate();
+
 
   const handleLogout = () => {
     localStorage.setItem('isLoggedIn', 'false');
@@ -35,16 +37,17 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar className="navContainer" isLoggedIn={isLoggedIn} onLogout={handleLogout} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/evenements" element={<Evenements />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/soutenir" element={<Soutenir />} />
-          <Route path="/missions" element={<Missions />} />
-          <Route path="/equipes" element={<Equipes />} />
-          <Route path="/rejoindre" element={<Rejoindre />} />
-          <Route path="/espaceMembres" element={<EspaceMembres isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/evenements" element={<Evenements />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/soutenir" element={<Soutenir isLoggedIn={isLoggedIn} />} />
+        <Route path="/missions" element={<Missions />} />
+        <Route path="/equipes" element={<Equipes />} />
+        <Route path="/rejoindre" element={<Rejoindre />} />
+        <Route path="/espaceMembres" element={<EspaceMembres isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/manageAccount/*" element={<ManageAccount />} />
+      </Routes>
     </BrowserRouter>
   );
 }

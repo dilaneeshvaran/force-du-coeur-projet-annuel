@@ -1,36 +1,84 @@
 import '../styles/soutenir.css'
+import { useState } from 'react';
+import { AdhererForm } from '../components/AdhererForm';
+import { DonationForm } from '../components/DonationForm';
+import { Link } from 'react-router-dom';
 
-function Soutenir() {
+interface SoutenirProps {
+  isLoggedIn?: boolean;
+  onMembershipChange?: (id: any, newStatus: string, amount: any) => void;
+}
+
+function Soutenir({ isLoggedIn }: SoutenirProps) {
+  const [isPonctuelClicked, setPonctuelClicked] = useState(false);
+  const [isAdhererClicked, setAdhererClicked] = useState(false);
+
+  const handlePonctuelClick = () => {
+    setPonctuelClicked(true);
+  }
+
+  const handleAdhererClick = () => {
+    setAdhererClicked(true);
+  }
+
+  const handleCloseClick = () => {
+    setPonctuelClicked(false);
+    setAdhererClicked(false);
+  }
 
   return (
     <>
       <h1>Soutenir nos actions</h1>
       <div className="containerCB">
-        <div className='contentBox'>
-          <h3>Adhérer à 'Force du Coeur'</h3>
-          <div className='ulCB'>
-            <ul>
-              <li>Donnez votre force du coeur</li>
-              <li>Recevez notre t-shirt Force du coeur</li>
-              <li>Participez à nos événements</li>
-              <li>Recevez des sourires</li>
-            </ul>
-          </div>
-          <div className='btnCB'><button className='buttonCB'>Adhérer</button></div>
-        </div>
+        {!isPonctuelClicked && !isAdhererClicked ? (
+          <>
+            <div className='contentBox'>
+              <h3>Adhérer à 'Force du Coeur'</h3>
+              <div className='ulCB'>
+                <ul>
+                  <li>Donnez votre force du coeur</li>
+                  <li>Recevez notre t-shirt Force du coeur</li>
+                  <li>Participez à nos événements</li>
+                  <li>Recevez des sourires</li>
+                </ul>
+              </div>
+              <div className='btnCB'>
+                {isLoggedIn ? (
+                  <Link to="/manageAccount?selectedType=membership" className='buttonCB'>
+                    Adhérer
+                  </Link>
+                ) : (
+                  <button onClick={handleAdhererClick} className='buttonCB'>
+                    Adhérer
+                  </button>
+                )}
+              </div>
+            </div>
 
-        <div className='contentBox'>
-          <h3>Faire un don</h3>
-          <div className='ulCB'>
-            <ul>
-              <li>Enlargir la zone d'aide</li>
-            </ul>
-          </div>
-          <div className='btnContainer'>
-            <div className='btnCB'><button className='buttonCB'>Ponctuel</button></div>
-            <div className='btnCB'><button className='buttonCB'>Mensuel</button></div>
-          </div>
-        </div>
+            <div className='contentBox'>
+              <h3>Faire un don</h3>
+              <div className='ulCB'>
+                <ul>
+                  <li>Enlargir la zone d'aide</li>
+                </ul>
+              </div>
+              <div className='btnContainer'>
+                <div className='btnCB'><button onClick={handlePonctuelClick} className='buttonCB'>Ponctuel</button></div>
+                <div className='btnCB'>
+                  {isLoggedIn ? (
+                    <Link to="/manageAccount?selectedType=donation" className='buttonCB'>Périodique</Link>
+                  ) : (
+                    <Link to="/espaceMembres" className='buttonCB'>Périodique</Link>
+                  )}
+                </div>
+              </div>
+            </div>
+          </>
+        ) : isPonctuelClicked ? (
+          <DonationForm handleCloseClick={handleCloseClick} />
+        ) : (
+          <AdhererForm handleCloseClick={handleCloseClick} />
+        )}
       </div>
     </>
   )

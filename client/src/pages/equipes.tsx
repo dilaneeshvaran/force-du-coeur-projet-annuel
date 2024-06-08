@@ -1,6 +1,6 @@
 import '../App.css'
 
-function Missions() {
+function Equipes() {
 
   return (
     <>
@@ -12,4 +12,4 @@ function Missions() {
   )
 }
 
-export default Missions
+export default Equipes

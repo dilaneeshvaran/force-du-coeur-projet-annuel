@@ -18,6 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ className, isLoggedIn, onLogout }) => {
 
   return (
     <nav
+
       className={`navbar is-primary ${className}`}
       role="navigation"
       aria-label="main navigation"
@@ -52,9 +53,8 @@ const Navbar: React.FC<NavbarProps> = ({ className, isLoggedIn, onLogout }) => {
         <NavLink className={`navbar-item ${location.pathname === '/soutenir' ? 'is-active' : ''}`} to="/soutenir">
           Soutenir nos actions
         </NavLink>
-        <NavLink className={`navbar-item ${location.pathname === '/rejoindre' ? 'is-active' : ''}`} to="/rejoindre">
-          Nous Rejoindre
-        </NavLink>
+
+
 
         <NavLink className={`navbar-item ${location.pathname === '/espaceMembres' ? 'is-active' : ''}`} to="/espaceMembres">
           Espace Membres
