@@ -6,10 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateMessage = exports.messageValidation = void 0;
 const joi_1 = __importDefault(require("joi"));
 const messageValidation = joi_1.default.object({
-    content: joi_1.default.string().required(),
-    creationDate: joi_1.default.date().required(),
-    authorId: joi_1.default.number().required(),
-    recipientId: joi_1.default.number().required(),
+    id: joi_1.default.number().required(),
+    subject: joi_1.default.string().required(),
+    message: joi_1.default.string().optional(),
+    type: joi_1.default.string().valid('sent', 'received').required(),
+    fileAttachment: joi_1.default.string().uri().optional(),
 });
 exports.messageValidation = messageValidation;
 const validateMessage = (data) => {

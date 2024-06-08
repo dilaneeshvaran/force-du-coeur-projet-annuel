@@ -6,6 +6,7 @@ interface Message {
     subject: string;
     message?: string;
     type: 'sent' | 'received';
+    fileAttachment?: string;
 }
 
 function Messages() {
@@ -33,11 +34,21 @@ function Messages() {
 
     const handleLinkClick = (link: string) => {
         setSelectedLink(link);
+
     };
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        // handle form submission...
+
+        const formData = new FormData();
+        formData.append('receiver', receiver);
+        formData.append('subject', subject);
+        formData.append('body', body);
+        if (file) {
+            formData.append('file', file);
+        }
+
+        // send formData to API
     };
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

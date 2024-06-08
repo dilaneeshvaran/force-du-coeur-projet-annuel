@@ -1,10 +1,11 @@
 import joi from 'joi';
 
 const messageValidation = joi.object ({
-  content: joi.string().required(),
-  creationDate: joi.date().required(),
-  authorId: joi.number().required(),
-  recipientId: joi.number().required(),
+  id: joi.number().required(),
+  subject: joi.string().required(),
+  message: joi.string().optional(),
+  type: joi.string().valid('sent', 'received').required(),
+  fileAttachment: joi.string().uri().optional(), 
 });
 
 const validateMessage = (data: any) => {
