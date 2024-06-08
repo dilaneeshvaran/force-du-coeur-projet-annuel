@@ -1,8 +1,8 @@
 import '../styles/mesDocuments.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Document {
-    id: number;
+    documentId: number;
     title: string;
     content?: string;
     file?: File;
@@ -10,29 +10,40 @@ interface Document {
 }
 
 function MesDocuments() {
-    const [documents, setDocuments] = useState<Document[]>([
-        {
-            id: 1,
-            title: 'deroulement de l evenement',
-            content: 'bla bla',
-            isArchived: false,
-            file: new File(["content"], "sample.txt"),
-        },
-        {
-            id: 2,
-            title: 'planning event',
-            content: 'test archive',
-            isArchived: true,
-            file: new File(["content"], "sample.txt"),
-        }
-    ]);
+    const [documents, setDocuments] = useState<Document[]>([]);
 
-    const archiveDocument = (id: number) => {
-        setDocuments(documents.map(document => document.id === id ? { ...document, isArchived: true } : document));
+    useEffect(() => {
+        fetch('http://localhost:8088/documents')
+            .then(response => response.json())
+            .then(data => setDocuments(data));
+    }, []);
+
+    const archiveDocument = (documentId: number) => {
+        fetch(`http://localhost:8088/documents/${documentId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isArchived: 1 }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                setDocuments(currentDocuments => currentDocuments.map(document => document.documentId === documentId ? { ...document, isArchived: true } : document));
+            });
     };
 
-    const unarchiveDocument = (id: number) => {
-        setDocuments(documents.map(document => document.id === id ? { ...document, isArchived: false } : document));
+    const unarchiveDocument = (documentId: number) => {
+        fetch(`http://localhost:8088/documents/${documentId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isArchived: 0 }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                setDocuments(documents.map(document => document.documentId === documentId ? { ...document, isArchived: false } : document));
+            });
     };
 
     const getArchivedDocuments = () => {
@@ -57,7 +68,7 @@ function MesDocuments() {
             </div>
             <div className='doc-list'>
                 {(selectedLink === 'received' ? getNonArchivedDocuments() : getArchivedDocuments()).map((document) => (
-                    <div key={document.id}>
+                    <div key={document.documentId}>
                         <h2>{document.title}</h2>
                         <p>{document.content}</p>
                         {document.file && (
@@ -65,7 +76,7 @@ function MesDocuments() {
                                 Download {document.file.name}
                             </a>
                         )}
-                        <input type="checkbox" checked={document.isArchived} onChange={() => document.isArchived ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archive
+                        <input type="checkbox" checked={document.isArchived} onChange={() => document.isArchived ? unarchiveDocument(document.documentId) : archiveDocument(document.documentId)} /> Archive
                     </div>
                 ))}
             </div>

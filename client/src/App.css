@@ -4,7 +4,7 @@
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
-    background-color: blue;
+    background-color: rgb(255, 255, 255);
   }
   
   
@@ -26,7 +26,7 @@
   
   .card {
     padding: 2em;
-    background-color: #00ff33;
+    background-color: #dadada;
   }
   
   .navContainer{
