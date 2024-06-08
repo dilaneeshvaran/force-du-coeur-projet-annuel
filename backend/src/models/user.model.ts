@@ -1,6 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import argon2 from 'argon2';
 import crypto from 'crypto';
 
 
@@ -14,10 +13,6 @@ export class User extends Model {
   public verificationCode!: string;
   public passwordResetCode!: string | null;  
   public verified!: boolean;
-
-  public async validPassword(password: string): Promise<boolean> {
-    return argon2.verify(this.password, password);
-  }
 }
 
 export const generateValidationCode = (): string => {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import argon2 from 'argon2';
-import jwt from 'jsonwebtoken';;
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { validateUser, validateUserAuth } from '../validation';
 import { generateToken } from '../services';
 import { User } from '../models';
@@ -15,7 +15,7 @@ const register = async (req: Request, res: Response) => {
 
   try {
     const { username, password, email, firstname, lastname } = value;
-    const hashedPassword = await argon2.hash(password);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       username,
       password: hashedPassword,
@@ -24,17 +24,14 @@ const register = async (req: Request, res: Response) => {
       lastname
     });
 
-    const isValidPassword = await newUser.validPassword(password);
-    if (!isValidPassword) {
-      throw new Error('Invalid password');
-    }
+  
 
   const token = generateToken(newUser.userId);
 
-    res.status(201).json({ newUser, token });
+  return res.status(201).json({ newUser, token });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Erreur lors de la création de l'utilisateur."});
+    return res.status(500).json({ message: "Erreur lors de la création de l'utilisateur."});
   }
 } 
  
@@ -54,7 +51,7 @@ const login = async (req: RequestWithUser, res: Response) => {
       return res.status(401).send({ message: "nom d'utilisateur ou mot de passe erroné."});
     }
 
-    const isPasswordCorrect = await argon2.verify(user.password, password);
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
       return res.status(401).send({ message: "le mot de passe est erroné."});
@@ -98,7 +95,7 @@ const getUserById = async (req: Request, res: Response) => {
     }
   } catch(error) {
     logger.error(error);
-    res.status(500).json({ message: "Erreur lors de la recherche de l'utilisateur"});
+    return res.status(500).json({ message: "Erreur lors de la recherche de l'utilisateur"});
   }
 }
 
@@ -109,8 +106,25 @@ const getAllUsers = async (req: Request, res: Response) => {
     return res.status(200).json(users);
   } catch (error) {
     logger.error(error);
-    res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des utilisateurs."});
+    return res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des utilisateurs."});
   }
 }
 
-export { register, login, adminAccess, logout, getUserById, getAllUsers };
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findByPk(userId);
+    if (user !== null) {
+      await user.destroy();
+      return res.status(200).json({ message: "Suppression de l'utilisateur effectuée"});
+    } else {
+      return res.status(404).json({ message: "Utilisateur non retrouvé"});
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erreur rencontré en essayant de supprimer l'utilisateur"});
+  }
+}
+
+
+export { register, login, adminAccess, logout, getUserById, getAllUsers, deleteUser };

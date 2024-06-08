@@ -12,10 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsers = exports.getUserById = exports.logout = exports.adminAccess = exports.login = exports.register = void 0;
-const argon2_1 = __importDefault(require("argon2"));
+exports.deleteUser = exports.getAllUsers = exports.getUserById = exports.logout = exports.adminAccess = exports.login = exports.register = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-;
 const validation_1 = require("../validation");
 const services_1 = require("../services");
 const models_1 = require("../models");
@@ -28,7 +27,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     try {
         const { username, password, email, firstname, lastname } = value;
-        const hashedPassword = yield argon2_1.default.hash(password);
+        const hashedPassword = yield bcrypt_1.default.hash(password, 10);
         const newUser = yield models_1.User.create({
             username,
             password: hashedPassword,
@@ -36,16 +35,12 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             firstname,
             lastname
         });
-        const isValidPassword = yield newUser.validPassword(password);
-        if (!isValidPassword) {
-            throw new Error('Invalid password');
-        }
         const token = (0, services_1.generateToken)(newUser.userId);
-        res.status(201).json({ newUser, token });
+        return res.status(201).json({ newUser, token });
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Erreur lors de la création de l'utilisateur." });
+        return res.status(500).json({ message: "Erreur lors de la création de l'utilisateur." });
     }
 });
 exports.register = register;
@@ -61,7 +56,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!user) {
             return res.status(401).send({ message: "nom d'utilisateur ou mot de passe erroné." });
         }
-        const isPasswordCorrect = yield argon2_1.default.verify(user.password, password);
+        const isPasswordCorrect = yield bcrypt_1.default.compare(password, user.password);
         if (!isPasswordCorrect) {
             return res.status(401).send({ message: "le mot de passe est erroné." });
         }
@@ -103,7 +98,7 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (error) {
         middlewares_1.logger.error(error);
-        res.status(500).json({ message: "Erreur lors de la recherche de l'utilisateur" });
+        return res.status(500).json({ message: "Erreur lors de la recherche de l'utilisateur" });
     }
 });
 exports.getUserById = getUserById;
@@ -114,7 +109,25 @@ const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (error) {
         middlewares_1.logger.error(error);
-        res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des utilisateurs." });
+        return res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des utilisateurs." });
     }
 });
 exports.getAllUsers = getAllUsers;
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.id;
+        const user = yield models_1.User.findByPk(userId);
+        if (user !== null) {
+            yield user.destroy();
+            return res.status(200).json({ message: "Suppression de l'utilisateur effectuée" });
+        }
+        else {
+            return res.status(404).json({ message: "Utilisateur non retrouvé" });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Erreur rencontré en essayant de supprimer l'utilisateur" });
+    }
+});
+exports.deleteUser = deleteUser;
