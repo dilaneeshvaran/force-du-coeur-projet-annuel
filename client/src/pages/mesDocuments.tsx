@@ -61,8 +61,16 @@ function MesDocuments() {
             });
     };
 
-    const getArchivedDocuments = () => {
-        return documents.filter(document => document.isArchieved);
+    const downloadDoc = (doc: Document) => {
+        fetch(`http://localhost:8088/upload/${doc.id}`)
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = window.document.createElement('a');
+                a.href = url;
+                a.download = doc.title;
+                a.click();
+            });
     };
 
     const [selectedLink, setSelectedLink] = useState('received');
@@ -87,6 +95,7 @@ function MesDocuments() {
                                         <div key={document.id}>
                                             <h2>{document.title}</h2>
                                             <p>{document.description}</p>
+                                            <button onClick={() => downloadDoc(document)}>Download</button>
                                             <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archive
                                         </div>
                                     ))
@@ -104,7 +113,8 @@ function MesDocuments() {
                                         <div key={document.id}>
                                             <h2>{document.title}</h2>
                                             <p>{document.description}</p>
-                                            <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Unarchive
+                                            <button onClick={() => downloadDoc(document)}>Download</button>
+                                            <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archive
                                         </div>
                                     ))
                                 }

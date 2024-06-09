@@ -30,6 +30,8 @@ app.use('/tasks', routers_1.tasksRouter);
 app.use('/useOfResources', routers_1.useOfResourcesRouter);
 app.use('/votes', routers_1.votesRouter);
 app.use('/users', routers_1.usersRouter);
+app.use('/upload', routers_1.uploadRouter);
+app.use('/upload', express_1.default.static('upload'));
 app.use(middlewares_1.errorHandler);
 app.listen(port, () => {
     console.log(`Port http://localhost:${port}`);
