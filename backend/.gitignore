@@ -1,2 +1,6 @@
 node_modules/
 dist/
+logs/
+backend/node_modules/
+backend/dist/
+backend/logs/

@@ -7,7 +7,6 @@ exports.validateVoteChoice = exports.voteChoiceValidation = void 0;
 const joi_1 = __importDefault(require("joi"));
 const voteChoiceValidation = joi_1.default.object({
     voteId: joi_1.default.number().required(),
-    choiceId: joi_1.default.number().required(),
 });
 exports.voteChoiceValidation = voteChoiceValidation;
 const validateVoteChoice = (data) => {

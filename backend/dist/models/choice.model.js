@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Choice = void 0;
+exports.Option = void 0;
 const sequelize_1 = require("sequelize");
 const services_1 = require("./../services");
-const _1 = require(".");
-class Choice extends sequelize_1.Model {
+class Option extends sequelize_1.Model {
 }
-exports.Choice = Choice;
-Choice.init({
-    choiceId: {
-        type: sequelize_1.DataTypes.INTEGER,
+exports.Option = Option;
+Option.init({
+    id: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
     },
-    label: {
-        type: sequelize_1.DataTypes.STRING,
+    label: sequelize_1.DataTypes.STRING,
+    voteId: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
-        unique: true
+    },
+    votes: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+        defaultValue: 0,
     },
 }, {
+    tableName: 'options',
     sequelize: services_1.sequelize,
-    modelName: 'Choice',
-    tableName: 'choices',
-    timestamps: false
 });
-Choice.hasMany(_1.VoteChoice, { foreignKey: 'choiceId' });

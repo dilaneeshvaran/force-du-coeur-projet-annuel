@@ -10,9 +10,9 @@ const createVote = async (req: Request, res: Response) => {
   }
 
   try {
-    const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, options } = value;
+    const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, createdBy, voterId } = value;
 
-    if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status || !options ) {
+    if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status || !createdBy || !voterId ) {
       return res.status(400).json({ message: "Aucun champ ne doit être vide"});
     }
     
@@ -25,8 +25,8 @@ const createVote = async (req: Request, res: Response) => {
       ongoingRound,
       votingMethod,
       status,
-      createdBy: req.body.createdBy,
-      voterId: req.body.voterId
+      createdBy,
+      voterId
     });
     return res.status(201).json(newVote);
   } catch (error) {

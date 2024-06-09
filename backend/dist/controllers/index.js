@@ -23,6 +23,6 @@ __exportStar(require("./documents"), exports);
 __exportStar(require("./messages"), exports);
 __exportStar(require("./resources"), exports);
 __exportStar(require("./votes"), exports);
-__exportStar(require("./choices"), exports);
+__exportStar(require("./options"), exports);
 __exportStar(require("./useOfResources"), exports);
 __exportStar(require("./users"), exports);

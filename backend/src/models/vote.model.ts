@@ -1,6 +1,33 @@
-import { DataTypes, Model } from "sequelize";
+import { Model, DataTypes } from 'sequelize';
 import { sequelize } from './../services';
-import { User } from ".";
+
+export class Option extends Model {
+  public id!: number;
+  public label!: string;
+  public voteId!: number;
+  public votes!: number;
+}
+
+Option.init({
+  id: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  label: DataTypes.STRING,
+  voteId: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+  },
+  votes: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    defaultValue: 0,
+  },
+}, {
+  tableName: 'options',
+  sequelize,
+});
+
 
 export class Vote extends Model {
   public id!: number;
@@ -12,85 +39,53 @@ export class Vote extends Model {
   public ongoingRound!: 'first-round' | 'second-round'; 
   public votingMethod!: 'majority rule' | 'absolute majority';
   public status!: 'open' | 'closed';
-  public options!: { label: string, votes: number }[];
+  public options!: Option[];
+  public createdBy!: number;
+  public voterId!: number;
 }
 
 Vote.init({
-  voteId: {
-    type: DataTypes.INTEGER,
+  id: {
+    type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
-    primaryKey: true
+    primaryKey: true,
   },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
-  },
-  description: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  }, 
-  startDate: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  endDate: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  votingType: {
-    type: DataTypes.ENUM('one-round', 'two-round'),
-    allowNull: false
-  },
-  ongoingRound: {
-    type: DataTypes.ENUM('first-round', 'second-round'),
-    allowNull: false
-  },
-  votingMethod: {
-    type: DataTypes.ENUM('majority rule', 'absolute majority'),
-    allowNull: false
-  },
-  status: {
-    type: DataTypes.ENUM('open', 'closed'),
-    allowNull: false
-  },
-  options: {
-    type: DataTypes.JSON,
-    validate: {
-      isArrayOfOptions(value: any) {
-        if (!Array.isArray(value)) {
-          throw new Error('il faut un tableau');
-        }
-        if (value.length > 10) {
-          throw new Error('le tableau d\'options contient au maximum 10 éléments');
-        } 
-        value.forEach((option: any) => {
-          if (typeof option.label !== 'string' || typeof option.votes !== 'number') {
-            throw new Error('chaque option requiert un label et un nombre de votes');
-          }
-        });
-      }
-    }
-  },
-  createdBy: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: User,
-      key: 'userId'
-    }
-  },
-  voterId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: User, // Updated to User
-      key: 'userId' // Updated to userId
-    }
-  }
+  title: DataTypes.STRING,
+  description: DataTypes.TEXT,
+  startDate: DataTypes.DATE,
+  endDate: DataTypes.DATE,
+  votingType: DataTypes.ENUM('one-round', 'two-round'),
+  ongoingRound: DataTypes.ENUM('first-round', 'second-round'),
+  votingMethod: DataTypes.ENUM('majority rule', 'absolute majority'),
+  status: DataTypes.ENUM('open', 'closed'),
+  createdBy: DataTypes.INTEGER.UNSIGNED, // New field
+  voterId: DataTypes.INTEGER.UNSIGNED, // New field
 }, {
-  sequelize,
-  modelName: 'Vote',
   tableName: 'votes',
-  timestamps: false
+  sequelize,
 });
+
+export class UserVote extends Model {
+  public userId!: number;
+  public optionId!: number;
+}
+
+UserVote.init({
+  userId: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+  },
+  optionId: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+  },
+}, {
+  tableName: 'user_votes',
+  sequelize,
+});
+
+Vote.hasMany(Option, { foreignKey: 'voteId' });
+Option.belongsTo(Vote, { foreignKey: 'voteId' });
+
+Option.hasMany(UserVote, { foreignKey: 'optionId' });
+UserVote.belongsTo(Option, { foreignKey: 'optionId' });

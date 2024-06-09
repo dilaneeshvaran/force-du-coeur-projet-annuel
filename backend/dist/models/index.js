@@ -19,7 +19,7 @@ __exportStar(require("./task.model"), exports);
 __exportStar(require("./event.model"), exports);
 __exportStar(require("./vote.model"), exports);
 __exportStar(require("./vote-choice.model"), exports);
-__exportStar(require("./choice.model"), exports);
+__exportStar(require("./option.model"), exports);
 __exportStar(require("./message.model"), exports);
 __exportStar(require("./document.model"), exports);
 __exportStar(require("./donation.model"), exports);

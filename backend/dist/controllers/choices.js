@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteChoice = exports.updateChoice = exports.getChoiceById = exports.getAllChoices = exports.createChoice = void 0;
+exports.deleteOption = exports.updateOption = exports.getOptionById = exports.getAllOptions = exports.createOption = void 0;
 const validation_1 = require("../validation");
 const models_1 = require("../models");
 const middlewares_1 = require("../middlewares");
-const createChoice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { error, value } = (0, validation_1.validateChoice)(req.body);
+const createOption = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { error, value } = (0, validation_1.validateOption)(req.body);
     if (error) {
         res.status(400).json({ message: middlewares_1.logger.error(error.details[0].message) });
     }
@@ -23,48 +23,48 @@ const createChoice = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         if (!label) {
             res.status(400).json({ message: "Aucun champ ne doit être vide" });
         }
-        const newChoice = yield models_1.Choice.create({ label });
-        res.status(201).json(newChoice);
+        const newOption = yield models_1.Option.create({ label });
+        res.status(201).json(newOption);
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ lessage: "Erreur lors de la création du choix." });
+        res.status(500).json({ message: "Erreur lors de la création de l'option." });
     }
 });
-exports.createChoice = createChoice;
-const getAllChoices = (req, res) => {
+exports.createOption = createOption;
+const getAllOptions = (req, res) => {
 };
-exports.getAllChoices = getAllChoices;
-const getChoiceById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getAllOptions = getAllOptions;
+const getOptionById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const choices = yield models_1.Choice.findAll();
-        return res.status(200).json(choices);
+        const options = yield models_1.Option.findAll();
+        return res.status(200).json(options);
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des choix." });
+        res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des options." });
     }
 });
-exports.getChoiceById = getChoiceById;
-const updateChoice = (req, res) => {
+exports.getOptionById = getOptionById;
+const updateOption = (req, res) => {
     // TODO
 };
-exports.updateChoice = updateChoice;
-const deleteChoice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.updateOption = updateOption;
+const deleteOption = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const choiceId = req.params.id;
-        const choice = yield models_1.Choice.findByPk(choiceId);
-        if (choice !== null) {
-            yield choice.destroy();
-            res.status(200).json({ message: "Suppression d'un choix réussie" });
+        const optionId = req.params.id;
+        const option = yield models_1.Option.findByPk(optionId);
+        if (option !== null) {
+            yield option.destroy();
+            res.status(200).json({ message: "Suppression d'une option réussie" });
         }
         else {
-            res.status(404).json({ message: "Choix non retrouvé" });
+            res.status(404).json({ message: "Option non retrouvée" });
         }
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Erreur rencontré en essayant de supprimer le choix" });
+        res.status(500).json({ message: "Erreur rencontrée en essayant de supprimer l'option" });
     }
 });
-exports.deleteChoice = deleteChoice;
+exports.deleteOption = deleteOption;

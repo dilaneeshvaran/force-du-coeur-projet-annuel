@@ -2,7 +2,6 @@ import joi from 'joi';
 
 const voteChoiceValidation = joi.object ({
   voteId: joi.number().required(),
-  choiceId: joi.number().required(),
 });
 
 const validateVoteChoice = (data: any) => {

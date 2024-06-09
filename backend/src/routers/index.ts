@@ -12,7 +12,7 @@ export { router as messagesRouter } from './messages';
 export { router as tasksRouter } from './tasks';
 export { router as resourcesRouter } from './resources';
 export { router as useOfResourcesRouter } from './useOfResources';
-export { router as choicesRouter } from './choices';
+export { router as choicesRouter } from './option';
 export { router as votesRouter } from './votes';
 export { router as donationsRouter } from './donations';
 export { router as usersRouter } from './users';

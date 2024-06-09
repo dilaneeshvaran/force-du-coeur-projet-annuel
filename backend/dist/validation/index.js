@@ -19,7 +19,7 @@ __exportStar(require("./task.validation"), exports);
 __exportStar(require("./event.validation"), exports);
 __exportStar(require("./vote.validation"), exports);
 __exportStar(require("./vote-choice.validation"), exports);
-__exportStar(require("./choice.validation"), exports);
+__exportStar(require("./option.validation"), exports);
 __exportStar(require("./message.validation"), exports);
 __exportStar(require("./document.validation"), exports);
 __exportStar(require("./donation.validation"), exports);

@@ -2,8 +2,9 @@ import joi from 'joi';
 
 const validateOptions = joi.array().items(joi.object ({
   label: joi.string().required(),
-  votes: joi.number().integer().min(0).required()
-})).max(10).required();
+  voteId: joi.number().integer().min(0).required(),
+  votes: joi.number().integer().min(0).optional()
+}))
 
 const voteValidation = joi.object ({
   title: joi.string().required(),
@@ -11,11 +12,10 @@ const voteValidation = joi.object ({
   startDate: joi.date().required(),
   endDate: joi.date().required(),
   votingType: joi.string().valid('one-round', 'two-round').required(),
-  ongoingRound: joi.string().valid('first-round', 'second-round').required(),
+  ongoingRound: joi.string().valid('first-round', 'second-round').optional(),
   votingMethod: joi.string().valid('majority rule', 'absolute majority').required(),
-  status: joi.string().valid('open', 'closed').required(),
-  options: validateOptions,
-  createdBy: joi.number().required(),
+  status: joi.string().valid('open', 'closed').optional(),
+  createdBy: joi.number().optional(),
   voterId: joi.number().required()
 });
 
@@ -23,4 +23,4 @@ const validateVote = (data: any) => {
   return voteValidation.validate(data);
 }
 
-export { voteValidation, validateVote };
+export {validateOptions, voteValidation, validateVote };

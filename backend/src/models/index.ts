@@ -3,7 +3,7 @@ export * from './task.model';
 export * from './event.model';
 export * from './vote.model';
 export * from './vote-choice.model';
-export * from './choice.model';
+export * from './option.model';
 export * from './message.model';
 export * from './document.model';
 export * from './donation.model';

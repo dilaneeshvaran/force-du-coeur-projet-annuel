@@ -7,6 +7,6 @@ export * from './documents';
 export * from './messages';
 export * from './resources';
 export * from './votes';
-export * from './choices';
+export * from './options';
 export * from './useOfResources';
 export * from './users';
