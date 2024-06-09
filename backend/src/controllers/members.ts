@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { validateMember } from '../validation';
+import bcrypt from 'bcrypt';
 import { Member } from '../models';
-import argon2 from "argon2";
 import { logger } from '../middlewares';
 
 const createMember = async (req: Request, res: Response) => {
@@ -15,7 +15,7 @@ const createMember = async (req: Request, res: Response) => {
   try {
     const { name, firstName, email, password, role, memberSince, dateOfBirth } = value;
 
-    const hashedPassword = await argon2.hash(password);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newMember = await Member.create({
       name,

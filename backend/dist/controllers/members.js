@@ -14,8 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteMember = exports.updateMember = exports.getMemberById = exports.getAllMembers = exports.createMember = void 0;
 const validation_1 = require("../validation");
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const models_1 = require("../models");
-const argon2_1 = __importDefault(require("argon2"));
 const middlewares_1 = require("../middlewares");
 const createMember = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateMember)(req.body);
@@ -25,7 +25,7 @@ const createMember = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     try {
         const { name, firstName, email, password, role, memberSince, dateOfBirth } = value;
-        const hashedPassword = yield argon2_1.default.hash(password);
+        const hashedPassword = yield bcrypt_1.default.hash(password, 10);
         const newMember = yield models_1.Member.create({
             name,
             firstName,

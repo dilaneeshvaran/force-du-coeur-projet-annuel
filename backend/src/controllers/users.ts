@@ -73,15 +73,19 @@ const adminAccess = (req: Request, res: Response) => {
 
 
 const logout = async (req: RequestWithUser, res: Response) => {
-  // TODO
-  const token = req.token;
+  try {
+    const token = req.token;
 
-  if (token) {
-    tokenRevocationList.push(token);
-    return res.status(200).json({ message: 'Deconnexion réussie'});
-  } else {
-    return res.status(400).json({ message: 'Pas de jeton fourni'});
+    if (token) {
+      tokenRevocationList.push(token);
+      return res.status(200).json({ message: 'Deconnexion réussie'});
+    } else {
+      return res.status(400).json({ message: 'Pas de jeton fourni'});
+    }
+  } catch (error: any) {
+    return res.status(500).json({ message: 'Erreur interne', error: error.message });
   }
+ 
 }
 
 const getUserById = async (req: Request, res: Response) => {

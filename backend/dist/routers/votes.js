@@ -14,6 +14,7 @@ exports.router = (0, express_1.Router)();
 exports.router.post('/', controllers_1.createVote);
 exports.router.get('/', controllers_1.getAllVotes);
 exports.router.get('/:id', controllers_1.getVoteById);
+exports.router.get('/vote/:voteId/choices', controllers_1.getChoicesByVoteId);
 exports.router.put('/:id', controllers_1.updateVote);
 //router.put('/:id', isAuth, updateVote);
 exports.router.delete('/:id', controllers_1.deleteVote);
