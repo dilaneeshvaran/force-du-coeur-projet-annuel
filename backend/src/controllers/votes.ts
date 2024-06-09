@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { validateVote } from '../validation';
 import { Vote } from '../models';
+import { logger } from '../middlewares';
 
 const createVote = async (req: Request, res: Response) => {
   const { error, value } = validateVote(req.body);
@@ -12,7 +13,7 @@ const createVote = async (req: Request, res: Response) => {
     const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, options } = value;
 
     if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status || !options ) {
-      res.status(400).json({ message: "Aucun champ ne doit être vide"});
+      return res.status(400).json({ message: "Aucun champ ne doit être vide"});
     }
     
     const newVote = await Vote.create({
@@ -29,8 +30,8 @@ const createVote = async (req: Request, res: Response) => {
     });
     return res.status(201).json(newVote);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erreur lors de la création d'un vote"});
+    logger.error(error);
+    return res.status(500).json({ message: "Erreur lors de la création d'un vote"});
   }
 }
 
@@ -39,8 +40,8 @@ const getAllVotes = async (req: Request, res: Response) => {
     const votes = await Vote.findAll();
     return res.status(200).json(votes);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des évènements"});
+    logger.error(error);
+    return res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des évènements"});
   }
 }
 
@@ -49,13 +50,13 @@ const getVoteById = async (req: Request, res: Response) => {
     const voteId = req.params.id;
     const vote = await Vote.findByPk(voteId);
     if (vote !== null) {
-      res.status(200).json(vote);
+      return res.status(200).json(vote);
     } else {
-      res.status(404).json({ message: "Membre non retrouvé"});
+      return res.status(404).json({ message: "Membre non retrouvé"});
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erreur lors de la recherche du membre"});
+    logger.error(error);
+    return res.status(500).json({ message: "Erreur lors de la recherche du membre"});
   }
 }
 
@@ -70,13 +71,13 @@ const deleteVote = async (req: Request, res: Response) => {
     const vote = await Vote.findByPk(voteId);
     if (vote !== null) {
       await vote.destroy();
-      res.status(200).json({ message: "Suppression du vote réussie"});
+      return res.status(200).json({ message: "Suppression du vote réussie"});
     } else {
-      res.status(404).json({ message: "Vote non retrouvé"});
+      return res.status(404).json({ message: "Vote non retrouvé"});
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erreur rencontrée en essayant de supprimer le vote"});
+    logger.error(error);
+    return res.status(500).json({ message: "Erreur rencontrée en essayant de supprimer le vote"});
   }
 }
 
