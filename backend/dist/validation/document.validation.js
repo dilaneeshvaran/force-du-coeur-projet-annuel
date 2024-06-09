@@ -7,12 +7,12 @@ exports.validateDocument = exports.documentValidation = void 0;
 const joi_1 = __importDefault(require("joi"));
 const documentValidation = joi_1.default.object({
     documentId: joi_1.default.number().required(),
-    title: joi_1.default.string().required(),
+    title: joi_1.default.string().optional(),
     description: joi_1.default.string().optional(),
     file: joi_1.default.string().optional(),
     isArchieved: joi_1.default.boolean().optional(),
-    senderOd: joi_1.default.number().required(),
-    receiverId: joi_1.default.number().required(),
+    senderOd: joi_1.default.number().optional(),
+    receiverId: joi_1.default.number().optional(),
 });
 exports.documentValidation = documentValidation;
 const validateDocument = (data) => {

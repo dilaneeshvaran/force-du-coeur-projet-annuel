@@ -16,3 +16,4 @@ exports.router.get('/', controllers_1.getAllDocuments);
 exports.router.get('/:id', controllers_1.getDocumentById);
 exports.router.put('/:id', controllers_1.updateDocument);
 exports.router.delete('/:id', controllers_1.deleteDocument);
+exports.router.get('/by-user/:userId', controllers_1.getDocumentByUserId);

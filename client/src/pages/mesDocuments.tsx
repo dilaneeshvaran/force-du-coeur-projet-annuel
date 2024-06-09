@@ -2,11 +2,11 @@ import '../styles/mesDocuments.css';
 import { useEffect, useState } from 'react';
 
 interface Document {
-    documentId: number;
+    id: number;
     title: string;
     description?: string;
     file?: string;
-    isArchived: boolean;
+    isArchieved: boolean;
     senderId: number;
     receiverId: number;
 }
@@ -15,10 +15,20 @@ function MesDocuments() {
     const [documents, setDocuments] = useState<Document[]>([]);
 
     useEffect(() => {
-        fetch('http://localhost:8088/documents')
-            .then(response => response.json())
+        const userId = Number(localStorage.getItem('userId'));
+        console.log("userId", userId)
+        fetch(`http://localhost:8088/documents/by-user/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("HTTP error " + response.status);
+                }
+                return response.json();
+            })
             .then(data => {
-                setDocuments(data)
+                setDocuments(data);
+            })
+            .catch(error => {
+                console.error('Failed to fetch documents:', error);
             });
     }, []);
 
@@ -28,12 +38,13 @@ function MesDocuments() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ isArchived: 1 }),
+            body: JSON.stringify({ isArchieved: true }),
         })
             .then(response => response.json())
             .then(() => {
-                setDocuments(currentDocuments => currentDocuments.map(document => document.documentId === documentId ? { ...document, isArchived: true } : document));
+                setDocuments(currentDocuments => currentDocuments.map(document => documentId === documentId ? { ...document, isArchieved: true } : document));
             });
+        console.log(":::::::::docId", documentId);
     };
 
     const unarchiveDocument = (documentId: number) => {
@@ -42,20 +53,16 @@ function MesDocuments() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ isArchived: 0 }),
+            body: JSON.stringify({ isArchieved: 0 }),
         })
             .then(response => response.json())
             .then(() => {
-                setDocuments(documents.map(document => document.documentId === documentId ? { ...document, isArchived: false } : document));
+                setDocuments(documents.map(document => document.id === documentId ? { ...document, isArchieved: false } : document));
             });
     };
 
     const getArchivedDocuments = () => {
-        return documents.filter(document => document.isArchived);
-    };
-
-    const getNonArchivedDocuments = () => {
-        return documents.filter(document => !document.isArchived);
+        return documents.filter(document => document.isArchieved);
     };
 
     const [selectedLink, setSelectedLink] = useState('received');
@@ -74,20 +81,35 @@ function MesDocuments() {
                 {(selectedLink === 'received' &&
                     <div>
                         {
-                            documents.length === 0 ? <p>No documsents</p> : <div>
-                                <h1>{document.title}</h1>
+                            documents.filter(document => !document.isArchieved).length === 0 ? <p>No documents</p> : <div>
                                 {
-                                    documents.map(document => (
-                                        <div key={document.documentId}>
+                                    documents.filter(document => !document.isArchieved).map(document => (
+                                        <div key={document.id}>
                                             <h2>{document.title}</h2>
                                             <p>{document.description}</p>
-                                            <input type="checkbox" checked={document.isArchived} onChange={() => document.isArchived ? unarchiveDocument(document.documentId) : archiveDocument(document.documentId)} /> Archive
+                                            <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archive
                                         </div>
                                     ))
                                 }
                             </div>
                         }
-
+                    </div>
+                )}
+                {(selectedLink === 'archived' &&
+                    <div>
+                        {
+                            documents.filter(document => document.isArchieved).length === 0 ? <p>No archived documents</p> : <div>
+                                {
+                                    documents.filter(document => document.isArchieved).map(document => (
+                                        <div key={document.id}>
+                                            <h2>{document.title}</h2>
+                                            <p>{document.description}</p>
+                                            <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Unarchive
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        }
                     </div>
                 )}
             </div>

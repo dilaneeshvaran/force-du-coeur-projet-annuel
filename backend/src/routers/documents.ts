@@ -3,7 +3,7 @@
  */
 
 import { Router, Request, Response } from "express";
-import { createDocument, deleteDocument, getAllDocuments, getDocumentById, updateDocument } from '../controllers';
+import { getDocumentByUserId,createDocument, deleteDocument, getAllDocuments, getDocumentById, updateDocument } from '../controllers';
 
 export const router = Router();
 
@@ -17,3 +17,4 @@ router.get('/', getAllDocuments);
 router.get('/:id', getDocumentById);
 router.put('/:id', updateDocument);
 router.delete('/:id', deleteDocument);
+router.get('/by-user/:userId', getDocumentByUserId);
