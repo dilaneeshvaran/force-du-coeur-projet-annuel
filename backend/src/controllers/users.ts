@@ -59,7 +59,7 @@ const login = async (req: RequestWithUser, res: Response) => {
 
     const token = jwt.sign({ id: user.userId}, 'your_secret_key', { expiresIn: '3h'});
 
-    return res.status(200).send({ messsage: "authentification de l'user réussie", token });
+    return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.userId }); 
   } catch (error) {
     logger.error(error);
     return res.status(500).send({ message: "erreur interne" });

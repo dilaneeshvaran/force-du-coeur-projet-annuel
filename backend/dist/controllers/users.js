@@ -61,7 +61,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(401).send({ message: "le mot de passe est erroné." });
         }
         const token = jsonwebtoken_1.default.sign({ id: user.userId }, 'your_secret_key', { expiresIn: '3h' });
-        return res.status(200).send({ messsage: "authentification de l'user réussie", token });
+        return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.userId });
     }
     catch (error) {
         middlewares_1.logger.error(error);

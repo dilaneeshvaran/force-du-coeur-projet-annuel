@@ -8,35 +8,27 @@ class Message extends sequelize_1.Model {
 }
 exports.Message = Message;
 Message.init({
-    messageId: {
+    id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    content: {
+    subject: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
-    creationDate: {
-        type: sequelize_1.DataTypes.DATE,
+    message: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
+    type: {
+        type: sequelize_1.DataTypes.ENUM('sent', 'received'),
         allowNull: false,
     },
-    authorId: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: _1.Member,
-            key: 'memberId'
-        }
+    fileAttachment: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
     },
-    recipientId: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: _1.Member,
-            key: 'memberId'
-        }
-    }
 }, {
     sequelize: services_1.sequelize,
     modelName: 'Message',
@@ -44,6 +36,6 @@ Message.init({
     timestamps: false
 });
 //
-_1.Member.hasMany(Message, { foreignKey: 'authorId', as: 'sentMessages' });
+_1.Member.hasMany(Message, { foreignKey: 'id', as: 'sentMessages' });
 //
-_1.Member.hasMany(Message, { foreignKey: 'recipientId', as: 'receivedMessages' });
+_1.Member.hasMany(Message, { foreignKey: 'id', as: 'receivedMessages' });

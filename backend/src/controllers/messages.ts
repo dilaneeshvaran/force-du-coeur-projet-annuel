@@ -3,24 +3,24 @@ import { validateMessage } from '../validation';
 import { Message } from '../models';
 import { logger } from '../middlewares';
 
-const createMessage = async (req: Request, res: Response) => {
+const createMessage = async (req: Request, res: Response, fileAttachment: any) => {
   const { error, value } = validateMessage(req.body);
   if (error) {
     res.status(400).json({ message: logger.error(error.details[0].message) });
   }
   
   try {
-    const { content, creationDate, authorId, recipientId } = value;
+    const { subject, message, type } = value;
     
-    if (!content || !creationDate || !authorId || !recipientId) {
+    if (!subject || !type) {
       res.status(400).json({ message: "Aucun champ ne doit être vide"});
     }
 
     const newMessage = await Message.create({
-      content,
-      creationDate,
-      authorId,
-      recipientId,
+      subject,
+      message,
+      type,
+      fileAttachment, 
     });
     res.status(201).json(newMessage);
   } catch (error) {
@@ -31,8 +31,8 @@ const createMessage = async (req: Request, res: Response) => {
 
 const getAllMessages = async (req: Request, res: Response) => {
   try {
-    const message = await Message.findAll();
-    return res.status(200).json(message);
+    const messages = await Message.findAll();
+    return res.status(200).json(messages);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des messages." });
@@ -54,8 +54,26 @@ const getMessageById = async (req: Request, res: Response) => {
   }
 }
 
-const updateMessage = (req: Request, res: Response) => {
-  // TODO
+const updateMessage = async (req: Request, res: Response, fileAttachment: any) => {
+  try {
+    const messageId = req.params.id;
+    const { subject, message, type } = req.body;
+
+    const existingMessage = await Message.findByPk(messageId);
+    if (existingMessage !== null) {
+      existingMessage.subject = subject;
+      existingMessage.message = message;
+      existingMessage.type = type;
+      existingMessage.fileAttachment = fileAttachment; 
+      await existingMessage.save();
+      res.status(200).json(existingMessage);
+    } else {
+      res.status(404).json({ message: "Message non retrouvé"});
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur lors de la mise à jour du message"});
+  }
 }
 
 const deleteMessage = async (req: Request, res: Response) => {

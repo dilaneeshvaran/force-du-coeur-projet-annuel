@@ -25,7 +25,6 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
     event.preventDefault();
 
     try {
-      // Call the login API
       const response = await fetch('http://localhost:8088/users/login', {
         method: 'POST',
         headers: {
@@ -38,14 +37,18 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
       if (response.ok) {
         const data = await response.json();
 
-        // Save the token in the local storage
-        localStorage.setItem('token', data.token);
+        if (data && data.token) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('userId', data.userId);
 
-        setIsLoggedIn(true);
-        localStorage.setItem('isLoggedIn', 'true');
-        setErrorMessage('');
+          setIsLoggedIn(true);
+          localStorage.setItem('isLoggedIn', 'true');
+          setErrorMessage('');
+        } else {
+          console.error('Failed to login');
+          setErrorMessage('Email or password is incorrect');
+        }
       } else {
-        // Handle error
         console.error('Failed to login');
         setErrorMessage('Email or password is incorrect');
       }

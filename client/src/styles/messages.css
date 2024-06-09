@@ -1,7 +1,7 @@
 .message-box{
     clear: both;
     margin-top: 150px;
-    background-color: aquamarine;
+    background-color: rgb(255, 193, 127);
     width: 1200px;
     height: 500px;
     display:flex;
@@ -34,4 +34,32 @@
     margin-right: 60px;
     padding: 10px;
     top:30px;
+}
+
+.message-list label {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2em;
+}
+
+.message-list input,
+.message-list textarea {
+    padding: 1px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.message-list button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: white;
+    background-color: #c30000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.message-list button:hover {
+    background-color: #b30000;
 }

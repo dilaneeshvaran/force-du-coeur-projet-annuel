@@ -13,21 +13,21 @@ exports.deleteMessage = exports.updateMessage = exports.getMessageById = exports
 const validation_1 = require("../validation");
 const models_1 = require("../models");
 const middlewares_1 = require("../middlewares");
-const createMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createMessage = (req, res, fileAttachment) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateMessage)(req.body);
     if (error) {
         res.status(400).json({ message: middlewares_1.logger.error(error.details[0].message) });
     }
     try {
-        const { content, creationDate, authorId, recipientId } = value;
-        if (!content || !creationDate || !authorId || !recipientId) {
+        const { subject, message, type } = value;
+        if (!subject || !type) {
             res.status(400).json({ message: "Aucun champ ne doit être vide" });
         }
         const newMessage = yield models_1.Message.create({
-            content,
-            creationDate,
-            authorId,
-            recipientId,
+            subject,
+            message,
+            type,
+            fileAttachment,
         });
         res.status(201).json(newMessage);
     }
@@ -39,8 +39,8 @@ const createMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.createMessage = createMessage;
 const getAllMessages = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const message = yield models_1.Message.findAll();
-        return res.status(200).json(message);
+        const messages = yield models_1.Message.findAll();
+        return res.status(200).json(messages);
     }
     catch (error) {
         console.error(error);
@@ -65,9 +65,28 @@ const getMessageById = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getMessageById = getMessageById;
-const updateMessage = (req, res) => {
-    // TODO
-};
+const updateMessage = (req, res, fileAttachment) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const messageId = req.params.id;
+        const { subject, message, type } = req.body;
+        const existingMessage = yield models_1.Message.findByPk(messageId);
+        if (existingMessage !== null) {
+            existingMessage.subject = subject;
+            existingMessage.message = message;
+            existingMessage.type = type;
+            existingMessage.fileAttachment = fileAttachment;
+            yield existingMessage.save();
+            res.status(200).json(existingMessage);
+        }
+        else {
+            res.status(404).json({ message: "Message non retrouvé" });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur lors de la mise à jour du message" });
+    }
+});
 exports.updateMessage = updateMessage;
 const deleteMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

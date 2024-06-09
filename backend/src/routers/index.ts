@@ -16,5 +16,5 @@ export { router as choicesRouter } from './choices';
 export { router as votesRouter } from './votes';
 export { router as donationsRouter } from './donations';
 export { router as usersRouter } from './users';
-//export { router as authRouter } from './auth';
+export { default as uploadRouter } from './upload';//export { router as authRouter } from './auth';
 

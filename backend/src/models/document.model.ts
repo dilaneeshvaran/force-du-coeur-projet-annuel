@@ -1,18 +1,25 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member } from ".";
+import { User } from ".";
 
 export class Document extends Model {
-  public documentId!: number;
+
+  public id!: number;
   public title!: string;
   public description!: string;
-  public type!: string;
-  public creationDate!: string;
-  public authorId!: number;
+  public file!: string;
+  public isArchieved!: boolean;
+  public senderId!: number;
+  public receiverId!: number;
+
+  static associate(models: any) {
+    this.belongsTo(models.User, { foreignKey: 'senderId', as: 'sender' });
+    this.belongsTo(models.User, { foreignKey: 'receiverId', as: 'receiver' });
+  }
 }
 
 Document.init({
-  documentId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
@@ -25,23 +32,34 @@ Document.init({
     type: DataTypes.STRING,
     allowNull: false
   }, 
-  creationDate: {
-    type: DataTypes.DATE,
-    allowNull: false
+  file: {
+    type: DataTypes.STRING,
+    allowNull: true
   },
-  authorId: {
+  isArchieved: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  senderId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Member,
-      key: 'memberId'
+      model: User,
+      key: 'id'
     }
   },
+  receiverId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User,
+      key: 'id'
+    }
+  }
 }, {
   sequelize,
   modelName: 'Document',
   tableName: 'documents',
   timestamps: false
 });
-
-Member.hasMany(Document, { foreignKey: 'authorId' });

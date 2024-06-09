@@ -20,6 +20,8 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
+    "@types/multer": "^1.4.11",
+    "argon2": "^0.40.3",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -27,6 +29,7 @@
     "joi": "^17.12.3",
     "jsonwebtoken": "^9.0.2",
     "moment-timezone": "^0.5.45",
+    "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.4",
     "nanoid": "^5.0.7",

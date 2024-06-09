@@ -9,6 +9,8 @@ function Messages() {
     const [receiver, setReceiver] = useState('');
     const [group, setGroup] = useState('');
 
+    const apiAdress = 'http://localhost:8088/messages';
+
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
             setFile(event.target.files[0]);
@@ -18,7 +20,8 @@ function Messages() {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         // use api
-        console.log({ subject, body, file, receiver, group });
+        const apiAddress = file ? 'http://localhost:8088/documents' : 'http://localhost:8088/messages';
+        console.log({ subject, body, file, receiver, group, apiAddress });
     };
 
     return (
@@ -32,7 +35,7 @@ function Messages() {
                 <form onSubmit={handleSubmit}>
                     <label>
                         Receiver:
-                        <input type="email" value={receiver} onChange={e => setReceiver(e.target.value)} />
+                        <input type="email" value={receiver} onChange={e => setReceiver(e.target.value)} disabled={group !== ""} />
                     </label>
                     <label>
                         Group:

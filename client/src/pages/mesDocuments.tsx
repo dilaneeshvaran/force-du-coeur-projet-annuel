@@ -1,46 +1,76 @@
 import '../styles/mesDocuments.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Document {
     id: number;
     title: string;
-    content?: string;
-    file?: File;
-    isArchived: boolean;
+    description?: string;
+    file?: string;
+    isArchieved: boolean;
+    senderId: number;
+    receiverId: number;
 }
 
 function MesDocuments() {
-    const [documents, setDocuments] = useState<Document[]>([
-        {
-            id: 1,
-            title: 'deroulement de l evenement',
-            content: 'bla bla',
-            isArchived: false,
-            file: new File(["content"], "sample.txt"),
-        },
-        {
-            id: 2,
-            title: 'planning event',
-            content: 'test archive',
-            isArchived: true,
-            file: new File(["content"], "sample.txt"),
-        }
-    ]);
+    const [documents, setDocuments] = useState<Document[]>([]);
 
-    const archiveDocument = (id: number) => {
-        setDocuments(documents.map(document => document.id === id ? { ...document, isArchived: true } : document));
+    useEffect(() => {
+        const userId = Number(localStorage.getItem('userId'));
+        console.log("userId", userId)
+        fetch(`http://localhost:8088/documents/by-user/${userId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("HTTP error " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                setDocuments(data);
+            })
+            .catch(error => {
+                console.error('Failed to fetch documents:', error);
+            });
+    }, []);
+
+    const archiveDocument = (documentId: number) => {
+        fetch(`http://localhost:8088/documents/${documentId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isArchieved: true }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                setDocuments(currentDocuments => currentDocuments.map(document => documentId === documentId ? { ...document, isArchieved: true } : document));
+            });
+        console.log(":::::::::docId", documentId);
     };
 
-    const unarchiveDocument = (id: number) => {
-        setDocuments(documents.map(document => document.id === id ? { ...document, isArchived: false } : document));
+    const unarchiveDocument = (documentId: number) => {
+        fetch(`http://localhost:8088/documents/${documentId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isArchieved: 0 }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                setDocuments(documents.map(document => document.id === documentId ? { ...document, isArchieved: false } : document));
+            });
     };
 
-    const getArchivedDocuments = () => {
-        return documents.filter(document => document.isArchived);
-    };
-
-    const getNonArchivedDocuments = () => {
-        return documents.filter(document => !document.isArchived);
+    const downloadDoc = (doc: Document) => {
+        fetch(`http://localhost:8088/upload/${doc.id}`)
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = window.document.createElement('a');
+                a.href = url;
+                a.download = doc.title;
+                a.click();
+            });
     };
 
     const [selectedLink, setSelectedLink] = useState('received');
@@ -56,18 +86,42 @@ function MesDocuments() {
                 <a href='#' className='nav-ged-link' onClick={() => handleLinkClick('archived')}>Documents Archivés</a>
             </div>
             <div className='doc-list'>
-                {(selectedLink === 'received' ? getNonArchivedDocuments() : getArchivedDocuments()).map((document) => (
-                    <div key={document.id}>
-                        <h2>{document.title}</h2>
-                        <p>{document.content}</p>
-                        {document.file && (
-                            <a href={URL.createObjectURL(document.file)} download={document.file.name}>
-                                Download {document.file.name}
-                            </a>
-                        )}
-                        <input type="checkbox" checked={document.isArchived} onChange={() => document.isArchived ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archive
+                {(selectedLink === 'received' &&
+                    <div>
+                        {
+                            documents.filter(document => !document.isArchieved).length === 0 ? <p>No documents</p> : <div>
+                                {
+                                    documents.filter(document => !document.isArchieved).map(document => (
+                                        <div key={document.id}>
+                                            <h2>{document.title}</h2>
+                                            <p>{document.description}</p>
+                                            <button onClick={() => downloadDoc(document)}>Download</button>
+                                            <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archive
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        }
                     </div>
-                ))}
+                )}
+                {(selectedLink === 'archived' &&
+                    <div>
+                        {
+                            documents.filter(document => document.isArchieved).length === 0 ? <p>No archived documents</p> : <div>
+                                {
+                                    documents.filter(document => document.isArchieved).map(document => (
+                                        <div key={document.id}>
+                                            <h2>{document.title}</h2>
+                                            <p>{document.description}</p>
+                                            <button onClick={() => downloadDoc(document)}>Download</button>
+                                            <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archive
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        }
+                    </div>
+                )}
             </div>
         </div>
     );
