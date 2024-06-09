@@ -6,7 +6,11 @@ const documentValidation = joi.object ({
   description: joi.string().optional(),
   type: joi.string().required(),
   creationDate: joi.date().required(),
-  authorId: joi.number().required()
+  authorId: joi.number().optional(),
+  isArchieved: joi.boolean().required(),
+  receiverId: joi.number().required(),
+  senderOd: joi.number().required(),
+  file: joi.string().optional()
 });
 
 const validateDocument = (data: any) => {

@@ -11,7 +11,11 @@ const documentValidation = joi_1.default.object({
     description: joi_1.default.string().optional(),
     type: joi_1.default.string().required(),
     creationDate: joi_1.default.date().required(),
-    authorId: joi_1.default.number().required()
+    authorId: joi_1.default.number().optional(),
+    isArchieved: joi_1.default.boolean().required(),
+    receiverId: joi_1.default.number().required(),
+    senderOd: joi_1.default.number().required(),
+    file: joi_1.default.string().optional()
 });
 exports.documentValidation = documentValidation;
 const validateDocument = (data) => {

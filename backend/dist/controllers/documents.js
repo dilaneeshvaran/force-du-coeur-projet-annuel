@@ -15,19 +15,22 @@ const models_1 = require("../models");
 const createDocument = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateDocument)(req.body);
     if (error) {
-        res.status(400).json({ message: error.details[0].message });
+        return res.status(400).json({ message: error.details[0].message });
     }
     try {
         const { title, description, type, creationDate, authorId } = value;
         if (!title || !description || !type || !creationDate || !authorId) {
-            res.status(400).json({ message: "Aucun champ ne doit être vide" });
+            return res.status(400).json({ message: "Aucun champ ne doit être vide" });
         }
         const newDocument = yield models_1.Document.create({
             title,
             description,
             type,
             creationDate,
-            authorId
+            authorId,
+            senderId: req.body.userId,
+            receiverId: req.body.receiverId,
+            file: req.body.file
         });
         res.status(201).json(newDocument);
     }

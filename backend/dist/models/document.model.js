@@ -29,14 +29,41 @@ Document.init({
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: _1.Member,
-            key: 'memberId'
+            model: _1.User, // Updated to User
+            key: 'userId' // Updated to userId
         }
     },
+    senderId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: _1.User, // Updated to User
+            key: 'userId' // Updated to userId
+        }
+    },
+    receiverId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: _1.User, // Updated to User
+            key: 'userId' // Updated to userId
+        }
+    },
+    isArchieved: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
+    file: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true
+    }
 }, {
     sequelize: services_1.sequelize,
     modelName: 'Document',
     tableName: 'documents',
     timestamps: false
 });
-_1.Member.hasMany(Document, { foreignKey: 'authorId' });
+_1.User.hasMany(Document, { foreignKey: 'authorId' }); // Updated to User
+_1.User.hasMany(Document, { foreignKey: 'senderId' }); // Updated to User
+_1.User.hasMany(Document, { foreignKey: 'receiverId' }); // Updated to User

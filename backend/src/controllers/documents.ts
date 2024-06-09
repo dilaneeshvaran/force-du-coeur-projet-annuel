@@ -7,14 +7,14 @@ import { logger } from '../middlewares';
 const createDocument = async (req: Request, res: Response) => {
   const { error, value } = validateDocument(req.body);
   if (error) {
-    res.status(400).json({ message: error.details[0].message });
+    return res.status(400).json({ message: error.details[0].message });
   }
 
   try {
     const { title, description, type, creationDate, authorId } = value;
 
     if (!title || !description || !type || !creationDate || !authorId) {
-      res.status(400).json({ message: "Aucun champ ne doit être vide"});
+      return res.status(400).json({ message: "Aucun champ ne doit être vide"});
     }
 
     const newDocument = await Document.create({
@@ -22,12 +22,15 @@ const createDocument = async (req: Request, res: Response) => {
       description,
       type,
       creationDate,
-      authorId
+      authorId,
+      senderId: req.body.userId,
+      receiverId: req.body.receiverId,
+      file: req.body.file
     });
     res.status(201).json(newDocument);
   } catch(error) {
     console.error(error);
-    res.status(500).json({ message: "Erreur lors de la création du document."});
+     res.status(500).json({ message: "Erreur lors de la création du document."});
   }
 }
 

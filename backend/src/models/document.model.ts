@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member } from ".";
+import { Member, User } from ".";
 
 export class Document extends Model {
   public documentId!: number;
@@ -9,6 +9,10 @@ export class Document extends Model {
   public type!: string;
   public creationDate!: string;
   public authorId!: number;
+  public isArchieved!: boolean;
+  public receiverId!: number;
+  public senderId!: number;
+  public file!: string;
 }
 
 Document.init({
@@ -33,10 +37,35 @@ Document.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Member,
-      key: 'memberId'
+      model: User, // Updated to User
+      key: 'userId' // Updated to userId
     }
   },
+  senderId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User, // Updated to User
+      key: 'userId' // Updated to userId
+    }
+  },
+  receiverId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User, // Updated to User
+      key: 'userId' // Updated to userId
+    }
+  },
+  isArchieved: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  file: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }
 }, {
   sequelize,
   modelName: 'Document',
@@ -44,4 +73,7 @@ Document.init({
   timestamps: false
 });
 
-Member.hasMany(Document, { foreignKey: 'authorId' });
+
+User.hasMany(Document, { foreignKey: 'authorId' }); // Updated to User
+User.hasMany(Document, { foreignKey: 'senderId' }); // Updated to User
+User.hasMany(Document, { foreignKey: 'receiverId' }); // Updated to User
