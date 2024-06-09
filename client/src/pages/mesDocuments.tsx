@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 interface Document {
     documentId: number;
     title: string;
-    content?: string;
-    file?: File;
+    description?: string;
+    file?: string;
     isArchived: boolean;
+    senderId: number;
+    receiverId: number;
 }
 
 function MesDocuments() {
@@ -15,7 +17,9 @@ function MesDocuments() {
     useEffect(() => {
         fetch('http://localhost:8088/documents')
             .then(response => response.json())
-            .then(data => setDocuments(data));
+            .then(data => {
+                setDocuments(data)
+            });
     }, []);
 
     const archiveDocument = (documentId: number) => {
@@ -67,18 +71,25 @@ function MesDocuments() {
                 <a href='#' className='nav-ged-link' onClick={() => handleLinkClick('archived')}>Documents Archivés</a>
             </div>
             <div className='doc-list'>
-                {(selectedLink === 'received' ? getNonArchivedDocuments() : getArchivedDocuments()).map((document) => (
-                    <div key={document.documentId}>
-                        <h2>{document.title}</h2>
-                        <p>{document.content}</p>
-                        {document.file && (
-                            <a href={URL.createObjectURL(document.file)} download={document.file.name}>
-                                Download {document.file.name}
-                            </a>
-                        )}
-                        <input type="checkbox" checked={document.isArchived} onChange={() => document.isArchived ? unarchiveDocument(document.documentId) : archiveDocument(document.documentId)} /> Archive
+                {(selectedLink === 'received' &&
+                    <div>
+                        {
+                            documents.length === 0 ? <p>No documsents</p> : <div>
+                                <h1>{document.title}</h1>
+                                {
+                                    documents.map(document => (
+                                        <div key={document.documentId}>
+                                            <h2>{document.title}</h2>
+                                            <p>{document.description}</p>
+                                            <input type="checkbox" checked={document.isArchived} onChange={() => document.isArchived ? unarchiveDocument(document.documentId) : archiveDocument(document.documentId)} /> Archive
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        }
+
                     </div>
-                ))}
+                )}
             </div>
         </div>
     );

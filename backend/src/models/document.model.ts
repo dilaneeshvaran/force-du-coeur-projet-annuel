@@ -1,22 +1,25 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member, User } from ".";
+import { User } from ".";
 
 export class Document extends Model {
-  public documentId!: number;
+
+  public id!: number;
   public title!: string;
   public description!: string;
-  public type!: string;
-  public creationDate!: string;
-  public authorId!: number;
-  public isArchieved!: boolean;
-  public receiverId!: number;
-  public senderId!: number;
   public file!: string;
+  public isArchieved!: boolean;
+  public senderId!: number;
+  public receiverId!: number;
+
+  static associate(models: any) {
+    this.belongsTo(models.User, { foreignKey: 'senderId', as: 'sender' });
+    this.belongsTo(models.User, { foreignKey: 'receiverId', as: 'receiver' });
+  }
 }
 
 Document.init({
-  documentId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
@@ -29,42 +32,30 @@ Document.init({
     type: DataTypes.STRING,
     allowNull: false
   }, 
-  creationDate: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  authorId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: User, // Updated to User
-      key: 'userId' // Updated to userId
-    }
-  },
-  senderId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: User, // Updated to User
-      key: 'userId' // Updated to userId
-    }
-  },
-  receiverId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: User, // Updated to User
-      key: 'userId' // Updated to userId
-    }
+  file: {
+    type: DataTypes.STRING,
+    allowNull: true
   },
   isArchieved: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
   },
-  file: {
-    type: DataTypes.STRING,
-    allowNull: true
+  senderId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User,
+      key: 'id'
+    }
+  },
+  receiverId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User,
+      key: 'id'
+    }
   }
 }, {
   sequelize,
@@ -72,8 +63,3 @@ Document.init({
   tableName: 'documents',
   timestamps: false
 });
-
-
-User.hasMany(Document, { foreignKey: 'authorId' }); // Updated to User
-User.hasMany(Document, { foreignKey: 'senderId' }); // Updated to User
-User.hasMany(Document, { foreignKey: 'receiverId' }); // Updated to User

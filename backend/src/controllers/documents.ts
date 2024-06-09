@@ -16,16 +16,16 @@ const createDocument = async (req: Request, res: Response) => {
     if (!title || !description || !type || !creationDate || !authorId) {
       return res.status(400).json({ message: "Aucun champ ne doit être vide"});
     }
+    if (!req.file) {
+      return res.status(400).json({ message: "A file must be included in the request." });
+    }
 
     const newDocument = await Document.create({
       title,
       description,
-      type,
-      creationDate,
-      authorId,
+      file: req.file.path,
       senderId: req.body.userId,
       receiverId: req.body.receiverId,
-      file: req.body.file
     });
     res.status(201).json(newDocument);
   } catch(error) {

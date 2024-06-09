@@ -1,9 +1,14 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
 import crypto from 'crypto';
+import { Document } from ".";
 
 
 export class User extends Model {
+  static associate(models: any) {
+    this.hasMany(models.Document, { foreignKey: 'senderId', as: 'sentDocuments' });
+    this.hasMany(models.Document, { foreignKey: 'receiverId', as: 'receivedDocuments' });
+  }
   public userId!: number;
   public username!: string;
   public password!: string;
@@ -17,6 +22,11 @@ export class User extends Model {
 
 export const generateValidationCode = (): string => {
   return crypto.randomBytes(8).toString('hex');
+}
+
+export function associateUser() {
+  User.hasMany(Document, { foreignKey: 'senderId' });
+  User.hasMany(Document, { foreignKey: 'receiverId' });
 }
 
 User.init({

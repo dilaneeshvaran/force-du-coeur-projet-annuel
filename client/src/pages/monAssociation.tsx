@@ -4,10 +4,12 @@ import '../styles/monAssociation.css';
 import EventBox from '../components/Eventbox';
 
 function MonAssociation() {
-  const [votes, setVotes] = useState(null);
+  const [votes, setVotes] = useState<any>(null);
   const [voteChoices, setVoteChoices] = useState(null);
   const [error, setError] = useState<Error | null>(null);
-  useEffect(() => {
+
+
+  const fetchVotes = async () => {
     fetch('http://localhost:8088/votes')
       .then(response => {
         if (!response.ok) {
@@ -20,22 +22,12 @@ function MonAssociation() {
         console.error('Error:', error);
         setError(error);
       });
-  }, []);
+  }
 
   useEffect(() => {
-    fetch('http://localhost:8088/voteChoices')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => setVoteChoices(data))
-      .catch(error => {
-        console.error('Error:', error);
-        setError(error);
-      });
+    fetchVotes()
   }, []);
+
 
   const event = {
     description: 'This is an upcoming event.',
@@ -45,16 +37,22 @@ function MonAssociation() {
 
   if (error) {
     return <div>Error: {error.message}</div>;
-  } else if (!votes || !voteChoices) {
+  } else if (!votes) {
     return <div>Loading...</div>;
   } else {
     return (
       <>
         <div className='parent'>
           <div className='box'>
-            <VoteBox vote={votes} optionsData={voteChoices} />
-          </div>
-          <div className='box'>
+            {
+              votes.map((vote: any) => {
+                return <div>
+                  <h1>
+                    {vote.voteId}
+                  </h1>;
+                </div>
+              })
+            }
             <EventBox event={event} />
           </div>
         </div >

@@ -22,15 +22,15 @@ const createDocument = (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (!title || !description || !type || !creationDate || !authorId) {
             return res.status(400).json({ message: "Aucun champ ne doit être vide" });
         }
+        if (!req.file) {
+            return res.status(400).json({ message: "A file must be included in the request." });
+        }
         const newDocument = yield models_1.Document.create({
             title,
             description,
-            type,
-            creationDate,
-            authorId,
+            file: req.file.path,
             senderId: req.body.userId,
             receiverId: req.body.receiverId,
-            file: req.body.file
         });
         res.status(201).json(newDocument);
     }
