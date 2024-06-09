@@ -26,4 +26,3 @@ __exportStar(require("./votes"), exports);
 __exportStar(require("./choices"), exports);
 __exportStar(require("./useOfResources"), exports);
 __exportStar(require("./users"), exports);
-__exportStar(require("./voteChoices"), exports);

@@ -15,11 +15,11 @@ const models_1 = require("../models");
 const createVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateVote)(req.body);
     if (error) {
-        res.status(400).json({ message: error.details[0].message });
+        return res.status(400).json({ message: error.details[0].message });
     }
     try {
-        const { title, description, startDate, endDate, votingType, votingMethod, status } = value;
-        if (!title || !description || !startDate || !endDate || !votingType || !votingMethod || !status) {
+        const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, options } = value;
+        if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status || !options) {
             res.status(400).json({ message: "Aucun champ ne doit être vide" });
         }
         const newVote = yield models_1.Vote.create({
@@ -28,8 +28,11 @@ const createVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             startDate,
             endDate,
             votingType,
+            ongoingRound,
             votingMethod,
-            status
+            status,
+            createdBy: req.body.createdBy,
+            voterId: req.body.voterId
         });
         return res.status(201).json(newVote);
     }

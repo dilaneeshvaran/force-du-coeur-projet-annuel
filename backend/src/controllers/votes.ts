@@ -5,13 +5,13 @@ import { Vote } from '../models';
 const createVote = async (req: Request, res: Response) => {
   const { error, value } = validateVote(req.body);
   if (error) {
-    res.status(400).json({ message: error.details[0].message});
+    return res.status(400).json({ message: error.details[0].message});
   }
 
   try {
-    const { title, description, startDate, endDate, votingType, votingMethod, status } = value;
+    const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, options } = value;
 
-    if (!title || !description || !startDate || !endDate || !votingType || !votingMethod || !status) {
+    if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status || !options ) {
       res.status(400).json({ message: "Aucun champ ne doit être vide"});
     }
     
@@ -21,8 +21,11 @@ const createVote = async (req: Request, res: Response) => {
       startDate,
       endDate,
       votingType,
+      ongoingRound,
       votingMethod,
-      status
+      status,
+      createdBy: req.body.createdBy,
+      voterId: req.body.voterId
     });
     return res.status(201).json(newVote);
   } catch (error) {
