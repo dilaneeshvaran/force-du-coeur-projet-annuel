@@ -5,6 +5,7 @@ import { Vote, Choice } from ".";
 export class VoteChoice extends Model {
   public voteId!: number;
   public choiceId!: number;
+  Choice: any;
 }
 
 VoteChoice.init({

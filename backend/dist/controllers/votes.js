@@ -12,15 +12,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteVote = exports.updateVote = exports.getVoteById = exports.getAllVotes = exports.createVote = void 0;
 const validation_1 = require("../validation");
 const models_1 = require("../models");
+const middlewares_1 = require("../middlewares");
 const createVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateVote)(req.body);
     if (error) {
-        res.status(400).json({ message: error.details[0].message });
+        return res.status(400).json({ message: error.details[0].message });
     }
     try {
-        const { title, description, startDate, endDate, votingType, votingMethod, status } = value;
-        if (!title || !description || !startDate || !endDate || !votingType || !votingMethod || !status) {
-            res.status(400).json({ message: "Aucun champ ne doit être vide" });
+        const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, options } = value;
+        if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status || !options) {
+            return res.status(400).json({ message: "Aucun champ ne doit être vide" });
         }
         const newVote = yield models_1.Vote.create({
             title,
@@ -28,14 +29,17 @@ const createVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             startDate,
             endDate,
             votingType,
+            ongoingRound,
             votingMethod,
-            status
+            status,
+            createdBy: req.body.createdBy,
+            voterId: req.body.voterId
         });
         return res.status(201).json(newVote);
     }
     catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Erreur lors de la création d'un vote" });
+        middlewares_1.logger.error(error);
+        return res.status(500).json({ message: "Erreur lors de la création d'un vote" });
     }
 });
 exports.createVote = createVote;
@@ -45,8 +49,8 @@ const getAllVotes = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         return res.status(200).json(votes);
     }
     catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des évènements" });
+        middlewares_1.logger.error(error);
+        return res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des évènements" });
     }
 });
 exports.getAllVotes = getAllVotes;
@@ -55,15 +59,15 @@ const getVoteById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const voteId = req.params.id;
         const vote = yield models_1.Vote.findByPk(voteId);
         if (vote !== null) {
-            res.status(200).json(vote);
+            return res.status(200).json(vote);
         }
         else {
-            res.status(404).json({ message: "Membre non retrouvé" });
+            return res.status(404).json({ message: "Membre non retrouvé" });
         }
     }
     catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Erreur lors de la recherche du membre" });
+        middlewares_1.logger.error(error);
+        return res.status(500).json({ message: "Erreur lors de la recherche du membre" });
     }
 });
 exports.getVoteById = getVoteById;
@@ -76,15 +80,15 @@ const deleteVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const vote = yield models_1.Vote.findByPk(voteId);
         if (vote !== null) {
             yield vote.destroy();
-            res.status(200).json({ message: "Suppression du vote réussie" });
+            return res.status(200).json({ message: "Suppression du vote réussie" });
         }
         else {
-            res.status(404).json({ message: "Vote non retrouvé" });
+            return res.status(404).json({ message: "Vote non retrouvé" });
         }
     }
     catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Erreur rencontrée en essayant de supprimer le vote" });
+        middlewares_1.logger.error(error);
+        return res.status(500).json({ message: "Erreur rencontrée en essayant de supprimer le vote" });
     }
 });
 exports.deleteVote = deleteVote;
