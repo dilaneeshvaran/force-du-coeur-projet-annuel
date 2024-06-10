@@ -14,12 +14,13 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.VoteOption = void 0;
 __exportStar(require("./member.model"), exports);
 __exportStar(require("./task.model"), exports);
 __exportStar(require("./event.model"), exports);
 __exportStar(require("./vote.model"), exports);
-__exportStar(require("./vote-choice.model"), exports);
-__exportStar(require("./option.model"), exports);
+var vote_model_1 = require("./vote.model");
+Object.defineProperty(exports, "VoteOption", { enumerable: true, get: function () { return vote_model_1.Option; } });
 __exportStar(require("./message.model"), exports);
 __exportStar(require("./document.model"), exports);
 __exportStar(require("./donation.model"), exports);
