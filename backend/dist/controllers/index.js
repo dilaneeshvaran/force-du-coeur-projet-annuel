@@ -27,3 +27,4 @@ __exportStar(require("./options"), exports);
 __exportStar(require("./useOfResources"), exports);
 __exportStar(require("./users"), exports);
 __exportStar(require("./participations"), exports);
+__exportStar(require("./user_votes"), exports);

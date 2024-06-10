@@ -33,6 +33,7 @@ app.use('/upload', routers_1.uploadRouter);
 app.use('/upload', express_1.default.static('upload'));
 app.use('/options', routers_1.optionsRouter);
 app.use('/participations', routers_1.participationsRouter);
+app.use('/user_votes', routers_1.userVotesRouter);
 app.use(middlewares_1.errorHandler);
 app.listen(port, () => {
     console.log(`Port http://localhost:${port}`);

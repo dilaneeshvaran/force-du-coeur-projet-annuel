@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import VoteBox from '../components/Votebox';
+import VoteBox, { Option } from '../components/Votebox';
 import '../styles/monAssociation.css';
 import EventBox from '../components/Eventbox';
 
 function MonAssociation() {
   const [votes, setVotes] = useState<any>(null);
-  const [voteChoices, setVoteChoices] = useState(null);
+  const [voteOptions, setVoteOptions] = useState<Option[]>([]);
   const [error, setError] = useState<Error | null>(null);
   const [events, setEvents] = useState<any>(null);
 
@@ -17,12 +17,27 @@ function MonAssociation() {
         }
         return response.json();
       })
-      .then(data => setVotes(data))
+      .then(data => {
+        setVotes(data);
+        data.forEach((vote: any) => fetchVoteOptions(vote.id));
+      })
       .catch(error => {
         console.error('Error:', error);
         setError(error);
       });
-  }
+  };
+
+  const fetchVoteOptions = async (voteId: number) => {
+    fetch(`http://localhost:8088/options/${voteId}`)
+      .then(response => response.json())
+      .then(data => {
+        setVoteOptions(prevOptions => [...prevOptions, ...data]);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setError(error);
+      });
+  };
 
   const fetchEvents = () => {
     fetch('http://localhost:8088/events')
@@ -32,35 +47,33 @@ function MonAssociation() {
         console.error('Error:', error);
         setError(error);
       });
-  }
+  };
 
   useEffect(() => {
-    fetchVotes()
+    fetchVotes();
     fetchEvents();
   }, []);
 
-
   if (error) {
     return <div>Error: {error.message}</div>;
-  } else if (!votes) {
+  } else if (!votes || !voteOptions) {
     return <div>Loading...</div>;
   } else {
     return (
       <>
         <div className='parent'>
-          <div className='box'>
+          <div className='vote-box'>
             {
               votes.map((vote: any) => {
-                return <div>
-                  <h1>
-                    {vote.voteId}
-                  </h1>;
-                </div>
+                const options = voteOptions.filter((option: Option) => option.voteId === vote.id);
+                return <VoteBox key={vote.id} vote={vote} options={options} />
               })
             }
+          </div>
+          <div className='event-box'>
             {
               events && events.filter((event: any) => event.membersOnly).map((event: any) => {
-                return <EventBox event={event} />
+                return <EventBox key={event.id} event={event} />
               })
             }
           </div>
@@ -71,7 +84,3 @@ function MonAssociation() {
 }
 
 export default MonAssociation;
-
-function setEvents(data: any): any {
-  throw new Error('Function not implemented.');
-}

@@ -1,25 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/votebox.css';
 
 interface Vote {
-    options: string[];
+    id: number;
+    title: string;
+    description: string;
+    options: Option[];
     result: string;
     status: 'open' | 'closed';
     startDate: Date;
     endDate: Date;
+    votingType: string;
+    ongoingRound: number;
+    votingMethod: string;
 }
 
 interface VoteBoxProps {
     vote: Vote;
-    optionsData: any[];
+    options: Option[];
 }
 
-const VoteBox: React.FC<VoteBoxProps> = ({ vote, optionsData }) => {
-    const [selectedOption, setSelectedOption] = useState('');
+export interface Option {
+    label: string;
+    voteId: number;
+    votes: number;
+}
+
+const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
+    const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+    const [hasVoted, setHasVoted] = useState(false);
+    const userId = 1;
+
+    useEffect(() => {
+        fetch(`http://localhost:8088/user_votes/check/${userId}/${vote.id}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.hasVoted) {
+                    setHasVoted(true);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }, [userId, vote.id]);
 
     const handleVote = () => {
-        // handle vote with api call
-        console.log(`You voted for ${selectedOption}`);
+        if (selectedOption) {
+            fetch('http://localhost:8088/user_votes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId, optionId: selectedOption.voteId }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Vote successful:', data);
+                    setHasVoted(true);
+                })
+                .catch(error => console.error('Error:', error));
+        }
     };
 
     if (!vote) {
@@ -28,30 +66,34 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, optionsData }) => {
 
     return (
         <div className="votebox">
-            <h2>{vote.status === 'open' ? 'Voting' : 'closed'}</h2>
+            <h2>{vote.title} - {vote.status === 'open' ? 'Voting' : 'Closed'}</h2>
+            <p>Description: {vote.description}</p>
             <p>Start Date: {new Date(vote.startDate).toLocaleDateString()}</p>
             <p>End Date: {new Date(vote.endDate).toLocaleDateString()}</p>
+            <p>Voting Type: {vote.votingType}</p>
+            <p>Ongoing Round: {vote.ongoingRound}</p>
+            <p>Voting Method: {vote.votingMethod}</p>
             <h3>Options</h3>
-            {vote.status === 'open' ? (
+            {vote.status === 'open' && !hasVoted ? (
                 <form className='voting-options'>
-                    {optionsData.map((option, index) => (
+                    {options.map((option, index) => (
                         <div key={index}>
                             <input
                                 type="radio"
                                 id={`option-${index}`}
                                 name="vote"
-                                value={option}
-                                onChange={e => setSelectedOption(e.target.value)}
+                                value={option.label}
+                                onChange={e => setSelectedOption(option)}
                             />
-                            <label htmlFor={`option-${index}`}>{option}</label>
+                            <label htmlFor={`option-${index}`}>{option.label}</label>
                         </div>
                     ))}
                     <button type="button" onClick={handleVote}>Vote</button>
                 </form>
             ) : (
                 <ul>
-                    {optionsData.map((option, index) => (
-                        <li key={index}>{option}</li>
+                    {options.map((option, index) => (
+                        <li key={index}>{option.label}</li>
                     ))}
                 </ul>
             )}

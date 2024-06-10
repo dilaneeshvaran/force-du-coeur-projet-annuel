@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 const cors = require('cors');
-import {participationsRouter,uploadRouter,optionsRouter, documentsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter,    membersRouter, resourcesRouter, useOfResourcesRouter, votesRouter, donationsRouter, usersRouter } from './routers';
+import {userVotesRouter,participationsRouter,uploadRouter,optionsRouter, documentsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter,    membersRouter, resourcesRouter, useOfResourcesRouter, votesRouter, donationsRouter, usersRouter } from './routers';
 import { errorHandler, logger, timeZoneFormatter, winston } from "./middlewares";
 import './global.data';
 
@@ -32,6 +32,7 @@ app.use('/upload', uploadRouter);
 app.use('/upload', express.static('upload'))
 app.use('/options', optionsRouter);
 app.use('/participations', participationsRouter);
+app.use('/user_votes', userVotesRouter);
 
 app.use(errorHandler);
 

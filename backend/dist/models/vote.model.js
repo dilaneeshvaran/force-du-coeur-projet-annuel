@@ -54,7 +54,11 @@ Vote.init({
 class UserVote extends sequelize_1.Model {
 }
 exports.UserVote = UserVote;
-UserVote.init({
+UserVote.init({ id: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     userId: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
@@ -66,6 +70,7 @@ UserVote.init({
 }, {
     tableName: 'user_votes',
     sequelize: services_1.sequelize,
+    timestamps: false,
 });
 Option.findAll({
     attributes: [
