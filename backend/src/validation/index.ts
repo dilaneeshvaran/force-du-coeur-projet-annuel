@@ -2,7 +2,6 @@ export * from './member.validation';
 export * from './task.validation';
 export * from './event.validation';
 export * from './vote.validation';
-export * from './vote-choice.validation';
 export * from './option.validation';
 export * from './message.validation';
 export * from './document.validation';

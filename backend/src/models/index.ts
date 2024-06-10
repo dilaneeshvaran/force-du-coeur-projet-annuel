@@ -2,7 +2,6 @@ export * from './member.model';
 export * from './task.model';
 export * from './event.model';
 export * from './vote.model';
-export { Option as VoteOption } from './vote.model';
 export * from './message.model';
 export * from './document.model';
 export * from './donation.model';

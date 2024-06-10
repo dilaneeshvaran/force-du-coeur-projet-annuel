@@ -26,7 +26,7 @@ const register = async (req: Request, res: Response) => {
 
   
 
-  const token = generateToken(newUser.userId);
+  const token = generateToken(newUser.id);
 
   return res.status(201).json({ newUser, token });
   } catch (error) {
@@ -57,9 +57,9 @@ const login = async (req: RequestWithUser, res: Response) => {
       return res.status(401).send({ message: "le mot de passe est erroné."});
     }
 
-    const token = jwt.sign({ id: user.userId}, 'your_secret_key', { expiresIn: '3h'});
+    const token = jwt.sign({ id: user.id}, 'your_secret_key', { expiresIn: '3h'});
 
-    return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.userId }); 
+    return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.id }); 
   } catch (error) {
     logger.error(error);
     return res.status(500).send({ message: "erreur interne" });

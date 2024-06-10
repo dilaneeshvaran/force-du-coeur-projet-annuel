@@ -7,7 +7,7 @@ class Resource extends sequelize_1.Model {
 }
 exports.Resource = Resource;
 Resource.init({
-    resourceId: {
+    id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true

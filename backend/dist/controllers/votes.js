@@ -20,7 +20,7 @@ const createVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     try {
         const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, createdBy, voterId } = value;
-        if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status || !createdBy || !voterId) {
+        if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status) {
             return res.status(400).json({ message: "Aucun champ ne doit être vide" });
         }
         const newVote = yield models_1.Vote.create({

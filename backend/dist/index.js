@@ -17,7 +17,6 @@ app.use(body_parser_1.default.json());
 app.use(middlewares_1.timeZoneFormatter);
 app.use(middlewares_1.winston);
 app.use(cors());
-app.use('/choices', routers_1.choicesRouter);
 app.use('/documents', routers_1.documentsRouter);
 app.use('/donations', routers_1.donationsRouter);
 app.use('/events', routers_1.eventsRouter);
@@ -32,6 +31,7 @@ app.use('/votes', routers_1.votesRouter);
 app.use('/users', routers_1.usersRouter);
 app.use('/upload', routers_1.uploadRouter);
 app.use('/upload', express_1.default.static('upload'));
+app.use('/options', routers_1.optionsRouter);
 app.use(middlewares_1.errorHandler);
 app.listen(port, () => {
     console.log(`Port http://localhost:${port}`);

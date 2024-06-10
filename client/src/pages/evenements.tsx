@@ -24,7 +24,7 @@ function Evenements() {
 
   return (
     <>
-      <h1>Evenements</h1>
+      <h1 className='title'>Evenements</h1>
       {events.map((event, index) => (
         <div className="ec-container">
           <div key={index} className="event-card">

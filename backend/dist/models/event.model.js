@@ -7,7 +7,7 @@ class Event extends sequelize_1.Model {
 }
 exports.Event = Event;
 Event.init({
-    eventId: {
+    id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true

@@ -3,14 +3,14 @@ import { sequelize } from './../services';
 import { MemberResource } from ".";
 
 export class Resource extends Model {
-  public resourceId!: number;
+  public id!: number;
   public label!: string;
   public type!: string;
   public description!: string;
 }
 
 Resource.init({
-  resourceId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true

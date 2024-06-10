@@ -3,7 +3,7 @@ import { sequelize } from './../services';
 import { Member } from ".";
 
 export class Membership extends Model {
-  public membershipId!: number;
+  public id!: number;
   public amount!: number;
   public paymentDate!: Date;
   public memberId!: number;
@@ -11,7 +11,7 @@ export class Membership extends Model {
 }
 
 Membership.init({
-  membershipId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true

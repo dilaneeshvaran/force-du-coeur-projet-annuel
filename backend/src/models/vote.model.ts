@@ -1,5 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from './../services';
+import { User } from './user.model';
 
 export class Option extends Model {
   public id!: number;
@@ -26,6 +27,7 @@ Option.init({
 }, {
   tableName: 'options',
   sequelize,
+  timestamps: false,  // Added this line
 });
 
 
@@ -58,8 +60,8 @@ Vote.init({
   ongoingRound: DataTypes.ENUM('first-round', 'second-round'),
   votingMethod: DataTypes.ENUM('majority rule', 'absolute majority'),
   status: DataTypes.ENUM('open', 'closed'),
-  createdBy: DataTypes.INTEGER.UNSIGNED, // New field
-  voterId: DataTypes.INTEGER.UNSIGNED, // New field
+  createdBy: DataTypes.INTEGER.UNSIGNED,
+  voterId: DataTypes.INTEGER.UNSIGNED,
 }, {
   tableName: 'votes',
   sequelize,
@@ -84,8 +86,26 @@ UserVote.init({
   sequelize,
 });
 
-Vote.hasMany(Option, { foreignKey: 'voteId' });
+Option.findAll({
+  attributes: [
+    'label',
+    [sequelize.fn('COUNT', sequelize.col('UserVotes.optionId')), 'voteCount']
+  ],
+  include: [{
+    model: UserVote,
+    attributes: []
+  }],
+  group: ['Option.id'],
+  order: [[sequelize.literal('voteCount'), 'DESC']]
+});
+Vote.hasMany(Option, { foreignKey: 'voteId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Option.belongsTo(Vote, { foreignKey: 'voteId' });
 
-Option.hasMany(UserVote, { foreignKey: 'optionId' });
+Option.hasMany(UserVote, { foreignKey: 'optionId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 UserVote.belongsTo(Option, { foreignKey: 'optionId' });
+
+Vote.belongsTo(User, { as: 'Voter', foreignKey: 'voterId', onDelete: 'SET NULL', onUpdate: 'CASCADE' });
+User.hasMany(Vote, { as: 'VotedVotes', foreignKey: 'voterId' });
+
+Vote.belongsTo(User, { as: 'Creator', foreignKey: 'createdBy', onDelete: 'SET NULL', onUpdate: 'CASCADE' });
+User.hasMany(Vote, { as: 'CreatedVotes', foreignKey: 'createdBy' });

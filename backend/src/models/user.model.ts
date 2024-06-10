@@ -9,7 +9,7 @@ export class User extends Model {
     this.hasMany(models.Document, { foreignKey: 'senderId', as: 'sentDocuments' });
     this.hasMany(models.Document, { foreignKey: 'receiverId', as: 'receivedDocuments' });
   }
-  public userId!: number;
+  public id!: number;
   public username!: string;
   public password!: string;
   public email!: string;
@@ -30,7 +30,7 @@ export function associateUser() {
 }
 
 User.init({
-  userId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true

@@ -8,7 +8,7 @@ class Membership extends sequelize_1.Model {
 }
 exports.Membership = Membership;
 Membership.init({
-    membershipId: {
+    id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true

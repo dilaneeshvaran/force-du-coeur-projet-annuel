@@ -7,7 +7,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadRouter = exports.usersRouter = exports.donationsRouter = exports.votesRouter = exports.choicesRouter = exports.useOfResourcesRouter = exports.resourcesRouter = exports.tasksRouter = exports.messagesRouter = exports.documentsRouter = exports.membersRouter = exports.eventsRouter = exports.membershipsRouter = exports.healthRouter = void 0;
+exports.uploadRouter = exports.usersRouter = exports.donationsRouter = exports.votesRouter = exports.optionsRouter = exports.useOfResourcesRouter = exports.resourcesRouter = exports.tasksRouter = exports.messagesRouter = exports.documentsRouter = exports.membersRouter = exports.eventsRouter = exports.membershipsRouter = exports.healthRouter = void 0;
 var health_1 = require("./health");
 Object.defineProperty(exports, "healthRouter", { enumerable: true, get: function () { return health_1.router; } });
 var memberships_1 = require("./memberships");
@@ -27,7 +27,7 @@ Object.defineProperty(exports, "resourcesRouter", { enumerable: true, get: funct
 var useOfResources_1 = require("./useOfResources");
 Object.defineProperty(exports, "useOfResourcesRouter", { enumerable: true, get: function () { return useOfResources_1.router; } });
 var option_1 = require("./option");
-Object.defineProperty(exports, "choicesRouter", { enumerable: true, get: function () { return option_1.router; } });
+Object.defineProperty(exports, "optionsRouter", { enumerable: true, get: function () { return option_1.router; } });
 var votes_1 = require("./votes");
 Object.defineProperty(exports, "votesRouter", { enumerable: true, get: function () { return votes_1.router; } });
 var donations_1 = require("./donations");

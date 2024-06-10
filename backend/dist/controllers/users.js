@@ -35,7 +35,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             firstname,
             lastname
         });
-        const token = (0, services_1.generateToken)(newUser.userId);
+        const token = (0, services_1.generateToken)(newUser.id);
         return res.status(201).json({ newUser, token });
     }
     catch (error) {
@@ -60,8 +60,8 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!isPasswordCorrect) {
             return res.status(401).send({ message: "le mot de passe est erroné." });
         }
-        const token = jsonwebtoken_1.default.sign({ id: user.userId }, 'your_secret_key', { expiresIn: '3h' });
-        return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.userId });
+        const token = jsonwebtoken_1.default.sign({ id: user.id }, 'your_secret_key', { expiresIn: '3h' });
+        return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.id });
     }
     catch (error) {
         middlewares_1.logger.error(error);

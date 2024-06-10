@@ -25,7 +25,7 @@ function associateUser() {
 }
 exports.associateUser = associateUser;
 User.init({
-    userId: {
+    id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true

@@ -12,7 +12,7 @@ const createVote = async (req: Request, res: Response) => {
   try {
     const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, createdBy, voterId } = value;
 
-    if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status || !createdBy || !voterId ) {
+    if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status ) {
       return res.status(400).json({ message: "Aucun champ ne doit être vide"});
     }
     

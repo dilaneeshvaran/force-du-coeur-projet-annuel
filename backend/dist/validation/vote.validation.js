@@ -17,11 +17,11 @@ const voteValidation = joi_1.default.object({
     startDate: joi_1.default.date().required(),
     endDate: joi_1.default.date().required(),
     votingType: joi_1.default.string().valid('one-round', 'two-round').required(),
-    ongoingRound: joi_1.default.string().valid('first-round', 'second-round').optional(),
+    ongoingRound: joi_1.default.string().valid('first-round', 'second-round').required(),
     votingMethod: joi_1.default.string().valid('majority rule', 'absolute majority').required(),
     status: joi_1.default.string().valid('open', 'closed').optional(),
     createdBy: joi_1.default.number().optional(),
-    voterId: joi_1.default.number().required()
+    voterId: joi_1.default.number().optional()
 });
 exports.voteValidation = voteValidation;
 const validateVote = (data) => {
