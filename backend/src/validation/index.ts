@@ -11,3 +11,4 @@ export * from './resource.validation';
 export * from './member-resource.validation';
 export * from './useOfResource.validation';
 export * from './user.validation';
+export * from './participation.validation';

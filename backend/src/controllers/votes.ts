@@ -10,6 +10,7 @@ const createVote = async (req: Request, res: Response) => {
   }
 
   try {
+    console.log('Received data:', req.body);
     const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, createdBy, voterId } = value;
 
     if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status ) {
@@ -29,9 +30,9 @@ const createVote = async (req: Request, res: Response) => {
       voterId
     });
     return res.status(201).json(newVote);
-  } catch (error) {
-    logger.error(error);
-    return res.status(500).json({ message: "Erreur lors de la création d'un vote"});
+  }    catch (error) {
+    logger.error('Error creating vote:', error);
+    return res.status(500).json({ message: "Erreur lors de la création d'un vote", error: (error as Error).message });
   }
 }
 

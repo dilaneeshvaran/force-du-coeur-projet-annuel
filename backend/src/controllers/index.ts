@@ -10,3 +10,4 @@ export * from './votes';
 export * from './options';
 export * from './useOfResources';
 export * from './users';
+export * from './participations';

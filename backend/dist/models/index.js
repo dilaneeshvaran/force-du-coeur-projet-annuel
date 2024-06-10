@@ -26,3 +26,4 @@ __exportStar(require("./resource.model"), exports);
 __exportStar(require("./member-resource.model"), exports);
 __exportStar(require("./useOfResource.model"), exports);
 __exportStar(require("./user.model"), exports);
+__exportStar(require("./participation.model"), exports);

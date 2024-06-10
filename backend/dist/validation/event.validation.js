@@ -6,11 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateEvent = exports.eventValidation = void 0;
 const joi_1 = __importDefault(require("joi"));
 const eventValidation = joi_1.default.object({
-    title: joi_1.default.string().required(),
-    description: joi_1.default.string().required(),
-    date: joi_1.default.date().required(),
-    location: joi_1.default.string().required(),
-    availableSpots: joi_1.default.number().required()
+    title: joi_1.default.string().optional(),
+    description: joi_1.default.string().optional(),
+    date: joi_1.default.date().optional(),
+    location: joi_1.default.string().optional(),
+    availableSpots: joi_1.default.number().optional(),
+    membersOnly: joi_1.default.boolean().optional()
 });
 exports.eventValidation = eventValidation;
 const validateEvent = (data) => {

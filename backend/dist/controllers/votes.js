@@ -19,6 +19,7 @@ const createVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return res.status(400).json({ message: error.details[0].message });
     }
     try {
+        console.log('Received data:', req.body);
         const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, createdBy, voterId } = value;
         if (!title || !description || !startDate || !endDate || !votingType || !ongoingRound || !votingMethod || !status) {
             return res.status(400).json({ message: "Aucun champ ne doit être vide" });
@@ -38,8 +39,8 @@ const createVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return res.status(201).json(newVote);
     }
     catch (error) {
-        middlewares_1.logger.error(error);
-        return res.status(500).json({ message: "Erreur lors de la création d'un vote" });
+        middlewares_1.logger.error('Error creating vote:', error);
+        return res.status(500).json({ message: "Erreur lors de la création d'un vote", error: error.message });
     }
 });
 exports.createVote = createVote;

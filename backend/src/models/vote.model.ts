@@ -65,6 +65,7 @@ Vote.init({
 }, {
   tableName: 'votes',
   sequelize,
+  timestamps: false,  
 });
 
 export class UserVote extends Model {

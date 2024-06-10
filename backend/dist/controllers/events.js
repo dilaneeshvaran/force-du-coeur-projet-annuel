@@ -19,8 +19,8 @@ const createEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(400).json({ message: middlewares_1.logger.error(error.details[0].message) });
     }
     try {
-        const { title, description, date, location, availableSpots } = value;
-        if (!title || !description || !date || !location || !availableSpots) {
+        const { title, description, date, location, availableSpots, membersOnly } = value;
+        if (!title || !description || !date || !location || !availableSpots || !membersOnly) {
             res.status(400).json({ message: "Aucun champ ne doit être vide" });
         }
         const newEvent = yield models_1.Event.create({
@@ -28,7 +28,8 @@ const createEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             description,
             date,
             location,
-            availableSpots
+            availableSpots,
+            membersOnly,
         });
         res.status(201).json(newEvent);
     }
@@ -67,7 +68,34 @@ const getEventById = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.getEventById = getEventById;
 const updateEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // TODO
+    try {
+        const eventId = req.params.id;
+        const { title, date, description, location, availableSpots, membersOnly } = req.body;
+        const event = yield models_1.Event.findByPk(eventId);
+        if (event !== null) {
+            if (title !== undefined)
+                event.title = title;
+            if (date !== undefined)
+                event.date = date;
+            if (description !== undefined)
+                event.description = description;
+            if (location !== undefined)
+                event.location = location;
+            if (availableSpots !== undefined)
+                event.availableSpots = availableSpots;
+            if (membersOnly !== undefined)
+                event.membersOnly = membersOnly;
+            yield event.save();
+            res.status(200).json(event);
+        }
+        else {
+            res.status(404).json({ message: "Event not found" });
+        }
+    }
+    catch (error) {
+        middlewares_1.logger.error('Error creating vote:', error);
+        return res.status(500).json({ message: "Erreur lors de la mise a jour d'un event", error: error.message });
+    }
 });
 exports.updateEvent = updateEvent;
 const deleteEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -1,11 +1,12 @@
 import joi from 'joi';
 
 const eventValidation = joi.object ({
-  title: joi.string().required(),
-  description: joi.string().required(),
-  date: joi.date().required(),
-  location: joi.string().required(),
-  availableSpots: joi.number().required()
+  title: joi.string().optional(),
+  description: joi.string().optional(),
+  date: joi.date().optional(),
+  location: joi.string().optional(),
+  availableSpots: joi.number().optional(),
+  membersOnly: joi.boolean().optional()
 });
 
 const validateEvent = (data: any) => {

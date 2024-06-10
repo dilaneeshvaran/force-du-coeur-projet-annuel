@@ -7,7 +7,7 @@ function MonAssociation() {
   const [votes, setVotes] = useState<any>(null);
   const [voteChoices, setVoteChoices] = useState(null);
   const [error, setError] = useState<Error | null>(null);
-
+  const [events, setEvents] = useState<any>(null);
 
   const fetchVotes = async () => {
     fetch('http://localhost:8088/votes')
@@ -24,15 +24,20 @@ function MonAssociation() {
       });
   }
 
+  const fetchEvents = () => {
+    fetch('http://localhost:8088/events')
+      .then(response => response.json())
+      .then(data => setEvents(data))
+      .catch(error => {
+        console.error('Error:', error);
+        setError(error);
+      });
+  }
+
   useEffect(() => {
     fetchVotes()
+    fetchEvents();
   }, []);
-
-
-  const event = {
-    description: 'This is an upcoming event.',
-    date: new Date('2022-02-01'),
-  };
 
 
   if (error) {
@@ -53,7 +58,11 @@ function MonAssociation() {
                 </div>
               })
             }
-            <EventBox event={event} />
+            {
+              events && events.filter((event: any) => event.membersOnly).map((event: any) => {
+                return <EventBox event={event} />
+              })
+            }
           </div>
         </div >
       </>
@@ -62,3 +71,7 @@ function MonAssociation() {
 }
 
 export default MonAssociation;
+
+function setEvents(data: any): any {
+  throw new Error('Function not implemented.');
+}

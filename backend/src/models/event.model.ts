@@ -8,6 +8,7 @@ export class Event extends Model {
   public date!: Date;
   public location!: string;
   public availableSpots!: number;
+  public membersOnly!: boolean; 
 }
 
 Event.init({
@@ -36,6 +37,11 @@ Event.init({
   availableSpots: {
     type: DataTypes.INTEGER,
     allowNull: false
+  },
+  membersOnly: { 
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   }
 }, {
   sequelize,
@@ -43,4 +49,3 @@ Event.init({
   tableName: 'events',
   timestamps: false, 
 });
-

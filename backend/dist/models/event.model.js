@@ -32,6 +32,11 @@ Event.init({
     availableSpots: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
+    },
+    membersOnly: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {
     sequelize: services_1.sequelize,
