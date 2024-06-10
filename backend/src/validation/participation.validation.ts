@@ -1,8 +1,8 @@
 import joi from 'joi';
 
 const participationValidation = joi.object ({
-  userId: joi.string().required(),
-  eventId: joi.string().required(),
+  userId: joi.number().required(),
+  eventId: joi.number().required(),
 });
 
 const validateParticipation = (data: any) => {

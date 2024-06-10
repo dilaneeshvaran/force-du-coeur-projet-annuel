@@ -6,7 +6,8 @@ import { logger } from '../middlewares';
 const createParticipation = async (req: Request, res: Response) => {
   const { error, value } = validateParticipation(req.body);
   if (error) {
-    res.status(400).json({ message: logger.error(error.details[0].message) });
+    logger.error(error.details[0].message);
+    res.status(400).json({ message: error.details[0].message });
   }
   
   try {
@@ -15,7 +16,7 @@ const createParticipation = async (req: Request, res: Response) => {
     if (!userId || !eventId) {
       res.status(400).json({ message: "Aucun champ ne doit être vide"});
     }
-
+  
     const newParticipation = await Participation.create({
       userId,
       eventId,
@@ -24,8 +25,7 @@ const createParticipation = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Erreur lors de la création de la participation."});
-  }
-}
+  }}
 
 const getAllParticipations = async (req: Request, res: Response) => {
   try {
