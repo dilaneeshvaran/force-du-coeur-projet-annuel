@@ -55,10 +55,10 @@ const updateOption = async (req: Request, res: Response) => {
 
     const option = await Option.findByPk(optionId);
     if (option !== null) {
-      option.id = id;
-      option.label = label;
-      option.voteId = voteId;
-      option.votes = votes;
+      if (id !== undefined)  option.id = id;
+      if (label !== undefined) option.label = label;
+      if (voteId !== undefined) option.voteId = voteId; // voteId is optional
+      if (votes !== undefined) option.votes = votes;
 
       await option.save();
       res.status(200).json(option);

@@ -1,5 +1,5 @@
 .votebox {
-    width: 60%;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -43,11 +43,21 @@
     cursor: pointer;
   }
   
-  .votebox .voting-options button:hover {
-    background-color: #0056b3;
-  }
-  
-  .votebox .chosen-option {
-    color: #007bff;
-    font-weight: bold;
-  }
+  .chosen-option span::before {
+    content: '• ';
+    color: #00aa1c;
+}
+
+.votebox .voting-options button:hover {
+  background-color: #0056b3;
+}
+
+.votebox-options ul li {
+  list-style-type: none;
+}
+
+.chosen-option {
+color: #00aa1c;
+font-weight: bold;
+font-size: 18px; 
+}

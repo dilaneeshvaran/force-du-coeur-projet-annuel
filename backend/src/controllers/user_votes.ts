@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { validateUserVote } from '../validation'; 
-import { UserVote } from '../models';
+import { UserVote,Option } from '../models';
 import { logger } from '../middlewares';
 
 const createUserVote = async (req: Request, res: Response) => {
@@ -122,6 +122,7 @@ const getUserVotesByUserId = async (req: Request, res: Response) => {
       res.status(500).json({ message: "Error encountered while trying to update the user vote"});
     }
   }
+  
 const deleteUserVote = async (req: Request, res: Response) => {
   try {
     const userVoteId = req.params.id;
@@ -138,4 +139,37 @@ const deleteUserVote = async (req: Request, res: Response) => {
   }
 }
 
-export {hasVoted,getAllVotesByUserId,updateUserVote,createUserVote, getAllUserVotes, getUserVoteById, deleteUserVote, getUserVotesByUserId};
+const getUserOptionByVoteId = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const voteId = req.params.voteId;
+
+    const userVote = await UserVote.findOne({
+      where: {
+        userId: userId,
+        voteId: voteId
+      }
+    });
+
+    if (userVote !== null) {
+      const option = await Option.findOne({
+        where: {
+          id: userVote.optionId
+        }
+      });
+
+      if (option !== null) {
+        res.status(200).json({ option: option });
+      } else {
+        res.status(404).json({ message: "Option not found" });
+      }
+    } else {
+      res.status(404).json({ message: "User vote not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error encountered while trying to get the user vote option" });
+  }
+}
+
+export {getUserOptionByVoteId,hasVoted,getAllVotesByUserId,updateUserVote,createUserVote, getAllUserVotes, getUserVoteById, deleteUserVote, getUserVotesByUserId};

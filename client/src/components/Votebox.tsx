@@ -30,7 +30,7 @@ export interface Option {
 const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
     const [hasVoted, setHasVoted] = useState(false);
-    const userId = 1;
+    const userId = localStorage.getItem('userId');
     const [userVote, setUserVote] = useState<Option | null>(null);
 
     useEffect(() => {
@@ -45,6 +45,32 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
             .catch(error => console.error('Error:', error));
     }, [userId, vote.id]);
 
+    useEffect(() => {
+        fetch(`http://localhost:8088/user_votes/${userId}/vote/${vote.id}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.option) {
+                    setSelectedOption(data.option);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }, [userId, vote.id]);
+
+    const updateOptionVotes = (optionId: string) => {
+        fetch(`http://localhost:8088/options/${optionId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ votes: 1 }), // increment votes by 1
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Votes updated:', data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
     const handleVote = () => {
         if (selectedOption) {
             fetch('http://localhost:8088/user_votes', {
@@ -58,6 +84,7 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
                 .then(data => {
                     console.log('Vote successful:', data);
                     setHasVoted(true);
+                    updateOptionVotes(selectedOption.id.toString());
                 })
                 .catch(error => console.error('Error:', error));
         }
@@ -106,7 +133,9 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
                 ) : (
                     <ul>
                         {options.map((option, index) => (
-                            <li key={index}>{option.label}</li>
+                            <li key={index} className={selectedOption && selectedOption.id === option.id ? 'chosen-option' : ''}>
+                                <span>{option.label}</span>
+                            </li>
                         ))}
                     </ul>
                 )}

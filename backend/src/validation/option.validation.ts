@@ -1,8 +1,8 @@
 import joi from 'joi';
 
 const optionValidation = joi.object ({
-  label: joi.string().required(),
-  voteId: joi.number().integer().min(0).required(),
+  label: joi.string().optional(),
+  voteId: joi.number().integer().min(0).optional(),
   votes: joi.number().integer().min(0).optional()
 });
 
