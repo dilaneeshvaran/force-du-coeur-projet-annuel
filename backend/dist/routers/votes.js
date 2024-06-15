@@ -17,3 +17,5 @@ exports.router.get('/:id', controllers_1.getVoteById);
 exports.router.put('/:id', controllers_1.updateVote);
 //router.put('/:id', isAuth, updateVote);
 exports.router.delete('/:id', controllers_1.deleteVote);
+exports.router.get('/user/:id', controllers_1.getAllVotesByUserId);
+exports.router.get('/:voteId/user/:userId', controllers_1.hasVoted);

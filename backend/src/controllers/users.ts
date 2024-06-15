@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { validateUser, validateUserAuth } from '../validation';
 import { generateToken } from '../services';
-import { User } from '../models';
+import { User, UserVote } from '../models';
 import { RequestWithUser, logger } from '../middlewares';
 import { tokenRevocationList } from '../routers/users';
 

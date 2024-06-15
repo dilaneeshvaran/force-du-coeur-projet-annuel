@@ -82,4 +82,6 @@ const deleteVote = async (req: Request, res: Response) => {
   }
 }
 
+
+
 export { createVote, getAllVotes, getVoteById, updateVote, deleteVote };

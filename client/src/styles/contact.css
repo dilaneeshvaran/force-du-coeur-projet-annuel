@@ -1,3 +1,38 @@
 .containerContact {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; 
+}
+
+.contactForm {
+  margin-top: 1rem;
+  width: 40rem;
+  margin-bottom: 1rem;
+}
+
+.contactForm h3 {
+  margin-bottom: 20px;
+}
+
+.contactForm form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactForm input, .contactForm textarea {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.contactForm button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
 }

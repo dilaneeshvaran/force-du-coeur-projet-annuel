@@ -1,18 +1,40 @@
 .navbar {
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+.parent-container {
+  display: flex;
 }
 
 .container {
   display: flex;
   align-items: center;
   background-color: rgb(255, 255, 255);
+  border-bottom: 3px solid rgb(222, 222, 222);
+  border-radius: 30px;
+  margin-left: 4rem;
+}
 
+
+.logout-box{
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
 }
 
 .navbar-item {
     display: inline;
     margin-right: 70px;
+    color:black;
 }
+.navbar-item:hover {
+  color: red  ;
+  filter: drop-shadow(0 0 1em #ff5900);
+
+}
+
 .is-active {
     color: red;
   }
@@ -35,5 +57,4 @@
     display:flex;
     float:right;
     margin-top:50px;
-    
   }

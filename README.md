@@ -12,6 +12,8 @@ Pour démarrer le client/backoffice, exécutez les commandes suivantes une aprè
 
 --------------------------------------CLIENT---------------------------------------------------
 TODO
+//Home screen add infos
+
 //voir les evenements / votes / sondages (blocks de posts/affiche le resultat si vote/sondage terminé)
 //mot de passe oublié
 //connect stripe to payment

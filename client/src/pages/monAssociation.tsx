@@ -31,13 +31,14 @@ function MonAssociation() {
     fetch(`http://localhost:8088/options/${voteId}`)
       .then(response => response.json())
       .then(data => {
-        setVoteOptions(prevOptions => [...prevOptions, ...data]);
+        setVoteOptions(data);
       })
       .catch(error => {
         console.error('Error:', error);
         setError(error);
       });
   };
+  console.log(voteOptions);
 
   const fetchEvents = () => {
     fetch('http://localhost:8088/events')

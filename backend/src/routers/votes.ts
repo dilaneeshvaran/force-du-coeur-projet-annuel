@@ -3,7 +3,7 @@
  */
 
 import express, { Router, Request, Response } from "express";
-import { createVote, deleteVote, getAllVotes, getVoteById, updateVote } from '../controllers';
+import {hasVoted,getAllVotesByUserId, createVote, deleteVote, getAllVotes, getVoteById, updateVote } from '../controllers';
 
 export const router = Router();
 
@@ -17,3 +17,5 @@ router.get('/:id', getVoteById);
 router.put('/:id', updateVote);
 //router.put('/:id', isAuth, updateVote);
 router.delete('/:id', deleteVote);
+router.get('/user/:id',getAllVotesByUserId);
+router.get('/:voteId/user/:userId', hasVoted);

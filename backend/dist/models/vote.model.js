@@ -25,7 +25,7 @@ Option.init({
 }, {
     tableName: 'options',
     sequelize: services_1.sequelize,
-    timestamps: false, // Added this line
+    timestamps: false,
 });
 class Vote extends sequelize_1.Model {
 }
@@ -54,12 +54,17 @@ Vote.init({
 class UserVote extends sequelize_1.Model {
 }
 exports.UserVote = UserVote;
-UserVote.init({ id: {
+UserVote.init({
+    id: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
     },
     userId: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+    },
+    voteId: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
     },
@@ -75,7 +80,7 @@ UserVote.init({ id: {
 Option.findAll({
     attributes: [
         'label',
-        [services_1.sequelize.fn('COUNT', services_1.sequelize.col('UserVotes.optionId')), 'voteCount']
+        [services_1.sequelize.fn('COUNT', services_1.sequelize.col('UserVotes.voteId')), 'voteCount']
     ],
     include: [{
             model: UserVote,
@@ -86,9 +91,9 @@ Option.findAll({
 });
 Vote.hasMany(Option, { foreignKey: 'voteId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 Option.belongsTo(Vote, { foreignKey: 'voteId' });
-Option.hasMany(UserVote, { foreignKey: 'optionId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
-UserVote.belongsTo(Option, { foreignKey: 'optionId' });
 Vote.belongsTo(user_model_1.User, { as: 'Voter', foreignKey: 'voterId', onDelete: 'SET NULL', onUpdate: 'CASCADE' });
 user_model_1.User.hasMany(Vote, { as: 'VotedVotes', foreignKey: 'voterId' });
 Vote.belongsTo(user_model_1.User, { as: 'Creator', foreignKey: 'createdBy', onDelete: 'SET NULL', onUpdate: 'CASCADE' });
 user_model_1.User.hasMany(Vote, { as: 'CreatedVotes', foreignKey: 'createdBy' });
+Option.hasMany(UserVote, { foreignKey: 'optionId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+UserVote.belongsTo(Option, { foreignKey: 'optionId' });

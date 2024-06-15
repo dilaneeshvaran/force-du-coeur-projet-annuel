@@ -15,8 +15,8 @@ const Logout: React.FC<LogoutProps> = ({ onLogout }) => {
   return (
     <div className="logout-div">
       <a className="logout-btn" onClick={handleLogout}>
-  <RiShutDownLine className="logout-logo" size={30} />
-</a>
+        <RiShutDownLine className="logout-logo" size={30} />
+      </a>
     </div>
   );
 };

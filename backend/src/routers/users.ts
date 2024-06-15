@@ -3,7 +3,7 @@
  */
 
 import express, { Router, Request, Response } from "express";
-import { register, login, adminAccess, logout, getAllUsers, getUserById, deleteUser } from '../controllers';
+import { register, login,adminAccess, logout, getAllUsers, getUserById, deleteUser } from '../controllers';
 import { authenticateToken } from "../middlewares";
 
 export const router = Router();

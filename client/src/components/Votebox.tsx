@@ -21,6 +21,7 @@ interface VoteBoxProps {
 }
 
 export interface Option {
+    id: number;
     label: string;
     voteId: number;
     votes: number;
@@ -30,13 +31,15 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
     const [hasVoted, setHasVoted] = useState(false);
     const userId = 1;
+    const [userVote, setUserVote] = useState<Option | null>(null);
 
     useEffect(() => {
-        fetch(`http://localhost:8088/user_votes/check/${userId}/${vote.id}`)
+        fetch(`http://localhost:8088/votes/${vote.id}/user/${userId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.hasVoted) {
                     setHasVoted(true);
+                    setUserVote(data.vote);
                 }
             })
             .catch(error => console.error('Error:', error));
@@ -49,7 +52,7 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ userId, optionId: selectedOption.voteId }),
+                body: JSON.stringify({ userId, voteId: selectedOption.voteId, optionId: selectedOption.id }),
             })
                 .then(response => response.json())
                 .then(data => {
@@ -85,7 +88,12 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
                                 value={option.label}
                                 onChange={e => setSelectedOption(option)}
                             />
-                            <label htmlFor={`option-${index}`}>{option.label}</label>
+                            <label
+                                htmlFor={`option-${index}`}
+                                className={userVote && userVote.id === option.id ? 'chosen-option' : ''}
+                            >
+                                {option.label}
+                            </label>
                         </div>
                     ))}
                     <button type="button" onClick={handleVote}>Vote</button>

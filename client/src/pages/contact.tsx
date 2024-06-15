@@ -6,6 +6,16 @@ function Contact() {
     <>
       <h1>Contactez Nous</h1>
       <div className='containerContact'>
+
+        <div className="contactForm">
+          <h3>Contact Us</h3>
+          <form>
+            <input type="text" name="name" placeholder="Your Name" required />
+            <input type="email" name="email" placeholder="Your Email" required />
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
         <div className="card">
           <p>
             <h3>Suivez la Force du Coeur sur les Réseau Sociaux</h3><br></br>
@@ -15,7 +25,7 @@ function Contact() {
           </p>
         </div>
         <p>
-          email : fdc@fdc.com
+          email : fdc@gmail.com
         </p>
       </div>
     </>
