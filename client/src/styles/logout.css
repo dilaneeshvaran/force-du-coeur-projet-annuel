@@ -3,10 +3,10 @@
 .logout-logo{
 will-change: filter;
   transition: filter 300ms;
-  color:red;
+  color: #a40000;
 }
 
   .logout-logo:hover{
-    filter: drop-shadow(0 0 2em #ff5900);
+    filter: drop-shadow(0 0 2em hsl(0, 0%, 28%));
     color: black;
   }

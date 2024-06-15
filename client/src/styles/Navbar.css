@@ -30,14 +30,13 @@
     color:black;
 }
 .navbar-item:hover {
-  color: red  ;
-  filter: drop-shadow(0 0 1em #ff5900);
+  color: #a40000;
 
 }
 
-.is-active {
-    color: red;
-  }
+.navbar-item.is-active {
+  color: #a40000;
+}
 
 .logo {
     padding: 1.5em;
@@ -45,7 +44,7 @@
   transition: filter 300ms;
   }
   .logofdc:hover {
-    filter: drop-shadow(0 0 2em #ff5900);
+    filter: drop-shadow(0 0 2em #dddddd);
   }
 
   .logofdc {

@@ -14,7 +14,7 @@ function Evenements() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const response = await fetch('http://localhost:8088/events'); // Replace with your API endpoint
+      const response = await fetch('http://localhost:8088/events');
       const data = await response.json();
       setEvents(data);
     };
@@ -24,20 +24,14 @@ function Evenements() {
 
   return (
     <>
-      <h1 className='title'>Evenements & Missions</h1>
       {events.map((event, index) => (
-        <div className="ec-container">
-          <div key={index} className="event-card">
-            <h2 className='event-title'>{event.title}</h2>
-            <p className="event-desc">{event.description}</p>
-            <p className='event-date'>{event.date}</p>
-            <p className='event-location'>{event.location}</p>
-          </div>
+        <div key={index} className="eventbox">
+          <h2>{event.title}</h2>
+          <p>{event.description}</p>
+          <p>Date: {new Date(event.date).toLocaleDateString()}</p>
+          <p>Location: {event.location}</p>
         </div>
       ))}
-      <p>
-        email : fdc@fdc.com
-      </p>
     </>
   )
 }

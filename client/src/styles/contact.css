@@ -32,7 +32,11 @@
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #007BFF;
+  background-color: #595959;
   color: white;
   cursor: pointer;
+}
+
+.contactForm button:hover {
+  background-color: #a40000;
 }

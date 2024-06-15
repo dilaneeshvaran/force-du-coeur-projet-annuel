@@ -69,47 +69,53 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
 
     return (
         <div className="votebox">
-            <h2>{vote.title} - {vote.status === 'open' ? 'Voting' : 'Closed'}</h2>
-            <p>Description: {vote.description}</p>
-            <p>Start Date: {new Date(vote.startDate).toLocaleDateString()}</p>
-            <p>End Date: {new Date(vote.endDate).toLocaleDateString()}</p>
-            <p>Voting Type: {vote.votingType}</p>
-            <p>Ongoing Round: {vote.ongoingRound}</p>
-            <p>Voting Method: {vote.votingMethod}</p>
-            <h3>Options</h3>
-            {vote.status === 'open' && !hasVoted ? (
-                <form className='voting-options'>
-                    {options.map((option, index) => (
-                        <div key={index}>
-                            <input
-                                type="radio"
-                                id={`option-${index}`}
-                                name="vote"
-                                value={option.label}
-                                onChange={e => setSelectedOption(option)}
-                            />
-                            <label
-                                htmlFor={`option-${index}`}
-                                className={userVote && userVote.id === option.id ? 'chosen-option' : ''}
-                            >
-                                {option.label}
-                            </label>
-                        </div>
-                    ))}
-                    <button type="button" onClick={handleVote}>Vote</button>
-                </form>
-            ) : (
-                <ul>
-                    {options.map((option, index) => (
-                        <li key={index}>{option.label}</li>
-                    ))}
-                </ul>
-            )}
+            <div className="votebox-header">
+                <h2>{vote.title} - {vote.status === 'open' ? 'Voting' : 'Closed'}</h2>
+            </div>
+            <div className="votebox-details">
+                <p>Description: {vote.description}</p>
+                <p>Start Date: {new Date(vote.startDate).toLocaleDateString()}</p>
+                <p>End Date: {new Date(vote.endDate).toLocaleDateString()}</p>
+                <p>Voting Type: {vote.votingType}</p>
+                <p>Ongoing Round: {vote.ongoingRound}</p>
+                <p>Voting Method: {vote.votingMethod}</p>
+            </div>
+            <div className="votebox-options">
+                <h3>Options</h3>
+                {vote.status === 'open' && !hasVoted ? (
+                    <form className='voting-options'>
+                        {options.map((option, index) => (
+                            <div key={index}>
+                                <input
+                                    type="radio"
+                                    id={`option-${index}`}
+                                    name="vote"
+                                    value={option.label}
+                                    onChange={e => setSelectedOption(option)}
+                                />
+                                <label
+                                    htmlFor={`option-${index}`}
+                                    className={userVote && userVote.id === option.id ? 'chosen-option' : ''}
+                                >
+                                    {option.label}
+                                </label>
+                            </div>
+                        ))}
+                        <button type="button" onClick={handleVote}>Vote</button>
+                    </form>
+                ) : (
+                    <ul>
+                        {options.map((option, index) => (
+                            <li key={index}>{option.label}</li>
+                        ))}
+                    </ul>
+                )}
+            </div>
             {vote.status === 'closed' && (
-                <>
+                <div className="votebox-result">
                     <h3>Result</h3>
                     <p>{vote.result}</p>
-                </>
+                </div>
             )}
         </div>
     );

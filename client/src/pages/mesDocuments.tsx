@@ -13,6 +13,7 @@ interface Document {
 
 function MesDocuments() {
     const [documents, setDocuments] = useState<Document[]>([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const userId = Number(localStorage.getItem('userId'));
@@ -86,12 +87,14 @@ function MesDocuments() {
                 <a href='#' className='nav-ged-link' onClick={() => handleLinkClick('archived')}>Documents Archivés</a>
             </div>
             <div className='doc-list'>
+                <div className='searchbar-ged'><input type="text" value={searchTerm} onChange={event => setSearchTerm(event.target.value)} placeholder="Search documents..." /></div>
+
                 {(selectedLink === 'received' &&
                     <div>
                         {
-                            documents.filter(document => !document.isArchieved).length === 0 ? <p>No documents</p> : <div>
+                            documents.filter(document => !document.isArchieved && document.title.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 ? <p>No documents</p> : <div>
                                 {
-                                    documents.filter(document => !document.isArchieved).map(document => (
+                                    documents.filter(document => !document.isArchieved && document.title.toLowerCase().includes(searchTerm.toLowerCase())).map(document => (
                                         <div key={document.id}>
                                             <h2>{document.title}</h2>
                                             <p>{document.description}</p>
@@ -107,9 +110,9 @@ function MesDocuments() {
                 {(selectedLink === 'archived' &&
                     <div>
                         {
-                            documents.filter(document => document.isArchieved).length === 0 ? <p>No archived documents</p> : <div>
+                            documents.filter(document => document.isArchieved && document.title.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 ? <p>No archived documents</p> : <div>
                                 {
-                                    documents.filter(document => document.isArchieved).map(document => (
+                                    documents.filter(document => document.isArchieved && document.title.toLowerCase().includes(searchTerm.toLowerCase())).map(document => (
                                         <div key={document.id}>
                                             <h2>{document.title}</h2>
                                             <p>{document.description}</p>

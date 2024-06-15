@@ -13,8 +13,15 @@ Pour démarrer le client/backoffice, exécutez les commandes suivantes une aprè
 --------------------------------------CLIENT---------------------------------------------------
 TODO
 //Home screen add infos
-
-//voir les evenements / votes / sondages (blocks de posts/affiche le resultat si vote/sondage terminé)
+//gestion de mon compte with real data
+//dons/cotisation with real data
+//mes taches / messages (write/received) real data
+//mon association (votes/events) clean up
+//public : voir les evenements / votes / sondages (blocks de posts/affiche le resultat si vote/sondage terminé)
+//équipes real data
+//connect contact with real data
+//soutenir nos actions button size fix
+//don punctual/periodic/cotisation with actual paiement (stripe)
 //mot de passe oublié
 //connect stripe to payment
 //GED : recherche & le classement
@@ -22,9 +29,20 @@ TODO
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
-  //change email & password in admin settings
-  //replace fakedata with the database
-  //ressources>inventory management/used
+//login with api
+//real performance
+//content manage clean
+//content manager with real api
+//members with search+real api
+//task manage filter/search+real api
+//real finance info+clean up
+//ressources>inventory management/used+real api
+//clean mesages+real api(doc/message)
+//admin setting clean+real api
+//alerts with mail alert+ clean up
+//real logout
+//change email & password in admin settings
+//replace fakedata with the database
 
 --------------------------------------BACKEND--------------------------------------------------
 TODO

@@ -81,13 +81,17 @@ const EventBox: React.FC<EventBoxProps> = ({ event }) => {
             <p>Date: {new Date(event.date).toLocaleDateString()}</p>
             <p>Location: {event.location}</p>
             <p>Available Spots: {availableSpots}</p>
-            <button
-                type="button"
-                onClick={handleParticipation}
-                style={{ backgroundColor: isParticipating ? 'green' : 'initial' }}
-            >
-                Participate
-            </button>
+            {userId && (
+                <div className="button-container">
+                    <button
+                        type="button"
+                        onClick={handleParticipation}
+                        className={isParticipating ? 'participating' : ''}
+                    >
+                        Participate
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
