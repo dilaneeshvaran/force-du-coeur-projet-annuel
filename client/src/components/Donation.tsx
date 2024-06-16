@@ -1,46 +1,58 @@
 import React, { useState } from 'react';
-import { Donation as DonationType } from '../pages/manageAccount';
 import Account from './Account';
 
 interface DonationProps {
-    account: Account;
-    onDonationChange: (id: number, newFrequency: 'monthly' | 'yearly' | 'none' | undefined, amount: number) => void;
+    donation: DonationInterface;
+    onDonationChange: (id: number, newFrequency: 'monthly' | 'yearly' | 'punctual' | undefined, amount: number) => void;
 }
 
-const Donation: React.FC<DonationProps> = ({ account, onDonationChange }) => {
-    const [donationAmount, setDonationAmount] = useState<number | ''>(account.donationAmount || '');
-    const [donationFrequency, setDonationFrequency] = useState<'monthly' | 'yearly' | 'none'>(account.donationFrequency || 'none');
+export interface DonationInterface {
+    id: number;
+    amount: number;
+    donationDate: Date;
+    fullname: string;
+    paymentMethod: string;
+    email: string;
+    donationFrequency: 'monthly' | 'yearly' | 'punctual';
+    donatorId: number;
+}
+
+const Donation: React.FC<DonationProps> = ({ donation, onDonationChange }) => {
+    const [donationAmount, setDonationAmount] = useState<number | ''>(donation.amount || '');
+    const [donationFrequency, setDonationFrequency] = useState<'monthly' | 'yearly' | 'punctual'>(donation.donationFrequency);
     const [showDonationForm, setShowDonationForm] = useState<boolean>(false);
-    const [tempFrequency, setTempFrequency] = useState<'monthly' | 'yearly' | 'none'>(account.donationFrequency || 'none');
-    const [tempAmount, setTempAmount] = useState<number | ''>(account.donationAmount || '');
+    const [tempFrequency, setTempFrequency] = useState<'monthly' | 'yearly' | 'punctual'>(donation.donationFrequency);
+    const [tempAmount, setTempAmount] = useState<number | ''>(donation.amount || '');
 
     const handleDonation = () => {
         setDonationFrequency(tempFrequency);
         setDonationAmount(tempAmount);
-        onDonationChange(account.id, tempFrequency, Number(tempAmount));
+        onDonationChange(donation.id, tempFrequency, Number(tempAmount));
         setShowDonationForm(false);
     };
 
     const handleCancelDonation = () => {
-        onDonationChange(account.id, 'none', 0);
+        onDonationChange(donation.id, 'punctual', 0);
         setDonationAmount('');
-        setDonationFrequency('none');
+        setDonationFrequency('punctual');
         setShowDonationForm(false);
     };
 
-    const handleFrequencyChange = (newFrequency: 'monthly' | 'yearly' | 'none') => {
+    const handleFrequencyChange = (newFrequency: 'monthly' | 'yearly' | 'punctual') => {
         setTempFrequency(newFrequency);
+    };
+
+    const handleDonationFrequencyChange = (id: number, newFrequency: 'monthly' | 'yearly' | 'punctual' | undefined, amount: number) => {
+        // Your function implementation here
     };
 
     const handleAmountChange = (newAmount: number) => {
         setTempAmount(newAmount);
     };
 
-
-
     return (
-        <div key={account.id}>
-            {donationFrequency !== 'none' ? (
+        <div key={donation.id}>
+            {donationFrequency !== 'punctual' ? (
                 <>
                     <p>Donation Frequency: {donationFrequency} ({donationAmount}€)</p>
                     <button onClick={() => setShowDonationForm(!showDonationForm)}>
@@ -84,14 +96,7 @@ const Donation: React.FC<DonationProps> = ({ account, onDonationChange }) => {
                     )}
                 </>
             )}
-            {account.donations && (
-                <div>
-                    <h3>History of Donations:</h3>
-                    {account.donations.map((donation: DonationType, index: number) => (
-                        <p key={index}>Donated {donation.amount}€ on {new Date(donation.date).toLocaleDateString()} ({donation.frequency})</p>
-                    ))}
-                </div>
-            )}
+
         </div>
     );
 };

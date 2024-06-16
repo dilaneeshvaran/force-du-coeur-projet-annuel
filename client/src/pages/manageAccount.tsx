@@ -2,26 +2,32 @@ import '../styles/taches.css';
 import { useState } from 'react';
 import Membership from '../components/Membership';
 import Account from '../components/Account';
-import Donation from '../components/Donation';
+import Donation, { DonationInterface } from '../components/Donation';
 import { useLocation } from 'react-router-dom';
 
-export interface Donation {
-    amount: number | undefined;
-    date: Date;
-    frequency: 'monthly' | 'yearly' | 'none';
-}
-
 function ManageAccount() {
-    const [account, setAccount] = useState<Account[]>([
+    const [memberships, setMemberships] = useState<Membership[]>([
         {
             id: 1,
-            name: 'John Doe',
-            email: 'johndoe@example.com',
-            dateOfBirth: new Date('1990-01-01'),
-            membershipStatus: 'inactive',
-            donationFrequency: 'none',
+            amount: 0,
+            paymentDate: new Date(),
+            userId: 1,
+            status: 'inactive',
         },
     ]);
+    const [donations, setDonations] = useState<DonationInterface[]>([
+        {
+            id: 1,
+            amount: 0,
+            donationDate: new Date(),
+            fullname: "billa",
+            paymentMethod: "paypal",
+            email: "k@l.com",
+            donationFrequency: 'monthly',
+            donatorId: 1
+        },
+    ]);
+    const [accounts, setAccounts] = useState<Account[]>([]); // Define the account state
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -35,22 +41,23 @@ function ManageAccount() {
         setSelectedType(type);
     };
 
-    const handleMembershipChange = (id: number, newStatus: string, amount: number) => {
-        const newStartDate = newStatus === 'active' ? new Date() : undefined;
-        setAccount(account.map(acc => acc.id === id ? { ...acc, membershipStatus: newStatus, membershipAmount: amount, membershipStartDate: newStartDate } : acc));
+    const handleMembershipChange = (id: number, newStatus: 'active' | 'inactive', amount: number) => {
+        const newPaymentDate = newStatus === 'active' ? new Date() : new Date(0);
+        setMemberships(memberships.map(mem => mem.id === id ? { ...mem, status: newStatus, amount: amount, paymentDate: newPaymentDate } : mem));
         setShowMembershipOptions(false);
     };
 
-
-    const handleDonationFrequencyChange = (id: number, newFrequency: 'monthly' | 'yearly' | 'none' | undefined, amount: number) => {
-        setAccount(account.map(acc => acc.id === id ? { ...acc, donationFrequency: newFrequency, donationAmount: amount, donations: newFrequency ? [...(acc.donations || []), { amount, date: new Date(), frequency: newFrequency }] : acc.donations } : acc));
+    const handleDonationFrequencyChange = (id: number, newFrequency: 'monthly' | 'yearly' | 'punctual' | undefined, amount: number) => {
+        if (newFrequency === undefined) {
+            return;
+        }
+        setDonations(donations.map(don => don.id === id ? { ...don, donationFrequency: newFrequency, donationAmount: amount } : don));
     };
-
 
     const handleAccountChange = (id: number, field: string, value: any) => {
         console.log(`Update account with id ${id}: set ${field} to ${value}`);
 
-        setAccount((prevAccount) => prevAccount.map(acc => {
+        setAccounts((prevAccount) => prevAccount.map(acc => {
             if (acc.id === id) {
                 return { ...acc, [field]: value };
             }
@@ -67,14 +74,14 @@ function ManageAccount() {
             </div>
 
             <div className='taches-list'>
-                {selectedType === 'account' && account.map((acc) => (
+                {selectedType === 'account' && accounts.map((acc) => (
                     <Account account={acc} onAccountChange={handleAccountChange} />
                 ))}
-                {selectedType === 'membership' && account.map((acc) => (
-                    <Membership account={acc} onMembershipChange={handleMembershipChange} />
+                {selectedType === 'membership' && memberships.map((mem) => (
+                    <Membership membership={mem} onMembershipChange={handleMembershipChange} />
                 ))}
-                {selectedType === 'donation' && account.map((acc) => (
-                    <Donation account={acc} onDonationChange={handleDonationFrequencyChange} />
+                {selectedType === 'donation' && donations.map((don) => (
+                    <Donation donation={don} onDonationChange={handleDonationFrequencyChange} />
                 ))}
             </div>
         </div>

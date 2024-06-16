@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import { Donation } from '../pages/manageAccount'
 
 interface Account {
     id: number;
-    name: string;
+    username: string;
     email?: string;
-    dateOfBirth: Date;
-    membershipStatus: string;
-    membershipAmount?: number;
-    membershipStartDate?: Date;
-    donationFrequency?: 'monthly' | 'yearly' | 'none';
-    donationAmount?: number;
-    donations?: Donation[];
+    password: string;
+    firstname: string;
+    lastname?: string;
 }
 
 interface AccountProps {
@@ -21,36 +16,43 @@ interface AccountProps {
 
 const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
     const [showEditForm, setShowEditForm] = useState<boolean>(false);
-    const [tempName, setTempName] = useState<string>(account.name);
+    const [tempUsername, setTempUsername] = useState<string>(account.username);
     const [tempEmail, setTempEmail] = useState<string | undefined>(account.email);
-    const [tempDateOfBirth, setTempDateOfBirth] = useState<Date>(account.dateOfBirth);
+    const [tempFirstname, setTempFirstname] = useState<string>(account.firstname);
+    const [tempLastname, setTempLastname] = useState<string | undefined>(account.lastname);
 
     const handleSave = () => {
         if (onAccountChange) {
-            onAccountChange(account.id, 'name', tempName);
+            onAccountChange(account.id, 'username', tempUsername);
             onAccountChange(account.id, 'email', tempEmail);
-            onAccountChange(account.id, 'dateOfBirth', tempDateOfBirth);
+            onAccountChange(account.id, 'firstname', tempFirstname);
+            onAccountChange(account.id, 'lastname', tempLastname);
         }
         setShowEditForm(false);
     };
 
     return (
         <div key={account.id}>
-            <h2>{account.name}</h2>
+            <h2>{account.username}</h2>
             <p>{account.email}</p>
-            <p>Date Of Birth: {account.dateOfBirth.toLocaleDateString()}</p>
+            <p>Firstname: {account.firstname}</p>
+            <p>Lastname: {account.lastname}</p>
             <button onClick={() => setShowEditForm(!showEditForm)}>Mettre à jour les infos</button>
             {showEditForm && (
                 <div>
                     <h2>
-                        <input type="text" value={tempName} onChange={(e) => setTempName(e.target.value)} />
+                        <input type="text" value={tempUsername} onChange={(e) => setTempUsername(e.target.value)} />
                     </h2>
                     <p>
                         <input type="email" value={tempEmail || ''} onChange={(e) => setTempEmail(e.target.value)} />
                     </p>
                     <p>
-                        Date Of Birth:
-                        <input type="date" value={tempDateOfBirth.toISOString().split('T')[0]} onChange={(e) => setTempDateOfBirth(new Date(e.target.value))} />
+                        Firstname:
+                        <input type="text" value={tempFirstname} onChange={(e) => setTempFirstname(e.target.value)} />
+                    </p>
+                    <p>
+                        Lastname:
+                        <input type="text" value={tempLastname || ''} onChange={(e) => setTempLastname(e.target.value)} />
                     </p>
                     <button onClick={handleSave}>Enregistrer</button>
                 </div>
