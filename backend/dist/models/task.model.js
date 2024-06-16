@@ -40,6 +40,14 @@ Task.init({
     createdBy: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
+    },
+    completedDate: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: true
+    },
+    failedDate: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: true
     }
 }, {
     sequelize: services_1.sequelize,

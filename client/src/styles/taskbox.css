@@ -1,0 +1,29 @@
+.task-box {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    margin: 20px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    width: 300px;
+}
+
+.task-box:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-10px);
+}
+
+.task-box h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.task-box p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.task-box input[type="checkbox"] {
+    margin-right: 5px;
+}

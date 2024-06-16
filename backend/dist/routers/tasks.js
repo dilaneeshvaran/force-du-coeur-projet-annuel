@@ -20,3 +20,4 @@ exports.router.get('/:id', controllers_1.getTaskById);
 exports.router.put('/:id', controllers_1.updateTask);
 //router.delete('/:id', isAuth, deleteTask);
 exports.router.delete('/:id', controllers_1.deleteTask);
+exports.router.get('/user/:userId', controllers_1.getTasksByUserId);

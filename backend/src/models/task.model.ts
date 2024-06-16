@@ -11,6 +11,8 @@ export class Task extends Model {
   public status!:  'ongoing' | 'completed' | 'failed';
   public assignedTo!: number;
   public createdBy!: number;
+  public completedDate!: Date;
+  public failedDate!: Date;
 }
 
 Task.init({
@@ -46,6 +48,14 @@ Task.init({
   createdBy: {
     type: DataTypes.INTEGER,
     allowNull: false
+  },
+  completedDate: {
+    type: DataTypes.DATE,
+    allowNull: true 
+  },
+  failedDate: {
+    type: DataTypes.DATE,
+    allowNull: true 
   }
 }, {
   sequelize,

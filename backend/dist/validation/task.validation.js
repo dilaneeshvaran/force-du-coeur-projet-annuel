@@ -8,11 +8,13 @@ const joi_1 = __importDefault(require("joi"));
 const taskValidation = joi_1.default.object({
     title: joi_1.default.string().optional(),
     description: joi_1.default.string().optional(),
-    deadline: joi_1.default.date().required(),
+    deadline: joi_1.default.date().optional(),
     assigned_date: joi_1.default.date().optional(),
     status: joi_1.default.string().valid('ongoing', 'completed', 'failed').optional(),
     assignedTo: joi_1.default.number().optional(),
-    createdBy: joi_1.default.number().optional()
+    createdBy: joi_1.default.number().optional(),
+    completedDate: joi_1.default.date().optional(),
+    failedDate: joi_1.default.date().optional()
 });
 exports.taskValidation = taskValidation;
 const validateTask = (data) => {

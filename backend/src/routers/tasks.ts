@@ -3,7 +3,7 @@
  */
 
 import express, { Router, Request, Response } from "express";
-import { createTask, getAllTasks, getTaskById, updateTask, deleteTask } from '../controllers';
+import { getTasksByUserId,createTask, getAllTasks, getTaskById, updateTask, deleteTask } from '../controllers';
 
 export const router = Router();
 
@@ -22,3 +22,4 @@ router.get('/:id', getTaskById);
 router.put('/:id', updateTask);
 //router.delete('/:id', isAuth, deleteTask);
 router.delete('/:id', deleteTask);
+router.get('/user/:userId', getTasksByUserId);

@@ -1,63 +1,92 @@
+import React, { useState, useEffect } from 'react';
+import TaskBox from '../components/TaskBox';
 import '../styles/taches.css';
-import { useState } from 'react';
 
 interface Tache {
     id: number;
-    name: string;
+    title: string;
     description?: string;
-    type: 'todo' | 'done';
+    deadline: Date;
     assignedDate: Date;
-    doneDate?: Date;
+    status: 'ongoing' | 'completed' | 'failed';
+    completedDate?: Date | null;
+    failedDate?: Date | null;
+    assignedTo: number;
+    createdBy: number;
 }
 
-function MesTaches() {
-    const [taches, setTaches] = useState<Tache[]>([
-        {
-            id: 1,
-            name: 'tache 1',
-            description: 'description.....',
-            type: 'todo',
-            assignedDate: new Date(),
-        },
-        {
-            id: 2,
-            name: 'tache 2',
-            description: 'description....',
-            type: 'done',
-            assignedDate: new Date(),
-            doneDate: new Date(),
-        }
-    ]);
+const MesTaches = () => {
+    const [taches, setTaches] = useState<Tache[]>([]);
+    const [selectedType, setSelectedType] = useState('ongoing');
 
-    const [selectedType, setSelectedType] = useState('todo');
+    useEffect(() => {
+        const fetchTasks = async () => {
+            const response = await fetch('http://localhost:8088/tasks/user/1');
+            const data = await response.json();
+            setTaches(data);
+        };
+
+        fetchTasks();
+    }, []);
 
     const handleTypeClick = (type: string) => {
         setSelectedType(type);
     };
 
-    const handleCheckboxChange = (id: number) => {
-        setTaches(taches.map(tache => tache.id === id ? { ...tache, type: tache.type === 'todo' ? 'done' : 'todo', doneDate: tache.type === 'todo' ? new Date() : undefined } : tache));
+    const handleCheckboxChange = (id: number, newStatus: 'completed' | 'failed' | 'ongoing') => {
+        const updatedTaches = taches.map(tache => {
+            if (tache.id === id) {
+                const isUnchecking = tache.status === newStatus;
+                let updatedStatus = isUnchecking ? 'ongoing' : newStatus;
+                let updatedCompletedDate = null;
+                let updatedFailedDate = null;
+
+                if (newStatus === 'completed' && !isUnchecking) {
+                    updatedCompletedDate = new Date();
+                } else if (newStatus === 'failed' && !isUnchecking) {
+                    updatedFailedDate = new Date();
+                }
+
+                return { ...tache, status: updatedStatus, completedDate: updatedCompletedDate, failedDate: updatedFailedDate };
+            }
+            return tache;
+        });
+
+        setTaches(updatedTaches);
+
+        // Find the task that was updated
+        const taskToUpdate = updatedTaches.find(tache => tache.id === id);
+        if (taskToUpdate) {
+            fetch(`http://localhost:8088/tasks/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    status: taskToUpdate.status,
+                    completedDate: taskToUpdate.completedDate ? taskToUpdate.completedDate.toISOString() : null,
+                    failedDate: taskToUpdate.failedDate ? taskToUpdate.failedDate.toISOString() : null
+                }),
+            })
+                .then(response => response.json())
+                .catch(error => console.error('Error:', error));
+        }
     };
 
     return (
         <div className="taches-box">
             <div className='nav-taches'>
-                <a href='#' className='nav-taches-link' onClick={() => handleTypeClick('todo')}>Tâches</a>
-                <a href='#' className='nav-taches-link' onClick={() => handleTypeClick('done')}>Tâches fait</a>
+                <a href='#' className={`nav-taches-link ${selectedType === 'ongoing' ? 'nav-taches-link-selected' : ''}`} onClick={() => handleTypeClick('ongoing')}>Tâches à faire</a>
+                <a href='#' className={`nav-taches-link ${selectedType === 'completed' ? 'nav-taches-link-selected' : ''}`} onClick={() => handleTypeClick('completed')}>Tâches fait</a>
+                <a href='#' className={`nav-taches-link ${selectedType === 'failed' ? 'nav-taches-link-selected' : ''}`} onClick={() => handleTypeClick('failed')}>Tâches échoués</a>
             </div>
             <div className='taches-list'>
-                {taches.filter(tache => tache.type === selectedType).map((tache) => (
-                    <div key={tache.id}>
-                        <h2>{tache.name}</h2>
-                        <p>{tache.description}</p>
-                        <p>Assigned: {tache.assignedDate.toLocaleDateString()}</p>
-                        {tache.doneDate && <p>Done: {tache.doneDate.toLocaleDateString()}</p>}
-                        <input type="checkbox" checked={tache.type === 'done'} onChange={() => handleCheckboxChange(tache.id)} /> Done
-                    </div>
-                ))}
+                {taches.filter(tache => tache.status === selectedType).map((tache) =>
+                    <TaskBox key={tache.id} tache={tache} handleCheckboxChange={handleCheckboxChange} />
+                )}
             </div>
         </div>
     );
-}
+};
 
 export default MesTaches;
