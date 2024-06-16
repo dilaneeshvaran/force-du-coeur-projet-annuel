@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateMembership = exports.membershipValidation = void 0;
 const joi_1 = __importDefault(require("joi"));
 const membershipValidation = joi_1.default.object({
-    amount: joi_1.default.number().required(),
-    paymentDate: joi_1.default.date().required(),
-    memberId: joi_1.default.number().required(),
-    status: joi_1.default.string().valid('pending', 'paid').required()
+    amount: joi_1.default.number().optional(),
+    paymentDate: joi_1.default.date().optional(),
+    userId: joi_1.default.number().optional(),
+    status: joi_1.default.string().valid('active', 'inactive').optional()
 });
 exports.membershipValidation = membershipValidation;
 const validateMembership = (data) => {

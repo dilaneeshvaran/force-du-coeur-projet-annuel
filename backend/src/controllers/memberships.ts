@@ -11,16 +11,16 @@ const createMembership = async (req: Request, res: Response) => {
   }
   
   try {
-    const { amount, paymentDate, memberId, status } = value;
+    const { amount, paymentDate, userId, status } = value;
     
-    if (!amount || !paymentDate || !memberId || !status) {
+    if (!amount || !userId) {
       res.status(400).json({ message: "Aucun champ ne doit être vide"});
     }
 
     const newMembership = await Membership.create({
       amount,
       paymentDate,
-      memberId,
+      userId,
       status,
     });
     res.status(201).json(newMembership);
@@ -55,10 +55,28 @@ const getMembershipById = async (req: Request, res: Response) => {
   }
 }
 
-const updateMembership = (req: Request, res: Response) => {
-  // TODO
+const updateMembership = async (req: Request, res: Response) => {
+  try {
+    const membershipId = req.params.id;
+    const { amount, paymentDate, userId, status } = req.body;
+  
+    const membership = await Membership.findByPk(membershipId);
+    if (membership !== null) {
+      if (amount !== undefined) membership.amount = amount;
+      if (paymentDate !== undefined) membership.paymentDate = paymentDate;
+      if (userId !== undefined) membership.userId = userId;
+      if (status !== undefined) membership.status = status;
+  
+      await membership.save();
+      res.status(200).json(membership);
+    } else {
+      res.status(404).json({ message: "Membership not found" });
+    }
+  } catch (error) {
+    logger.error('Error updating membership:', error);
+    return res.status(500).json({ message: "Erreur lors de la mise a jour d'un abonnement", error: (error as Error).message });
+  }
 }
-
 
 const deleteMembership = async (req: Request, res: Response) => {
   try {

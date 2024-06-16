@@ -51,3 +51,4 @@
 {"level":"error","message":"\"optionId\" is not allowed","timestamp":"2024-06-11T17:38:56+02:00"}
 {"level":"error","message":"\"optionId\" is not allowed","timestamp":"2024-06-11T17:44:59+02:00"}
 {"level":"error","message":"\"optionId\" is not allowed","timestamp":"2024-06-11T17:45:32+02:00"}
+{"level":"error","message":"\"donation frequency\" is not allowed","timestamp":"2024-06-16T17:46:40+02:00"}

@@ -18,6 +18,9 @@ export class User extends Model {
   public verificationCode!: string;
   public passwordResetCode!: string | null;  
   public verified!: boolean;
+  public role!: "user" | "admin";
+  public memberSince!: Date;
+  public dateOfBirth!: Date;
 }
 
 export const generateValidationCode = (): string => {
@@ -66,7 +69,7 @@ User.init({
   },
   verificationCode: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     defaultValue: generateValidationCode
   },
   passwordResetCode: {
@@ -78,6 +81,20 @@ User.init({
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
+  },  role: {
+    type: DataTypes.ENUM,
+    values: ['user', 'admin'],
+    allowNull: false,
+    defaultValue: 'user'
+  },
+  memberSince: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
+  },
+  dateOfBirth: {
+    type: DataTypes.DATE,
+    allowNull: false
   },
 }, {
   sequelize,

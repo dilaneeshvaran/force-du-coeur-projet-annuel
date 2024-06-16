@@ -14,14 +14,15 @@ const register = async (req: Request, res: Response) => {
   }
 
   try {
-    const { username, password, email, firstname, lastname } = value;
+    const { username, password, email, firstname, lastname, birthOfDate } = value;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       username,
       password: hashedPassword,
       email,
       firstname,
-      lastname
+      lastname,
+      birthOfDate: new Date(value.birthOfDate)
     });
 
   
@@ -66,6 +67,32 @@ const login = async (req: RequestWithUser, res: Response) => {
   }
 }
 
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.id;
+    const { id, username, password, email, firstname, lastname, dateOfBirth,role } = req.body;
+
+    const user = await User.findByPk(userId);
+    if (user !== null) {
+      if (id !== undefined) user.id = id;
+      if (username !== undefined) user.username = username;
+      if (password !== undefined) user.password = await bcrypt.hash(password, 10);
+      if (email !== undefined) user.email = email;
+      if (firstname !== undefined) user.firstname = firstname;
+      if (lastname !== undefined) user.lastname = lastname;
+      if (dateOfBirth !== undefined) user.dateOfBirth = new Date(dateOfBirth);
+      if (role !== undefined) user.role = role;
+
+      await user.save();
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ message: "User not found." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating the user." });
+  }
+}
 
 const adminAccess = (req: Request, res: Response) => {
   // TODO
@@ -131,4 +158,4 @@ const deleteUser = async (req: Request, res: Response) => {
 }
 
 
-export { register, login, adminAccess, logout, getUserById, getAllUsers, deleteUser };
+export {updateUser, register, login, adminAccess, logout, getUserById, getAllUsers, deleteUser };

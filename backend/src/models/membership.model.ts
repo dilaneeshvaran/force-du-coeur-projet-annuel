@@ -6,14 +6,14 @@ export class Membership extends Model {
   public id!: number;
   public amount!: number;
   public paymentDate!: Date;
-  public memberId!: number;
-  public status!: 'pending' | 'paid';
+  public userId!: number;
+  public status!: 'active' | 'inactive';
 }
 
 Membership.init({
   id: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
+    autoIncrement: true,  
     primaryKey: true
   },
   amount: {
@@ -24,16 +24,18 @@ Membership.init({
     type: DataTypes.DATE,
     allowNull: false
   },
-  memberId: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: User,
-      key: 'memberId'
-    }
+      key: 'id'  
+    },
+    onUpdate: 'CASCADE',  
+    onDelete: 'CASCADE' 
   }, 
   status: {
-    type: DataTypes.ENUM('pending', 'paid'),
+    type: DataTypes.ENUM('active', 'inactive'),
     allowNull: false
   },
 }, {
@@ -43,4 +45,5 @@ Membership.init({
   timestamps: false
 });
 
-User.hasMany(Membership, { foreignKey: 'memberId' });
+User.hasMany(Membership, { foreignKey: 'userId' });
+Membership.belongsTo(User, { foreignKey: 'userId' }); 

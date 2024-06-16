@@ -3,16 +3,18 @@ import { sequelize } from './../services';
 import { User } from './user.model';
 
 export class Donation extends Model {
-  public donationId!: number;
+  public id!: number;
   public amount!: number;
   public donationDate!: Date;
-  public donorId!: number;
+  public fullname!: string;
   public paymentMethod!: string;
-  public status!: 'pending' | 'confirmed' | 'cancelled';
+  public email!: string;
+  public donationFrequency!: 'monthly' | 'yearly' | 'punctual';
+  public donatorId!: number;
 }
 
 Donation.init({
-  donationId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
@@ -25,20 +27,28 @@ Donation.init({
     type: DataTypes.DATE,
     allowNull: false
   },
-  donorId: {
+  fullname: { // New field
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: { // New field
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  donationFrequency: { 
+    type: DataTypes.ENUM('monthly', 'yearly', 'punctual'),
+    allowNull: false
+  },
+  donatorId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: User,
-      key: 'memberId'
+      key: 'userId'
     }
   }, 
   paymentMethod: {
     type: DataTypes.STRING,
-    allowNull: false
-  },
-  status: {
-    type: DataTypes.ENUM('pending', 'confirmed', 'cancelled'),
     allowNull: false
   },
 }, {
@@ -48,4 +58,4 @@ Donation.init({
   timestamps: false
 });
 
-User.hasMany(Donation, { foreignKey: 'donorId' });
+User.hasMany(Donation, { foreignKey: 'donatorId' });

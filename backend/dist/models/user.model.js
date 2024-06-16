@@ -60,7 +60,7 @@ User.init({
     },
     verificationCode: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         defaultValue: exports.generateValidationCode
     },
     passwordResetCode: {
@@ -72,6 +72,20 @@ User.init({
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    }, role: {
+        type: sequelize_1.DataTypes.ENUM,
+        values: ['user', 'admin'],
+        allowNull: false,
+        defaultValue: 'user'
+    },
+    memberSince: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: sequelize_1.DataTypes.NOW
+    },
+    dateOfBirth: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false
     },
 }, {
     sequelize: services_1.sequelize,

@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteMembership = exports.updateMembership = exports.getMembershipById = exports.getAllMemberships = exports.createMembership = void 0;
 const validation_1 = require("../validation");
+const middlewares_1 = require("../middlewares");
 const models_1 = require("../models");
 const createMembership = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateMembership)(req.body);
@@ -18,14 +19,14 @@ const createMembership = (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.status(400).json({ message: error.details[0].message });
     }
     try {
-        const { amount, paymentDate, memberId, status } = value;
-        if (!amount || !paymentDate || !memberId || !status) {
+        const { amount, paymentDate, userId, status } = value;
+        if (!amount || !userId) {
             res.status(400).json({ message: "Aucun champ ne doit être vide" });
         }
         const newMembership = yield models_1.Membership.create({
             amount,
             paymentDate,
-            memberId,
+            userId,
             status,
         });
         res.status(201).json(newMembership);
@@ -64,9 +65,32 @@ const getMembershipById = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.getMembershipById = getMembershipById;
-const updateMembership = (req, res) => {
-    // TODO
-};
+const updateMembership = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const membershipId = req.params.id;
+        const { amount, paymentDate, userId, status } = req.body;
+        const membership = yield models_1.Membership.findByPk(membershipId);
+        if (membership !== null) {
+            if (amount !== undefined)
+                membership.amount = amount;
+            if (paymentDate !== undefined)
+                membership.paymentDate = paymentDate;
+            if (userId !== undefined)
+                membership.userId = userId;
+            if (status !== undefined)
+                membership.status = status;
+            yield membership.save();
+            res.status(200).json(membership);
+        }
+        else {
+            res.status(404).json({ message: "Membership not found" });
+        }
+    }
+    catch (error) {
+        middlewares_1.logger.error('Error updating membership:', error);
+        return res.status(500).json({ message: "Erreur lors de la mise a jour d'un abonnement", error: error.message });
+    }
+});
 exports.updateMembership = updateMembership;
 const deleteMembership = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

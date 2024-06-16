@@ -12,23 +12,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDonationById = exports.getAllDonations = exports.createDonation = void 0;
 const validation_1 = require("../validation");
 const models_1 = require("../models");
-const middlewares_1 = require("../middlewares");
 const createDonation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateDonation)(req.body);
     if (error) {
-        res.status(400).json({ message: middlewares_1.logger.error(error.details[0].message) });
+        res.status(400).json({ message: error.details[0].message });
+        return;
     }
     try {
-        const { amount, donationDate, donorId, paymentMethod, status } = value;
-        if (!amount || !donationDate || !donorId || !paymentMethod || !status) {
-            res.status(400).json({ message: "Aucun champ ne doit être vide" });
+        const { amount, donationDate, fullname, paymentMethod, email, donationFrequency, donatorId } = value;
+        if (!amount) {
+            res.status(400).json({ message: "amount champ ne doit être vide" });
+            return;
         }
         const newDonation = yield models_1.Donation.create({
             amount,
             donationDate,
-            donorId,
+            fullname,
             paymentMethod,
-            status
+            email,
+            donationFrequency,
+            donatorId
         });
         res.status(201).json(newDonation);
     }

@@ -6,23 +6,26 @@ import { logger } from '../middlewares';
 const createDonation = async (req: Request, res: Response) => {
   const { error, value } = validateDonation(req.body);
   if (error) {
-    res.status(400).json({ message: logger.error(error.details[0].message) });
+    res.status(400).json({ message: error.details[0].message });
+    return;
   }
   
   try {
-    const { amount, donationDate, donorId, paymentMethod, status } = value;
+    const { amount, donationDate, fullname, paymentMethod, email, donationFrequency, donatorId } = value;
     
-    
-    if (!amount || !donationDate || !donorId || !paymentMethod || !status) {
-      res.status(400).json({ message: "Aucun champ ne doit être vide"});
+    if (!amount) {
+      res.status(400).json({ message: "amount champ ne doit être vide"});
+      return;
     }
 
     const newDonation = await Donation.create({
       amount,
       donationDate,
-      donorId,
+      fullname,
       paymentMethod,
-      status
+      email,
+      donationFrequency,
+      donatorId
     });
     res.status(201).json(newDonation);
   } catch (error) {

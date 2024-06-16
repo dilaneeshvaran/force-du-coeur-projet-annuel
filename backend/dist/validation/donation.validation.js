@@ -6,11 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateDonation = exports.donationValidation = void 0;
 const joi_1 = __importDefault(require("joi"));
 const donationValidation = joi_1.default.object({
-    amount: joi_1.default.number().required(),
-    donationDate: joi_1.default.date().required(),
-    donorId: joi_1.default.number().required(),
-    paymentMethod: joi_1.default.string().required(),
-    status: joi_1.default.string().valid('pending', 'confirmed', 'cancelled').required()
+    amount: joi_1.default.number().optional(),
+    donationDate: joi_1.default.date().optional(),
+    fullname: joi_1.default.string().optional(),
+    paymentMethod: joi_1.default.string().optional(),
+    donationFrequency: joi_1.default.string().valid('monthly', 'yearly', 'punctual').optional(),
+    donatorId: joi_1.default.number().optional(),
+    email: joi_1.default.string().email().optional(),
 });
 exports.donationValidation = donationValidation;
 const validateDonation = (data) => {

@@ -15,7 +15,6 @@ TODO
 //Home screen add infos
 //activity visible to public only if membersOnly is falses
 //gestion de mon compte with real data
-//mes taches
 //public : voir les evenements / votes / sondages
 //équipes real data
 //connect contact with real data

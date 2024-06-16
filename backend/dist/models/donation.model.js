@@ -8,7 +8,7 @@ class Donation extends sequelize_1.Model {
 }
 exports.Donation = Donation;
 Donation.init({
-    donationId: {
+    id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
@@ -21,20 +21,28 @@ Donation.init({
         type: sequelize_1.DataTypes.DATE,
         allowNull: false
     },
-    donorId: {
+    fullname: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    email: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    donationFrequency: {
+        type: sequelize_1.DataTypes.ENUM('monthly', 'yearly', 'punctual'),
+        allowNull: false
+    },
+    donatorId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: user_model_1.User,
-            key: 'memberId'
+            key: 'userId'
         }
     },
     paymentMethod: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
-    status: {
-        type: sequelize_1.DataTypes.ENUM('pending', 'confirmed', 'cancelled'),
         allowNull: false
     },
 }, {
@@ -43,4 +51,4 @@ Donation.init({
     tableName: 'donations',
     timestamps: false
 });
-user_model_1.User.hasMany(Donation, { foreignKey: 'donorId' });
+user_model_1.User.hasMany(Donation, { foreignKey: 'donatorId' });

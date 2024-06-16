@@ -21,16 +21,18 @@ Membership.init({
         type: sequelize_1.DataTypes.DATE,
         allowNull: false
     },
-    memberId: {
+    userId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: user_model_1.User,
-            key: 'memberId'
-        }
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
     },
     status: {
-        type: sequelize_1.DataTypes.ENUM('pending', 'paid'),
+        type: sequelize_1.DataTypes.ENUM('active', 'inactive'),
         allowNull: false
     },
 }, {
@@ -39,4 +41,5 @@ Membership.init({
     tableName: 'memberships',
     timestamps: false
 });
-user_model_1.User.hasMany(Membership, { foreignKey: 'memberId' });
+user_model_1.User.hasMany(Membership, { foreignKey: 'userId' });
+Membership.belongsTo(user_model_1.User, { foreignKey: 'userId' });
