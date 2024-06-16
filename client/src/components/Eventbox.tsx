@@ -9,6 +9,7 @@ interface Event {
     location: string;
     availableSpots: number;
     membersOnly: boolean;
+    participations: number;
 }
 
 interface EventBoxProps {
@@ -20,10 +21,11 @@ const EventBox: React.FC<EventBoxProps> = ({ event }) => {
     const [availableSpots, setAvailableSpots] = useState(event.availableSpots);
     const userId = localStorage.getItem('userId');
 
+
     useEffect(() => {
-        fetch(`http://localhost:8088/participations?userId=${userId}&eventId=${event.id}`)
+        fetch(`http://localhost:8088/participations/user/${userId}/event/${event.id}`)
             .then(response => response.json())
-            .then(data => setIsParticipating(data.length > 0))
+            .then(data => setIsParticipating(data.isParticipating))
             .catch(error => console.error('Error:', error));
     }, [event.id, userId]);
 
@@ -40,6 +42,7 @@ const EventBox: React.FC<EventBoxProps> = ({ event }) => {
             body: JSON.stringify({
                 ...event,
                 availableSpots: newAvailableSpots,
+                participations: isParticipating ? event.participations - 1 : event.participations + 1, // Update participations
             }),
         })
             .then(response => response.json())
@@ -88,7 +91,7 @@ const EventBox: React.FC<EventBoxProps> = ({ event }) => {
                         onClick={handleParticipation}
                         className={isParticipating ? 'participating' : ''}
                     >
-                        Participate
+                        {isParticipating ? 'Cancel Participation' : 'Participate'}
                     </button>
                 </div>
             )}

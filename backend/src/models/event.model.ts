@@ -8,6 +8,7 @@ export class Event extends Model {
   public date!: Date;
   public location!: string;
   public availableSpots!: number;
+  public participations!: number;
   public membersOnly!: boolean; 
 }
 
@@ -35,6 +36,10 @@ Event.init({
     allowNull: false
   },
   availableSpots: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }, 
+  participations: {
     type: DataTypes.INTEGER,
     allowNull: false
   },

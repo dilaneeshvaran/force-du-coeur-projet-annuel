@@ -18,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setCurrentMenuParent, className }) =>
   const location = useLocation();
   const [currentMenu, setCurrentMenu] = useState('monAssociation');
 
-  const menuList = ['monAssociation', 'mesDocuments', 'messages', 'mesTaches', 'gestionDeMonCompteEtDossier']
+  const menuList = ['monAssociation', 'mesDocuments', 'mesTaches', 'gestionDeMonCompteEtDossier']
 
   return (
     <nav

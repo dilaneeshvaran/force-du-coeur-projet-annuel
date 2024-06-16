@@ -33,6 +33,10 @@ Event.init({
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
     },
+    participations: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false
+    },
     membersOnly: {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,

@@ -10,10 +10,10 @@ const createEvent = async (req: Request, res: Response) => {
   }
   
   try {
-    const { title, description, date, location, availableSpots,membersOnly } = value;
+    const { title, description, date, location, availableSpots,membersOnly,participations } = value;
     
-    if (!title || !description || !date || !location || !availableSpots || !membersOnly) {
-      res.status(400).json({ message: "Aucun champ ne doit être vide"});
+    if (!title ) {
+      res.status(400).json({ message: "title peux pas etre vide"});
     }
 
     const newEvent = await Event.create({
@@ -23,6 +23,7 @@ const createEvent = async (req: Request, res: Response) => {
       location,
       availableSpots,
       membersOnly,
+      participations
     });
     res.status(201).json(newEvent);
   } catch (error) {
@@ -60,7 +61,7 @@ const getEventById = async (req: Request, res: Response) => {
 const updateEvent = async (req: Request, res: Response) => {
   try {
     const eventId = req.params.id;
-    const { title, date , description, location , availableSpots,membersOnly} = req.body;
+    const { title, date , description, location , availableSpots,membersOnly,participations} = req.body;
   
     const event = await Event.findByPk(eventId);
     if (event !== null) {
@@ -70,7 +71,7 @@ const updateEvent = async (req: Request, res: Response) => {
       if (location !== undefined) event.location = location;
       if (availableSpots !== undefined) event.availableSpots = availableSpots;
       if (membersOnly !== undefined) event.membersOnly = membersOnly;
-
+      if (participations !== undefined) event.participations = participations;
   
       await event.save();
       res.status(200).json(event);

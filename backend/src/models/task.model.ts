@@ -3,7 +3,7 @@ import { sequelize } from './../services';
 import { Member } from ".";
 
 export class Task extends Model {
-  public taskId!: number;
+  public id!: number;
   public title!: string;
   public description!: string;
   public startDate!: Date;
@@ -14,7 +14,7 @@ export class Task extends Model {
 }
 
 Task.init({
-  taskId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true

@@ -19,9 +19,9 @@ const createEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(400).json({ message: middlewares_1.logger.error(error.details[0].message) });
     }
     try {
-        const { title, description, date, location, availableSpots, membersOnly } = value;
-        if (!title || !description || !date || !location || !availableSpots || !membersOnly) {
-            res.status(400).json({ message: "Aucun champ ne doit être vide" });
+        const { title, description, date, location, availableSpots, membersOnly, participations } = value;
+        if (!title) {
+            res.status(400).json({ message: "title peux pas etre vide" });
         }
         const newEvent = yield models_1.Event.create({
             title,
@@ -30,6 +30,7 @@ const createEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             location,
             availableSpots,
             membersOnly,
+            participations
         });
         res.status(201).json(newEvent);
     }
@@ -70,7 +71,7 @@ exports.getEventById = getEventById;
 const updateEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const eventId = req.params.id;
-        const { title, date, description, location, availableSpots, membersOnly } = req.body;
+        const { title, date, description, location, availableSpots, membersOnly, participations } = req.body;
         const event = yield models_1.Event.findByPk(eventId);
         if (event !== null) {
             if (title !== undefined)
@@ -85,6 +86,8 @@ const updateEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 event.availableSpots = availableSpots;
             if (membersOnly !== undefined)
                 event.membersOnly = membersOnly;
+            if (participations !== undefined)
+                event.participations = participations;
             yield event.save();
             res.status(200).json(event);
         }

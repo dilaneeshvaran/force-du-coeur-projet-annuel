@@ -32,6 +32,13 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
     const [hasVoted, setHasVoted] = useState(false);
     const userId = localStorage.getItem('userId');
     const [userVote, setUserVote] = useState<Option | null>(null);
+    const [showConfirm, setShowConfirm] = useState(false);
+
+    const handleVote = () => {
+        if (selectedOption) {
+            setShowConfirm(true);
+        }
+    };
 
     useEffect(() => {
         fetch(`http://localhost:8088/votes/${vote.id}/user/${userId}`)
@@ -71,8 +78,9 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
             .catch(error => console.error('Error:', error));
     }
 
-    const handleVote = () => {
+    const handleConfirm = () => {
         if (selectedOption) {
+
             fetch('http://localhost:8088/user_votes', {
                 method: 'POST',
                 headers: {
@@ -85,8 +93,12 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
                     console.log('Vote successful:', data);
                     setHasVoted(true);
                     updateOptionVotes(selectedOption.id.toString());
+                    setShowConfirm(false);
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    setShowConfirm(false);
+                });
         }
     };
 
@@ -129,6 +141,13 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
                             </div>
                         ))}
                         <button type="button" onClick={handleVote}>Vote</button>
+                        {showConfirm && (
+                            <div className="confirm-box">
+                                <p>Etes vous sur de voter pour {selectedOption?.label}?</p>
+                                <button type="button" onClick={handleConfirm}>Yes</button>
+                                <button type="button" onClick={() => setShowConfirm(false)}>No</button>
+                            </div>
+                        )}
                     </form>
                 ) : (
                     <ul>

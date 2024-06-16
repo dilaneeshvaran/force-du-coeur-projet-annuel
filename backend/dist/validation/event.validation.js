@@ -11,7 +11,8 @@ const eventValidation = joi_1.default.object({
     date: joi_1.default.date().optional(),
     location: joi_1.default.string().optional(),
     availableSpots: joi_1.default.number().optional(),
-    membersOnly: joi_1.default.boolean().optional()
+    membersOnly: joi_1.default.boolean().optional(),
+    participations: joi_1.default.number().optional()
 });
 exports.eventValidation = eventValidation;
 const validateEvent = (data) => {

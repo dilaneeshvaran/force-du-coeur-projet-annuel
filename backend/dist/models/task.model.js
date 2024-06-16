@@ -8,7 +8,7 @@ class Task extends sequelize_1.Model {
 }
 exports.Task = Task;
 Task.init({
-    taskId: {
+    id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true

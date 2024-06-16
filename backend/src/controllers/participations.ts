@@ -37,6 +37,18 @@ const getAllParticipations = async (req: Request, res: Response) => {
   }
 }
 
+const isUserParticipating = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const eventId = req.params.eventId;
+    const participation = await Participation.findOne({ where: { userId, eventId } });
+    res.status(200).json({ isParticipating: participation !== null });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error occurred while trying to check user participation." });
+  }
+}
+
 const getParticipationById = async (req: Request, res: Response) => {
   try {
     const participationId = req.params.id;
@@ -83,4 +95,4 @@ const deleteParticipation = async (req: Request, res: Response) => {
   }
 }
 
-export {getParticipationByEventId, createParticipation, getAllParticipations, getParticipationById, deleteParticipation };
+export {isUserParticipating, getParticipationByEventId, createParticipation, getAllParticipations, getParticipationById, deleteParticipation };

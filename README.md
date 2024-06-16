@@ -13,18 +13,16 @@ Pour démarrer le client/backoffice, exécutez les commandes suivantes une aprè
 --------------------------------------CLIENT---------------------------------------------------
 TODO
 //Home screen add infos
+//activity visible to public only if membersOnly is falses
 //gestion de mon compte with real data
-//dons/cotisation with real data
-//mes taches / messages (write/received) real data
-//mon association (votes/events) clean up
-//public : voir les evenements / votes / sondages (blocks de posts/affiche le resultat si vote/sondage terminé)
+//mes taches
+//public : voir les evenements / votes / sondages
 //équipes real data
 //connect contact with real data
 //soutenir nos actions button size fix
 //don punctual/periodic/cotisation with actual paiement (stripe)
 //mot de passe oublié
-//connect stripe to payment
-//GED : recherche & le classement
+//GED : edit & le classement
 //Chatbot (réponses automatique)
 
 --------------------------------------BACKOFFICE------------------------------------------------
