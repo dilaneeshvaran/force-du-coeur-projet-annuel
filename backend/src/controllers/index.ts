@@ -1,7 +1,6 @@
 export * from './donations';
 export * from './events';
 export * from './tasks';
-export * from './members';
 export * from './memberships';
 export * from './documents';
 export * from './messages';

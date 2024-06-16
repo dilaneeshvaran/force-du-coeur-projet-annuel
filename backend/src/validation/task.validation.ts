@@ -1,12 +1,13 @@
 import joi from 'joi';
 
 const taskValidation = joi.object ({
-  title: joi.string().required(),
-  description: joi.string().required(),
-  startDate: joi.date().required(),
-  endDate: joi.date().optional(),
-  status: joi.string().valid('pending', 'in progress', 'completed').required(),
-  responsibleId: joi.number().required(),
+  title: joi.string().optional(),
+  description: joi.string().optional(),
+  deadline: joi.date().required(),
+  assigned_date: joi.date().optional(),
+  status: joi.string().valid('ongoing', 'completed', 'failed').optional(),
+  assignedTo: joi.number().optional(),
+  createdBy: joi.number().optional()
 });
 
 const validateTask = (data: any) => {

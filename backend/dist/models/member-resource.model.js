@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MemberResource = void 0;
 const sequelize_1 = require("sequelize");
 const services_1 = require("./../services");
-const _1 = require(".");
+const user_model_1 = require("./user.model"); // Adjust the path as necessary
+const resource_model_1 = require("./resource.model");
 class MemberResource extends sequelize_1.Model {
 }
 exports.MemberResource = MemberResource;
@@ -24,5 +25,5 @@ MemberResource.init({
     tableName: 'memberResources',
     timestamps: false
 });
-MemberResource.belongsTo(_1.Member, { foreignKey: 'memberId' });
-MemberResource.belongsTo(_1.Resource, { foreignKey: 'resourceId' });
+MemberResource.belongsTo(user_model_1.User, { foreignKey: 'memberId' });
+MemberResource.belongsTo(resource_model_1.Resource, { foreignKey: 'resourceId' });

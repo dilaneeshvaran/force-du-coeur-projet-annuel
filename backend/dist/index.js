@@ -21,7 +21,6 @@ app.use('/documents', routers_1.documentsRouter);
 app.use('/donations', routers_1.donationsRouter);
 app.use('/events', routers_1.eventsRouter);
 app.use('/health', routers_1.healthRouter);
-app.use('/members', routers_1.membersRouter);
 app.use('/memberships', routers_1.membershipsRouter);
 app.use('/messages', routers_1.messagesRouter);
 app.use('/resources', routers_1.resourcesRouter);

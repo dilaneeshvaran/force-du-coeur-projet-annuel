@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Membership = void 0;
 const sequelize_1 = require("sequelize");
 const services_1 = require("./../services");
-const _1 = require(".");
+const user_model_1 = require("./user.model");
 class Membership extends sequelize_1.Model {
 }
 exports.Membership = Membership;
@@ -25,7 +25,7 @@ Membership.init({
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: _1.Member,
+            model: user_model_1.User,
             key: 'memberId'
         }
     },
@@ -39,4 +39,4 @@ Membership.init({
     tableName: 'memberships',
     timestamps: false
 });
-_1.Member.hasMany(Membership, { foreignKey: 'memberId' });
+user_model_1.User.hasMany(Membership, { foreignKey: 'memberId' });

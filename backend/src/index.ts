@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 const cors = require('cors');
-import {userVotesRouter,participationsRouter,uploadRouter,optionsRouter, documentsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter,    membersRouter, resourcesRouter, useOfResourcesRouter, votesRouter, donationsRouter, usersRouter } from './routers';
+import {userVotesRouter,participationsRouter,uploadRouter,optionsRouter, documentsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter, resourcesRouter, useOfResourcesRouter, votesRouter, donationsRouter, usersRouter } from './routers';
 import { errorHandler, logger, timeZoneFormatter, winston } from "./middlewares";
 import './global.data';
 
@@ -20,7 +20,6 @@ app.use('/documents', documentsRouter);
 app.use('/donations', donationsRouter);
 app.use('/events', eventsRouter);
 app.use('/health', healthRouter);
-app.use('/members', membersRouter);
 app.use('/memberships', membershipsRouter);
 app.use('/messages', messagesRouter);
 app.use('/resources', resourcesRouter);

@@ -1,4 +1,3 @@
-export * from './member.model';
 export * from './task.model';
 export * from './event.model';
 export * from './vote.model';

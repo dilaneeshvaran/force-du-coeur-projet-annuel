@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member } from ".";
+import { User } from './user.model';
 
 export class Membership extends Model {
   public id!: number;
@@ -28,7 +28,7 @@ Membership.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Member,
+      model: User,
       key: 'memberId'
     }
   }, 
@@ -43,4 +43,4 @@ Membership.init({
   timestamps: false
 });
 
-Member.hasMany(Membership, { foreignKey: 'memberId' });
+User.hasMany(Membership, { foreignKey: 'memberId' });

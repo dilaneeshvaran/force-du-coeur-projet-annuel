@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Message = void 0;
 const sequelize_1 = require("sequelize");
 const services_1 = require("./../services");
-const _1 = require(".");
+const user_model_1 = require("./user.model");
 class Message extends sequelize_1.Model {
 }
 exports.Message = Message;
@@ -36,6 +36,6 @@ Message.init({
     timestamps: false
 });
 //
-_1.Member.hasMany(Message, { foreignKey: 'id', as: 'sentMessages' });
+user_model_1.User.hasMany(Message, { foreignKey: 'id', as: 'sentMessages' });
 //
-_1.Member.hasMany(Message, { foreignKey: 'id', as: 'receivedMessages' });
+user_model_1.User.hasMany(Message, { foreignKey: 'id', as: 'receivedMessages' });

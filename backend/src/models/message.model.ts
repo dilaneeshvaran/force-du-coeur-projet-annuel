@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member } from ".";
+import { User } from "./user.model";
 
 export class Message extends Model {
   public id!: number;
@@ -40,6 +40,6 @@ Message.init({
 });
 
 //
-Member.hasMany(Message, { foreignKey: 'id', as: 'sentMessages' });
+User.hasMany(Message, { foreignKey: 'id', as: 'sentMessages' });
 //
-Member.hasMany(Message, { foreignKey: 'id', as: 'receivedMessages'});
+User.hasMany(Message, { foreignKey: 'id', as: 'receivedMessages'});

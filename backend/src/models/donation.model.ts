@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member } from ".";
+import { User } from './user.model';
 
 export class Donation extends Model {
   public donationId!: number;
@@ -29,7 +29,7 @@ Donation.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Member,
+      model: User,
       key: 'memberId'
     }
   }, 
@@ -48,4 +48,4 @@ Donation.init({
   timestamps: false
 });
 
-Member.hasMany(Donation, { foreignKey: 'donorId' });
+User.hasMany(Donation, { foreignKey: 'donorId' });

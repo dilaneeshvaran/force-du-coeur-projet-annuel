@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member, Resource } from ".";
+import { User } from './user.model'; // Adjust the path as necessary
+import { Resource } from './resource.model';
 
 export class MemberResource extends Model {
   public memberId!: number;  
@@ -25,5 +26,5 @@ MemberResource.init({
   timestamps: false
 });
 
-MemberResource.belongsTo(Member, { foreignKey: 'memberId' });
+MemberResource.belongsTo(User, { foreignKey: 'memberId' });
 MemberResource.belongsTo(Resource, { foreignKey: 'resourceId' });

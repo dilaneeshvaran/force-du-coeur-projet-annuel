@@ -17,7 +17,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./donations"), exports);
 __exportStar(require("./events"), exports);
 __exportStar(require("./tasks"), exports);
-__exportStar(require("./members"), exports);
 __exportStar(require("./memberships"), exports);
 __exportStar(require("./documents"), exports);
 __exportStar(require("./messages"), exports);

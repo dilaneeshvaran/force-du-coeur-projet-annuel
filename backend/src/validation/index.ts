@@ -1,4 +1,3 @@
-export * from './member.validation';
 export * from './task.validation';
 export * from './event.validation';
 export * from './vote.validation';

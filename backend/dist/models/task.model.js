@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Task = void 0;
 const sequelize_1 = require("sequelize");
 const services_1 = require("./../services");
-const _1 = require(".");
+const user_model_1 = require("./user.model");
 class Task extends sequelize_1.Model {
 }
 exports.Task = Task;
@@ -16,26 +16,28 @@ Task.init({
     title: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        //unique: true
     },
     description: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        //unique: true
     },
-    startDate: {
+    deadline: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false
     },
-    endDate: {
+    assigned_date: {
         type: sequelize_1.DataTypes.DATE,
-        allowNull: true
+        allowNull: false
     },
     status: {
-        type: sequelize_1.DataTypes.ENUM('pending', 'in progress', 'completed'),
+        type: sequelize_1.DataTypes.ENUM('ongoing', 'completed', 'failed'),
         allowNull: false
     },
-    responsibleId: {
+    assignedTo: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false
+    },
+    createdBy: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
     }
@@ -45,4 +47,4 @@ Task.init({
     tableName: 'tasks',
     timestamps: false,
 });
-Task.belongsTo(_1.Member, { foreignKey: 'responsibleId' });
+Task.belongsTo(user_model_1.User, { foreignKey: 'assignedTo' });

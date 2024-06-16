@@ -1,16 +1,16 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member } from ".";
+import { User } from './user.model';
 
 export class Task extends Model {
   public id!: number;
   public title!: string;
   public description!: string;
-  public startDate!: Date;
-  public endDate!: Date;
-  public status!:  'pending' | 'in progress' | 'completed';
-  // clé etrangère vers la clé primaire de la table Member
-  public responsibleId!: number;
+  public deadline!: Date;
+  public assigned_date!: Date;
+  public status!:  'ongoing' | 'completed' | 'failed';
+  public assignedTo!: number;
+  public createdBy!: number;
 }
 
 Task.init({
@@ -22,26 +22,28 @@ Task.init({
   title: {
     type: DataTypes.STRING,
     allowNull: false,
-    //unique: true
   },
   description: {
     type: DataTypes.STRING,
     allowNull: false,
-    //unique: true
   }, 
-  startDate: {
+  deadline: {
     type: DataTypes.DATE,
     allowNull: false
   },
-  endDate: {
+  assigned_date: {
     type: DataTypes.DATE,
-    allowNull: true
+    allowNull: false 
   },
   status: {
-    type: DataTypes.ENUM('pending', 'in progress', 'completed'),
+    type: DataTypes.ENUM('ongoing', 'completed', 'failed'),
     allowNull: false
   },
-  responsibleId: {
+  assignedTo: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  createdBy: {
     type: DataTypes.INTEGER,
     allowNull: false
   }
@@ -52,4 +54,4 @@ Task.init({
   timestamps: false, 
 });
 
-Task.belongsTo(Member, { foreignKey: 'responsibleId' });
+Task.belongsTo(User, { foreignKey: 'assignedTo' });
