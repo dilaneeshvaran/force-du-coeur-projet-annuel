@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDonationById = exports.getAllDonations = exports.createDonation = void 0;
+exports.getDonationById = exports.getAllDonations = exports.createDonation = exports.getDonationsByUserId = void 0;
 const validation_1 = require("../validation");
 const models_1 = require("../models");
 const createDonation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -69,3 +69,20 @@ const getDonationById = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.getDonationById = getDonationById;
+const getDonationsByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        const donations = yield models_1.Donation.findAll({ where: { donatorId: userId } });
+        if (donations.length > 0) {
+            res.status(200).json(donations);
+        }
+        else {
+            res.status(404).json({ message: "No donations found for this user" });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error while retrieving donations" });
+    }
+});
+exports.getDonationsByUserId = getDonationsByUserId;

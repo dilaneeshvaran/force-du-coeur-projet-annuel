@@ -59,7 +59,20 @@ const getDonationById = async (req: Request, res: Response) => {
   }
 }
 
+const getDonationsByUserId = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const donations = await Donation.findAll({ where: { donatorId: userId } });
+    if (donations.length > 0) {
+      res.status(200).json(donations);
+    } else {
+      res.status(404).json({ message: "No donations found for this user"});
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: "Error while retrieving donations"});
+  }
+}
 
 
-
-export { createDonation, getAllDonations, getDonationById };
+export { getDonationsByUserId,createDonation, getAllDonations, getDonationById };

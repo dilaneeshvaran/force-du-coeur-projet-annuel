@@ -25,7 +25,7 @@ const Membership: React.FC<MembershipProps> = ({ membership, onMembershipChange 
             <p>
                 Membership Status: {membership.status}
                 {membership.status === 'active' && `(${membership.amount}€/mois)`}
-                {membership.status === 'active' && `Adhéré depuis ${membership.paymentDate.toLocaleDateString()}`}
+                {membership.status === 'active' && `Adhéré depuis ${new Date(membership.paymentDate).toLocaleDateString()}`}
             </p>
             <button onClick={() => setShowMembershipOptions(!showMembershipOptions)}>
                 {membership.status === 'inactive' ? 'Adherer' : 'Changer Adhesion'}

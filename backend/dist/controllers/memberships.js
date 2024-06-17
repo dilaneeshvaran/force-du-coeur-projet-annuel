@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMembership = exports.updateMembership = exports.getMembershipById = exports.getAllMemberships = exports.createMembership = void 0;
+exports.deleteMembership = exports.updateMembership = exports.getMembershipById = exports.getAllMemberships = exports.createMembership = exports.getMembershipByUserId = void 0;
 const validation_1 = require("../validation");
 const middlewares_1 = require("../middlewares");
 const models_1 = require("../models");
@@ -110,3 +110,20 @@ const deleteMembership = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.deleteMembership = deleteMembership;
+const getMembershipByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        const memberships = yield models_1.Membership.findAll({ where: { userId: userId } });
+        if (memberships.length > 0) {
+            res.status(200).json(memberships);
+        }
+        else {
+            res.status(404).json({ message: "No memberships found for this user" });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error while retrieving memberships" });
+    }
+});
+exports.getMembershipByUserId = getMembershipByUserId;

@@ -18,3 +18,4 @@ exports.router.get('/:id', controllers_1.getMembershipById);
 exports.router.put('/:id', controllers_1.updateMembership);
 //router.delete('/:id', isAuth, deleteMembership);
 exports.router.delete('/:id', controllers_1.deleteMembership);
+exports.router.get('/user/:userId', controllers_1.getMembershipByUserId);

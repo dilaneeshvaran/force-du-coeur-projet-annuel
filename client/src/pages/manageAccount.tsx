@@ -1,33 +1,38 @@
 import '../styles/taches.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Membership from '../components/Membership';
 import Account from '../components/Account';
 import Donation, { DonationInterface } from '../components/Donation';
 import { useLocation } from 'react-router-dom';
 
 function ManageAccount() {
-    const [memberships, setMemberships] = useState<Membership[]>([
-        {
-            id: 1,
-            amount: 0,
-            paymentDate: new Date(),
-            userId: 1,
-            status: 'inactive',
-        },
-    ]);
-    const [donations, setDonations] = useState<DonationInterface[]>([
-        {
-            id: 1,
-            amount: 0,
-            donationDate: new Date(),
-            fullname: "billa",
-            paymentMethod: "paypal",
-            email: "k@l.com",
-            donationFrequency: 'monthly',
-            donatorId: 1
-        },
-    ]);
-    const [accounts, setAccounts] = useState<Account[]>([]); // Define the account state
+    const [memberships, setMemberships] = useState<Membership[]>([]);
+    const [donations, setDonations] = useState<DonationInterface[]>([]);
+    const [accounts, setAccounts] = useState<Account[]>([]);
+
+    const userId = localStorage.getItem('userId');
+
+    useEffect(() => {
+        fetch(`http://localhost:8088/memberships/user/${userId}`)
+            .then(response => response.json())
+            .then(data => setMemberships(data))
+            .catch(error => console.error('Error:', error));
+
+        fetch(`http://localhost:8088/donations/user/${userId}`)
+            .then(response => response.json())
+            .then(data => setDonations(data))
+            .catch(error => console.error('Error:', error));
+    }, [userId]);
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetch(`http://localhost:8088/users/${userId}`)
+                .then(response => response.json())
+                .then(data => setAccounts(Array.isArray(data) ? data : [data]))
+                .catch(error => console.error('Error:', error));
+        }
+    }, []);
+
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);

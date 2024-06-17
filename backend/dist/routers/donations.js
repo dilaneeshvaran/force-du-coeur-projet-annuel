@@ -11,3 +11,4 @@ exports.router = (0, express_1.Router)();
 exports.router.post('/', controllers_1.createDonation);
 exports.router.get('/', controllers_1.getAllDonations);
 exports.router.get('/:id', controllers_1.getDonationById);
+exports.router.get('/user/:userId', controllers_1.getDonationsByUserId);

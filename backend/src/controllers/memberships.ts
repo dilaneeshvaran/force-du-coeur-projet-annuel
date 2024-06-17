@@ -93,5 +93,18 @@ const deleteMembership = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Erreur rencontré en essayant de supprimer l'abonnement"});
   }
 }
-
-export { createMembership, getAllMemberships, getMembershipById, updateMembership, deleteMembership };
+const getMembershipByUserId = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const memberships = await Membership.findAll({ where: { userId: userId } });
+    if (memberships.length > 0) {
+      res.status(200).json(memberships);
+    } else {
+      res.status(404).json({ message: "No memberships found for this user"});
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: "Error while retrieving memberships"});
+  }
+}
+export {getMembershipByUserId, createMembership, getAllMemberships, getMembershipById, updateMembership, deleteMembership };

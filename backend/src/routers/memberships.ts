@@ -3,7 +3,7 @@
  */
 
 import { Router, Request, Response } from "express";
-import { createMembership, deleteMembership, getAllMemberships, getMembershipById, updateMembership } from '../controllers';
+import { getMembershipByUserId,createMembership, deleteMembership, getAllMemberships, getMembershipById, updateMembership } from '../controllers';
 
 export const router = Router();
 
@@ -19,3 +19,4 @@ router.get('/:id', getMembershipById);
 router.put('/:id', updateMembership);
 //router.delete('/:id', isAuth, deleteMembership);
 router.delete('/:id', deleteMembership);
+router.get('/user/:userId', getMembershipByUserId);
