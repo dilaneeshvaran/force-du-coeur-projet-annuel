@@ -1,39 +1,42 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member } from ".";
+import { User } from ".";
 
 export class Membership extends Model {
-  public membershipId!: number;
-  public amount!: number;
+  static associate(models: any) {
+    this.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
+  }
+  public id!: number;
+  public amount!: 10 | 30 | 50 | 100;
   public paymentDate!: Date;
-  public memberId!: number;
-  public status!: 'pending' | 'paid';
+  public userId!: number;
+  public status!: 'active' | 'inactive';
 }
 
 Membership.init({
-  membershipId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
   },
   amount: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.ENUM('10', '30', '50', '100'),
     allowNull: false
   },
   paymentDate: {
     type: DataTypes.DATE,
     allowNull: false
   },
-  memberId: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Member,
-      key: 'memberId'
+      model: User,
+      key: 'id'
     }
   }, 
   status: {
-    type: DataTypes.ENUM('pending', 'paid'),
+    type: DataTypes.ENUM('active', 'inactive'),
     allowNull: false
   },
 }, {
@@ -42,5 +45,3 @@ Membership.init({
   tableName: 'memberships',
   timestamps: false
 });
-
-Member.hasMany(Membership, { foreignKey: 'memberId' });

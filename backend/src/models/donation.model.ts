@@ -1,18 +1,23 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member } from ".";
+import { User } from ".";
 
 export class Donation extends Model {
-  public donationId!: number;
+  static associate(models: any) {
+    this.belongsTo(models.User, { foreignKey: 'donorId', as: 'donor' });
+  }
+  public id!: number;
   public amount!: number;
   public donationDate!: Date;
-  public donorId!: number;
+  public fullname!: string;
   public paymentMethod!: string;
-  public status!: 'pending' | 'confirmed' | 'cancelled';
+  public email!: string;
+  public frequency!: 'monthly' | 'yearly' | 'none';
+  public donorId!: number;
 }
 
 Donation.init({
-  donationId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
@@ -25,22 +30,30 @@ Donation.init({
     type: DataTypes.DATE,
     allowNull: false
   },
-  donorId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Member,
-      key: 'memberId'
-    }
-  }, 
+  fullname: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   paymentMethod: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  status: {
-    type: DataTypes.ENUM('pending', 'confirmed', 'cancelled'),
+  email: {
+    type: DataTypes.STRING,
     allowNull: false
   },
+  frequency: {
+    type: DataTypes.ENUM('monthly', 'yearly', 'none'),
+    allowNull: false
+  },
+  donorId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: User,
+      key: 'id'
+    }
+  }
 }, {
   sequelize,
   modelName: 'Donation',
@@ -48,4 +61,3 @@ Donation.init({
   timestamps: false
 });
 
-Member.hasMany(Donation, { foreignKey: 'donorId' });

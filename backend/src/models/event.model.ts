@@ -2,16 +2,17 @@ import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
 
 export class Event extends Model {
-  public eventId!: number;
+  public id!: number;
   public title!: string;
   public description!: string;
   public date!: Date;
   public location!: string;
   public availableSpots!: number;
+  public userParticipating!: number;
 }
 
 Event.init({
-  eventId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true

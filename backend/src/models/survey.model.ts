@@ -1,24 +1,24 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { User } from ".";
+import { User, Question, Answer } from ".";
 
-export class Task extends Model {
+export class Survey extends Model {
   static associate(models: any) {
-    this.belongsTo(models.User, { foreignKey: 'userId', as: 'assignedUser'});
-    this.belongsTo(models.User, { foreignKey: 'createdBy', as: 'creator'});
-    this.hasMany(models.Resource, { foreignKey: 'taskId', as: 'resources'});
+    this.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
+    this.belongsTo(models.User, { foreignKey: 'adminId', as: 'admin' });
+    this.hasMany(models.Question, { foreignKey: 'surveyId', as: 'questions'});
   }
   public id!: number;
   public title!: string;
   public description!: string;
-  public deadline!: Date;
-  public assignedDate?: Date;
-  public status!:  'ongoing' | 'completed' | 'failed';
+  public startDate!: Date;
+  public endDate!: Date;
+  public status!: 'open' | 'closed';
   public userId!: number;
-  public createdBy!: number;
+  public adminId!: number;
 }
 
-Task.init({
+Survey.init({
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -26,22 +26,22 @@ Task.init({
   },
   title: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: false,
-  }, 
-  deadline: {
+    allowNull: false
+  },
+  startDate: {
     type: DataTypes.DATE,
     allowNull: false
   },
-  assignedDate: {
+  endDate: {
     type: DataTypes.DATE,
-    allowNull: true
+    allowNull: false
   },
   status: {
-    type: DataTypes.ENUM('ongoing', 'completed', 'failed'),
+    type: DataTypes.ENUM('open', 'closed'),
     allowNull: false
   },
   userId: {
@@ -52,7 +52,7 @@ Task.init({
       key: 'id'
     }
   },
-  createdBy: {
+  adminId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -62,7 +62,7 @@ Task.init({
   }
 }, {
   sequelize,
-  modelName: 'Task',
-  tableName: 'tasks',
-  timestamps: false, 
+  modelName: 'Survey',
+  tableName: 'surveys',
+  timestamps: false
 });

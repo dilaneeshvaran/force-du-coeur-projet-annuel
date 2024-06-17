@@ -1,13 +1,19 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
-import { Member } from ".";
+import { User } from ".";
 
 export class Message extends Model {
+  static associate(models: any) {
+    this.belongsTo(models.User, { foreignKey: 'senderId', as: 'sentMessages' });
+    this.belongsTo(models.User, { foreignKey: 'receiverId', as: 'receivedMessages' });
+  }
   public id!: number;
-  public subject!: string;
-  public message?: string;
+  public title!: string;
+  public description?: string;
   public type!: 'sent' | 'received';
-  public fileAttachment?: string;
+  public senderId!: number;
+  public receiverId!: number;
+  public createdDate!: Date;
 }
 
 Message.init({
@@ -32,14 +38,29 @@ Message.init({
     type: DataTypes.STRING,
     allowNull: true,
   },
+  senderId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User,
+      key: 'id'
+    }
+  },
+  receiverId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User,
+      key: 'id'
+    }
+  },
+  createdDate: {
+    type: DataTypes.DATE,
+    allowNull: false
+  }
 }, {
   sequelize,
   modelName: 'Message',
   tableName: 'messages',
   timestamps: false
 });
-
-//
-Member.hasMany(Message, { foreignKey: 'id', as: 'sentMessages' });
-//
-Member.hasMany(Message, { foreignKey: 'id', as: 'receivedMessages'});

@@ -1,10 +1,11 @@
 import joi from 'joi';
 
 const membershipValidation = joi.object ({
-  amount: joi.number().required(),
-  paymentDate: joi.date().required(),
-  memberId: joi.number().required(),
-  status: joi.string().valid('pending', 'paid').required()
+  id: joi.number().optional(),
+  amount: joi.number().valid(10, 30, 50, 100).optional(),
+  paymentDate: joi.date().optional(),
+  userId: joi.number().optional(),
+  status: joi.string().valid('active', 'inactive').optional()
 });
 
 const validateMembership = (data: any) => {
@@ -12,3 +13,4 @@ const validateMembership = (data: any) => {
 }
 
 export { membershipValidation, validateMembership };
+
