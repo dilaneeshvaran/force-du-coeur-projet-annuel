@@ -10,3 +10,4 @@ export * from './member-resource.model';
 export * from './useOfResource.model';
 export * from './user.model';
 export * from './participation.model';
+export * from './payment.model';

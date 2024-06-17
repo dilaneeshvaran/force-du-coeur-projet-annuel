@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMembership = exports.updateMembership = exports.getMembershipById = exports.getAllMemberships = exports.createMembership = exports.getMembershipByUserId = void 0;
+exports.deleteMembership = exports.updateMembership = exports.getMembershipById = exports.getAllMemberships = exports.createMembership = exports.getMembershipByUserId = exports.updateMembershipDetails = void 0;
 const validation_1 = require("../validation");
 const middlewares_1 = require("../middlewares");
 const models_1 = require("../models");
+require('dotenv').config();
 const createMembership = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateMembership)(req.body);
     if (error) {
@@ -92,6 +93,27 @@ const updateMembership = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.updateMembership = updateMembership;
+function updateMembershipDetails(membershipId, updateParams) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const membership = yield models_1.Membership.findByPk(membershipId);
+        console.log("testing:::::::::::::::::::::updateMembershipDetails");
+        if (membership) {
+            if (updateParams.amount !== undefined)
+                membership.amount = updateParams.amount;
+            if (updateParams.paymentDate !== undefined)
+                membership.paymentDate = updateParams.paymentDate;
+            if (updateParams.status !== undefined)
+                membership.status = updateParams.status;
+            if (updateParams.userId !== undefined)
+                membership.userId = updateParams.userId;
+            yield membership.save();
+        }
+        else {
+            throw new Error('Membership not found');
+        }
+    });
+}
+exports.updateMembershipDetails = updateMembershipDetails;
 const deleteMembership = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const membershipId = req.params.id;

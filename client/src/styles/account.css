@@ -59,7 +59,12 @@
     border-radius: 1rem;
 }
 
-.info-title, .info-value {
+.info-value {
     font-size: 1.2em;
-    color: #333;
+    color: #8d0000;
+    margin-right: 10px;
+}
+
+.info-title{
+    font-size: 1.2em;
 }

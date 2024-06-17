@@ -11,3 +11,4 @@ export * from './useOfResources';
 export * from './users';
 export * from './participations';
 export * from './user_votes';
+export * from './payment';

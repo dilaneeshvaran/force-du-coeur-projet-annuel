@@ -18,3 +18,4 @@ export { router as usersRouter } from './users';
 export { default as uploadRouter } from './upload';//export { router as authRouter } from './auth';
 export { router as participationsRouter } from './participation';
 export { default as userVotesRouter } from './user_votes';
+export { router as paymentRouter } from './payment';

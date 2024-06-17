@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import stripe from 'stripe';
+
 
 interface Membership {
     id: number;
@@ -12,13 +15,95 @@ interface MembershipProps {
     membership: Membership;
     onMembershipChange: (id: number, newStatus: 'active' | 'inactive', amount: number) => void;
 }
+const stripePromise = loadStripe('pk_test_51PScAqGc0PhuZBe9Uqm7XP3iXPKio8QNqbt4iNfSINUE06VzAPldOUwEgVn94rLLmQKd8STxK6fj12YKwBeiMRbS00DCyPSNGY');
 
 const Membership: React.FC<MembershipProps> = ({ membership, onMembershipChange }) => {
     const [showMembershipOptions, setShowMembershipOptions] = useState(false);
+    const [membershipData, setMembershipData] = useState<Membership | null>(null);
+    const [selectedAmount, setSelectedAmount] = useState<number>(membership.amount);
 
     const handleMembershipChange = (newStatus: 'active' | 'inactive', amount: number) => {
-        onMembershipChange(membership.id, newStatus, amount);
+        if (newStatus === 'inactive') {
+            const confirmation = window.confirm('Are you sure you want to deactivate your membership? This will delete your user and membership data.');
+            if (confirmation) {
+                fetch(`http://localhost:8088/memberships/${membership.id}`, {
+                    method: 'DELETE',
+                }).then(() => {
+                    fetch(`http://localhost:8088/users/${membership.userId}`, {
+                        method: 'DELETE',
+                    }).then(() => {
+                        localStorage.removeItem('userId');
+                    });
+                });
+            }
+        } else {
+            fetch(`http://localhost:8088/memberships/${membership.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...membership,
+                    amount,
+                    status: newStatus,
+                    paymentDate: new Date(),
+                }),
+            }).then(response => response.json())
+                .then(data => setMembershipData(data));
+        }
+
     };
+
+    const handleAmountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value;
+        setSelectedAmount(Number(value));
+    };
+
+    const handleValidateClick = async () => {
+        const newStatus = selectedAmount === 0 ? 'inactive' : 'active';
+
+        if (newStatus === 'active') {
+            try {
+                const response = await fetch('http://localhost:8088/payments/processMembership', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userId: membership.userId,
+                        membershipId: membership.id,
+                        amount: selectedAmount,
+                    }),
+                });
+
+                const session = await response.json();
+                const stripe = await stripePromise;
+
+                if (stripe) {
+                    const result = await stripe.redirectToCheckout({
+                        sessionId: session.id,
+                    });
+
+                    if (result.error) {
+                        console.log(result.error.message);
+                    }
+                } else {
+                    console.log("Stripe.js has not loaded yet.");
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    };
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+            fetch(`http://localhost:8088/memberships/user/${userId}`)
+                .then(response => response.json())
+                .then(data => setMembershipData(data));
+        }
+    }, []);
 
     return (
         <div key={membership.id}>
@@ -31,20 +116,20 @@ const Membership: React.FC<MembershipProps> = ({ membership, onMembershipChange 
                 {membership.status === 'inactive' ? 'Adherer' : 'Changer Adhesion'}
             </button>
             {showMembershipOptions && (
-                <label>
-                    Membership:
-                    <select onChange={(e) => {
-                        const value = e.target.value;
-                        const newStatus = value === '0' ? 'inactive' : 'active';
-                        handleMembershipChange(newStatus, Number(value));
-                    }}>
-                        <option value="0">Deactivate Membership</option>
-                        <option value="10">10€/mois ADHesion</option>
-                        <option value="30">30€/mois ADHesion famille</option>
-                        <option value="50">50€/mois ADHesion soutien</option>
-                        <option value="100">100€/mois ADHesion bienfaiteur</option>
-                    </select>
-                </label>
+                <>
+                    <label>
+                        Membership:
+                        <select value={selectedAmount} onChange={handleAmountChange}>
+
+                            <option value="0">Deactivate Membership</option>
+                            <option value="10">10€/mois ADHesion</option>
+                            <option value="30">30€/mois ADHesion famille</option>
+                            <option value="50">50€/mois ADHesion soutien</option>
+                            <option value="100">100€/mois ADHesion bienfaiteur</option>
+                        </select>
+                    </label>
+                    <button onClick={handleValidateClick}>Validate</button>
+                </>
             )}
         </div>
     );

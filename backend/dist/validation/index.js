@@ -28,3 +28,4 @@ __exportStar(require("./useOfResource.validation"), exports);
 __exportStar(require("./user.validation"), exports);
 __exportStar(require("./participation.validation"), exports);
 __exportStar(require("./user_vote.validation"), exports);
+__exportStar(require("./payment.validation"), exports);

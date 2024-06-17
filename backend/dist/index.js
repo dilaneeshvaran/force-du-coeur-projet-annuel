@@ -13,7 +13,15 @@ const app = (0, express_1.default)();
 // utiliser la variable d'environnement PORT si elle est définie, sinon utiliser le port 8088
 const port = process.env.PORT || 8088;
 // analyser le corps de requêtes en JSON
-app.use(body_parser_1.default.json());
+// Use bodyParser.json() for all routes except the Stripe webhook route
+app.use((req, res, next) => {
+    if (req.originalUrl === '/payments/webhook') {
+        next();
+    }
+    else {
+        body_parser_1.default.json()(req, res, next);
+    }
+});
 app.use(middlewares_1.timeZoneFormatter);
 app.use(middlewares_1.winston);
 app.use(cors());
@@ -33,6 +41,7 @@ app.use('/upload', express_1.default.static('upload'));
 app.use('/options', routers_1.optionsRouter);
 app.use('/participations', routers_1.participationsRouter);
 app.use('/user_votes', routers_1.userVotesRouter);
+app.use('/payments', routers_1.paymentRouter);
 app.use(middlewares_1.errorHandler);
 app.listen(port, () => {
     console.log(`Port http://localhost:${port}`);

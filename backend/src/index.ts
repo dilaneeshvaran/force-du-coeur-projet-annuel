@@ -1,7 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
+import rawBodyBuffer  from './middlewares/rawBodyBuffer'; 
 const cors = require('cors');
-import {userVotesRouter,participationsRouter,uploadRouter,optionsRouter, documentsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter, resourcesRouter, useOfResourcesRouter, votesRouter, donationsRouter, usersRouter } from './routers';
+import { paymentRouter, userVotesRouter,participationsRouter,uploadRouter,optionsRouter, documentsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter, resourcesRouter, useOfResourcesRouter, votesRouter, donationsRouter, usersRouter } from './routers';
 import { errorHandler, logger, timeZoneFormatter, winston } from "./middlewares";
 import './global.data';
 
@@ -11,7 +12,14 @@ const app = express();
 const port = process.env.PORT || 8088;
 
 // analyser le corps de requêtes en JSON
-app.use(bodyParser.json());
+// Use bodyParser.json() for all routes except the Stripe webhook route
+app.use((req, res, next) => {
+  if (req.originalUrl === '/payments/webhook') { 
+    next();
+  } else {
+    bodyParser.json()(req, res, next);
+  }
+});
 app.use(timeZoneFormatter);
 app.use(winston);
 app.use(cors());
@@ -32,6 +40,7 @@ app.use('/upload', express.static('upload'))
 app.use('/options', optionsRouter);
 app.use('/participations', participationsRouter);
 app.use('/user_votes', userVotesRouter);
+app.use('/payments', paymentRouter);
 
 app.use(errorHandler);
 

@@ -2,24 +2,38 @@
 
 Ce projet comprend un client, un backoffice et un backend.
 
-## Installation
+## Installation FRONT
 
 Pour démarrer le client/backoffice, exécutez les commandes suivantes une après l'autre:
 ```bash
-1) npm install
+1) cd client
+(or cd backoffice)
 
-2) npm run dev
+2) npm install
+
+3) npm run dev
+
+```
+## Installation BACKEND
+```bash
+
+1) cd backend
+
+2) docker compose up -d
+
+3) npm run start:dev
+
+4) stripe listen --forward-to http://localhost:8088/payments/webhook
 
 --------------------------------------CLIENT---------------------------------------------------
 TODO
-//Home screen add infos
-//activity visible to public only if membersOnly is falses
-//gestion de mon compte with real data
-//public : voir les evenements / votes / sondages
-//équipes real data
-//connect contact with real data
 //soutenir nos actions button size fix
 //don punctual/periodic/cotisation with actual paiement (stripe)
+//Home screen add infos
+//activity visible to public only if membersOnly is falses
+//public : voir les evenements / votes / sondages
+//équipes real data
+//contact with real data
 //mot de passe oublié
 //GED : edit & le classement
 //Chatbot (réponses automatique)

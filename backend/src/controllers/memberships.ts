@@ -2,7 +2,16 @@ import express, { Request, Response } from 'express';
 import { validateMembership } from '../validation';
 import { logger } from '../middlewares';
 import { Membership } from '../models';
+require('dotenv').config()
 
+
+interface MembershipUpdateParams {
+  amount?: number;
+  paymentDate?: Date;
+  status?: string;
+  userId?: number;
+  membershipId?: number;
+}
 
 const createMembership = async (req: Request, res: Response) => {
   const { error, value } = validateMembership(req.body);
@@ -62,7 +71,7 @@ const updateMembership = async (req: Request, res: Response) => {
   
     const membership = await Membership.findByPk(membershipId);
     if (membership !== null) {
-      if (amount !== undefined) membership.amount = amount;
+      if (amount !== undefined) membership.amount = amount; 
       if (paymentDate !== undefined) membership.paymentDate = paymentDate;
       if (userId !== undefined) membership.userId = userId;
       if (status !== undefined) membership.status = status;
@@ -75,6 +84,21 @@ const updateMembership = async (req: Request, res: Response) => {
   } catch (error) {
     logger.error('Error updating membership:', error);
     return res.status(500).json({ message: "Erreur lors de la mise a jour d'un abonnement", error: (error as Error).message });
+  }
+}
+
+export async function updateMembershipDetails(membershipId: string, updateParams: MembershipUpdateParams): Promise<void> {
+  const membership = await Membership.findByPk(membershipId);
+  console.log("testing:::::::::::::::::::::updateMembershipDetails");
+  if (membership) {
+    if (updateParams.amount !== undefined) membership.amount = updateParams.amount;
+    if (updateParams.paymentDate !== undefined) membership.paymentDate = updateParams.paymentDate;
+    if (updateParams.status !== undefined) membership.status = updateParams.status as 'active' | 'inactive';
+    if (updateParams.userId !== undefined) membership.userId = updateParams.userId;
+
+    await membership.save();
+  } else {
+    throw new Error('Membership not found');
   }
 }
 
