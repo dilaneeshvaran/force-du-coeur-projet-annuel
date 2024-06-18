@@ -3,6 +3,10 @@ import { useState } from 'react';
 import { AdhererForm } from '../components/AdhererForm';
 import { DonationForm } from '../components/DonationForm';
 import { Link } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe('pk_test_51PScAqGc0PhuZBe9Uqm7XP3iXPKio8QNqbt4iNfSINUE06VzAPldOUwEgVn94rLLmQKd8STxK6fj12YKwBeiMRbS00DCyPSNGY');
+
 
 interface SoutenirProps {
   isLoggedIn?: boolean;
@@ -63,13 +67,8 @@ function Soutenir({ isLoggedIn }: SoutenirProps) {
                 </ul>
               </div>
               <div className='btnContainer'>
-                <div className='btnCB'><button onClick={handlePonctuelClick} className='buttonCB'>Ponctuel</button></div>
-                <div className='btnCB'>
-                  {isLoggedIn ? (
-                    <Link to="/manageAccount?selectedType=donation" className='buttonCB'>Périodique</Link>
-                  ) : (
-                    <Link to="/espaceMembres" className='buttonCB'>Périodique</Link>
-                  )}
+                <div className='btnCB2'>
+                  <button onClick={handlePonctuelClick} className='buttonCB2'>Ponctuel</button>
                 </div>
               </div>
             </div>

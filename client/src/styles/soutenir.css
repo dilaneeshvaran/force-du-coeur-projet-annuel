@@ -32,11 +32,38 @@
     cursor: pointer;
 }
 
+.buttonCB2{
+    background-color: #ff5500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
 .buttonCB:hover{
     background-color: #ff908a;
 }
 
+
+.buttonCB2:hover{
+    background-color: #ff908a;
+}
+
 .btnCB{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+}
+
+.btnCB2{
     display: flex;
     justify-content: center;
     align-items: center;

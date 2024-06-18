@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import { Payment } from '../models';
+import e, { Request, Response } from 'express';
+import { Donation, Payment } from '../models';
 import stripe from 'stripe';
 import { IncomingMessage } from 'http';
 import { updateMembershipDetails } from './memberships';
@@ -42,33 +42,60 @@ export const handleWebhook = async (req: any, res: Response) => {
 
     if (session.metadata) { 
       const membershipId = session.metadata.membershipId;
-      console.log(":::::::::::metzdaya", session.metadata);
+      const email = session.metadata.email;
+      console.log(":::::::::::metzdayaaaaaaaaaaaaaaaaaaa", session.metadata);
 
       let type = 'donation';
     if (session.mode === 'subscription') {
       type = 'membership';
-    }    
+    }
+    
+    try {
+      console.log(":::::::::::::try payment");
+      console.log("::::::::::::USER ID", session.metadata.userId);
+      const paymentRecord = await Payment.create({
+        user_id: session.metadata.userId && !isNaN(Number(session.metadata.userId)) ? Number(session.metadata.userId) : null, 
+        stripe_payment_intent_id: session.payment_intent,
+        stripe_customer_id: session.customer,
+        amount: session.amount_total ? session.amount_total / 100 : undefined, //cents to dollars
+        type: type,
+        datePaiement: new Date(),
+        typeId: null,
+        email: session.metadata.email,
+      });
+      console.log("Payment record created successfully");
+      console.log(":::::::::::::donation record");
 
-
-
+      const donationRecord = await Donation.create({
+          amount: session.amount_total ? session.amount_total / 100 : undefined, // cents to dollars
+          donationDate: new Date(),
+          fullname: session.metadata.name,
+          email: session.metadata.email,
+          paymentMethod: 'card',
+          donationFrequency: 'punctual',
+          donatorId: session.metadata.userId && !isNaN(Number(session.metadata.userId)) ? Number(session.metadata.userId) : null, 
+        });
+      console.log("Donation record created successfully");
+  } catch (error) {
+      console.error("Error creating payment or donation record: ", error);
+      return res.status(500).json({ message: "Error creating payment or donation record" });
+  }
 
       if (membershipId) {
-
         try {
           const newPayment = await Payment.create({
-            user_id: Number(session.metadata.userId),
-            stripe_payment_intent_id: session.payment_intent,
-            stripe_customer_id: session.customer,
-            amount: session.amount_total ? session.amount_total / 100 : undefined, //cents to dollars
-            type: type,
-            datePaiement: new Date(),
-            typeId: membershipId
+              user_id: Number(session.metadata.userId),
+              stripe_payment_intent_id: session.payment_intent,
+              stripe_customer_id: session.customer,
+              amount: session.amount_total ? session.amount_total / 100 : undefined, //cents to dollars
+              type: type,
+              datePaiement: new Date(),
+              typeId: membershipId
           });
           console.log("Payment record created successfully");
-        } catch (error) {
+      } catch (error) {
           console.error("Error creating payment record: ", error);
-        }
-
+      }
         console.log("Membership ID found:", membershipId);
         const updateParams = {
           amount: session.amount_total ? session.amount_total / 100 : undefined, //cents to dollars
@@ -97,7 +124,7 @@ export const processPayment = async (req: Request, res: Response) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'Membership',
+              name: 'Don FDC',
             },
             unit_amount: req.body.amount * 100, //cents
           },
@@ -109,8 +136,9 @@ export const processPayment = async (req: Request, res: Response) => {
       cancel_url: 'http://localhost:5173/espaceMembres',
       metadata: {
         userId: req.body.userId,
-        membershipId: req.body.membershipId,
+        email: req.body.email,
         amount: req.body.amount,
+        name: req.body.name,
       },
     });
 

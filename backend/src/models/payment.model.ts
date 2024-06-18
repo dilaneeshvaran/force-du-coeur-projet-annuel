@@ -6,13 +6,14 @@ import { Membership } from './membership.model';
 
 export class Payment extends Model {
     public id!: number;
-    public user_id!: number;
+    public user_id!: number | null;
     public stripe_payment_intent_id!: string;
     public stripe_customer_id!: string;
     public amount!: number;
     public type!: "donation"  |"membership";
     public datePaiement!: Date;
     public typeId!: number; // This will hold the id of the Donation or Membership
+    public email!: string;
 }
 
     Payment.init({
@@ -23,7 +24,7 @@ export class Payment extends Model {
         },
         user_id: {
             type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: User,
                 key: 'id',
@@ -53,6 +54,10 @@ export class Payment extends Model {
             type: DataTypes.DATE,
             allowNull: true,
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
     }, {
         sequelize,

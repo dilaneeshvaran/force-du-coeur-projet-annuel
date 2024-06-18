@@ -10,7 +10,7 @@ export class Donation extends Model {
   public paymentMethod!: string;
   public email!: string;
   public donationFrequency!: 'monthly' | 'yearly' | 'punctual';
-  public donatorId!: number;
+  public donatorId!: number | null;
 }
 
 Donation.init({
@@ -41,7 +41,7 @@ Donation.init({
   },
   donatorId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: User,
       key: 'userId'

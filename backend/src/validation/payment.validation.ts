@@ -7,7 +7,8 @@ const paymentValidation = joi.object ({
   amount: joi.number().optional(),
   type: joi.string().valid('donation', 'membership').optional(),
   datePaiement: joi.date().optional(),
-  typeId: joi.number().optional()
+  typeId: joi.number().optional(),
+  email: joi.string().optional()
 });
 
 const validatePayment = (data: any) => {

@@ -5,14 +5,13 @@
     width: 1200px;
     height: 500px;
     display:flex;
-    
 }
 
 .nav-taches{
     position: relative;
     top: 30px;
     background-color: brown;
-    height: 120px;
+    height: 90px;
     width: 150px;
 }
 

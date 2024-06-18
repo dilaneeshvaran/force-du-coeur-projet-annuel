@@ -75,7 +75,6 @@ function ManageAccount() {
             <div className='nav-taches'>
                 <a href='#' className='nav-taches-link' onClick={() => handleTypeClick('account')}>Mon Compte</a>
                 <a href='#' className='nav-taches-link' onClick={() => handleTypeClick('membership')}>Mon Adhesion</a>
-                <a href='#' className='nav-taches-link' onClick={() => handleTypeClick('donation')}>Mes Dons</a>
             </div>
 
             <div className='taches-list'>

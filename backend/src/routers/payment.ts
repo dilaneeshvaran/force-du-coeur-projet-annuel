@@ -3,7 +3,7 @@ import {handleWebhook,processMembership, processPayment,createPayment, getAllPay
 import rawBodyBuffer  from '../middlewares/rawBodyBuffer'; 
 export const router = Router();
 
-//router.post('/', createPayment);
+router.post('/', createPayment);
 router.get('/', getAllPayments);
 router.get('/:id', getPaymentById);
 router.put('/:id', updatePayment);

@@ -11,7 +11,7 @@ const donationValidation = joi_1.default.object({
     fullname: joi_1.default.string().optional(),
     paymentMethod: joi_1.default.string().optional(),
     donationFrequency: joi_1.default.string().valid('monthly', 'yearly', 'punctual').optional(),
-    donatorId: joi_1.default.number().optional(),
+    donatorId: joi_1.default.number().allow(null).optional(),
     email: joi_1.default.string().email().optional(),
 });
 exports.donationValidation = donationValidation;

@@ -6,8 +6,8 @@ const donationValidation = joi.object ({
 fullname: joi.string().optional(),
   paymentMethod: joi.string().optional(),
   donationFrequency: joi.string().valid('monthly', 'yearly', 'punctual').optional(),
-  donatorId: joi.number().optional(),
-  email: joi.string().email().optional(),});
+  donatorId: joi.number().allow(null).optional(),
+    email: joi.string().email().optional(),});
 
 const validateDonation = (data: any) => {
   return donationValidation.validate(data);

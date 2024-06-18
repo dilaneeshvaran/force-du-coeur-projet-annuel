@@ -43,7 +43,6 @@ const Donation: React.FC<DonationProps> = ({ donation, onDonationChange }) => {
     };
 
     const handleDonationFrequencyChange = (id: number, newFrequency: 'monthly' | 'yearly' | 'punctual' | undefined, amount: number) => {
-        // Your function implementation here
     };
 
     const handleAmountChange = (newAmount: number) => {
@@ -96,7 +95,6 @@ const Donation: React.FC<DonationProps> = ({ donation, onDonationChange }) => {
                     )}
                 </>
             )}
-
         </div>
     );
 };

@@ -8,6 +8,7 @@ interface LogoutProps {
 const Logout: React.FC<LogoutProps> = ({ onLogout }) => {
   const handleLogout = () => {
     localStorage.setItem('isLoggedIn', 'false');
+    localStorage.removeItem('userId');
     if (onLogout) {
       onLogout();
     }

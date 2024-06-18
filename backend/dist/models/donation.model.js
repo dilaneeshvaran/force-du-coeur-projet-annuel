@@ -35,7 +35,7 @@ Donation.init({
     },
     donatorId: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: user_model_1.User,
             key: 'userId'
