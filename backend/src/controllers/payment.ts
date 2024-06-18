@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Payment } from '../models';
 import stripe from 'stripe';
 import { IncomingMessage } from 'http';
-import { updateMembershipDetails } from './memberships'; 
+import { updateMembershipDetails } from './memberships';
 require('dotenv').config()
 
 const stripeClient = new stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -44,10 +44,34 @@ export const handleWebhook = async (req: any, res: Response) => {
       const membershipId = session.metadata.membershipId;
       console.log(":::::::::::metzdaya", session.metadata);
 
+      let type = 'donation';
+    if (session.mode === 'subscription') {
+      type = 'membership';
+    }    
+
+
+
+
       if (membershipId) {
+
+        try {
+          const newPayment = await Payment.create({
+            user_id: Number(session.metadata.userId),
+            stripe_payment_intent_id: session.payment_intent,
+            stripe_customer_id: session.customer,
+            amount: session.amount_total ? session.amount_total / 100 : undefined, //cents to dollars
+            type: type,
+            datePaiement: new Date(),
+            typeId: membershipId
+          });
+          console.log("Payment record created successfully");
+        } catch (error) {
+          console.error("Error creating payment record: ", error);
+        }
+
         console.log("Membership ID found:", membershipId);
         const updateParams = {
-          amount: session.amount_total ? session.amount_total / 100 : undefined, // Convert cents to dollars
+          amount: session.amount_total ? session.amount_total / 100 : undefined, //cents to dollars
           paymentDate: new Date(),
           status: 'active',
           userId: Number(session.metadata.userId),
@@ -64,7 +88,7 @@ export const handleWebhook = async (req: any, res: Response) => {
   res.status(200).end()
 };
 
-export const processMembership = async (req: Request, res: Response) => {
+export const processPayment = async (req: Request, res: Response) => {
   try {
     const session = await stripeClient.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -96,6 +120,43 @@ export const processMembership = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error creating checkout session" });
   }
 };
+
+export const processMembership = async (req: Request, res: Response) => {
+  try {
+    const priceIdMap = {
+      10: 'price_1PT55qGc0PhuZBe9pQAMVC5K',
+      30: 'price_1PT524Gc0PhuZBe9P4aSkGZ1',
+      50: 'price_1PT55VGc0PhuZBe9K1bSAwKu',
+      100: 'price_1PT56AGc0PhuZBe9dPGecJRj',
+    };
+
+    const amount = req.body.amount as keyof typeof priceIdMap;
+
+    const session = await stripeClient.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price: priceIdMap[amount], 
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      success_url: 'http://localhost:5173/espaceMembres?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'http://localhost:5173/espaceMembres',
+      metadata: {
+        userId: req.body.userId,
+        membershipId: req.body.membershipId,
+        amount: req.body.amount,
+      },
+    });
+
+    res.json({ id: session.id });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error creating checkout session" });
+  }
+};
+
 
 const createPayment = async (req: Request, res: Response) => {
   try {

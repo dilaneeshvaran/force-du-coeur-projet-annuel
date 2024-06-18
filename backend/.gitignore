@@ -4,3 +4,4 @@ logs/
 backend/node_modules/
 backend/dist/
 backend/logs/
+.env

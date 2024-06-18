@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import stripe from 'stripe';
 
 
 interface Membership {
@@ -22,37 +21,6 @@ const Membership: React.FC<MembershipProps> = ({ membership, onMembershipChange 
     const [membershipData, setMembershipData] = useState<Membership | null>(null);
     const [selectedAmount, setSelectedAmount] = useState<number>(membership.amount);
 
-    const handleMembershipChange = (newStatus: 'active' | 'inactive', amount: number) => {
-        if (newStatus === 'inactive') {
-            const confirmation = window.confirm('Are you sure you want to deactivate your membership? This will delete your user and membership data.');
-            if (confirmation) {
-                fetch(`http://localhost:8088/memberships/${membership.id}`, {
-                    method: 'DELETE',
-                }).then(() => {
-                    fetch(`http://localhost:8088/users/${membership.userId}`, {
-                        method: 'DELETE',
-                    }).then(() => {
-                        localStorage.removeItem('userId');
-                    });
-                });
-            }
-        } else {
-            fetch(`http://localhost:8088/memberships/${membership.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...membership,
-                    amount,
-                    status: newStatus,
-                    paymentDate: new Date(),
-                }),
-            }).then(response => response.json())
-                .then(data => setMembershipData(data));
-        }
-
-    };
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value;

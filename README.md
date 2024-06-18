@@ -19,11 +19,15 @@ Pour démarrer le client/backoffice, exécutez les commandes suivantes une aprè
 
 1) cd backend
 
-2) docker compose up -d
+2) npm install
 
-3) npm run start:dev
+3) docker compose up -d
 
-4) stripe listen --forward-to http://localhost:8088/payments/webhook
+4) npm run start:dev
+
+5) stripe listen --forward-to http://localhost:8088/payments/webhook
+command to trigger successful payment :
+stripe trigger checkout.session.completed
 
 --------------------------------------CLIENT---------------------------------------------------
 TODO
