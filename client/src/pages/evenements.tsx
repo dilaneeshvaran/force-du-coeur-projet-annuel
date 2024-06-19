@@ -23,7 +23,7 @@ function Evenements() {
   }, []);
 
   return (
-    <>
+    <><div className='eventContainer'>
       {events.map((event, index) => (
         <div key={index} className="eventbox">
           <h2>{event.title}</h2>
@@ -32,6 +32,7 @@ function Evenements() {
           <p>Location: {event.location}</p>
         </div>
       ))}
+    </div>
     </>
   )
 }

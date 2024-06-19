@@ -1,4 +1,4 @@
-import '../styles/taches.css';
+import '../styles/manageAccount.css';
 import { useEffect, useState } from 'react';
 import Membership from '../components/Membership';
 import Account from '../components/Account';
@@ -71,13 +71,13 @@ function ManageAccount() {
     };
 
     return (
-        <div className="taches-box">
-            <div className='nav-taches'>
-                <a href='#' className='nav-taches-link' onClick={() => handleTypeClick('account')}>Mon Compte</a>
-                <a href='#' className='nav-taches-link' onClick={() => handleTypeClick('membership')}>Mon Adhesion</a>
+        <div className="acc-box">
+            <div className='nav-acc'>
+                <a href='#' className={`nav-acc-link ${selectedType === 'account' ? 'nav-acc-link-selected' : ''}`} onClick={() => handleTypeClick('account')}>Mon Compte</a>
+                <a href='#' className={`nav-acc-link ${selectedType === 'membership' ? 'nav-acc-link-selected' : ''}`} onClick={() => handleTypeClick('membership')}>Mon Adhesion</a>
             </div>
 
-            <div className='taches-list'>
+            <div className='acc-list'>
                 {selectedType === 'account' && accounts.map((acc) => (
                     <Account account={acc} onAccountChange={handleAccountChange} />
                 ))}

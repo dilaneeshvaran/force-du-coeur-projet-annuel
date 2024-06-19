@@ -20,8 +20,9 @@ const MesTaches = () => {
     const [selectedType, setSelectedType] = useState('ongoing');
 
     useEffect(() => {
+        const userId = Number(localStorage.getItem('userId'));
         const fetchTasks = async () => {
-            const response = await fetch('http://localhost:8088/tasks/user/1');
+            const response = await fetch(`http://localhost:8088/tasks/user/${userId}`);
             const data = await response.json();
             setTaches(data);
         };

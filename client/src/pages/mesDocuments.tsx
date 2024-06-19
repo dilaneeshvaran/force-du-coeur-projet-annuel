@@ -83,8 +83,8 @@ function MesDocuments() {
     return (
         <div className="ged">
             <div className='nav-ged'>
-                <a href='#' className='nav-ged-link' onClick={() => handleLinkClick('received')}>Documents Reçu</a>
-                <a href='#' className='nav-ged-link' onClick={() => handleLinkClick('archived')}>Documents Archivés</a>
+                <a href='#' className={`nav-ged-link ${selectedLink === 'received' ? 'nav-ged-link-selected' : ''}`} onClick={() => handleLinkClick('received')}>Documents Reçu</a>
+                <a href='#' className={`nav-ged-link ${selectedLink === 'archived' ? 'nav-ged-link-selected' : ''}`} onClick={() => handleLinkClick('archived')}>Documents Archivés</a>
             </div>
             <div className='doc-list'>
                 <div className='searchbar-ged'><input type="text" value={searchTerm} onChange={event => setSearchTerm(event.target.value)} placeholder="Search documents..." /></div>

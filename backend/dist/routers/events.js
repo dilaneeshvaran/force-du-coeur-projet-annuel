@@ -10,6 +10,7 @@ exports.router = (0, express_1.Router)();
 //router.post('/', isAuth, createEvent);
 exports.router.post('/', controllers_1.createEvent);
 exports.router.get('/', controllers_1.getAllEvents);
+exports.router.get('/nonMembersOnly', controllers_1.getNonMembersOnlyEvents);
 exports.router.get('/:id', controllers_1.getEventById);
 exports.router.put('/:id', controllers_1.updateEvent);
 //router.delete('/:id', isAuth, deleteEvent);

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteEvent = exports.updateEvent = exports.getEventById = exports.getAllEvents = exports.createEvent = void 0;
+exports.deleteEvent = exports.updateEvent = exports.getEventById = exports.getAllEvents = exports.createEvent = exports.getNonMembersOnlyEvents = void 0;
 const validation_1 = require("../validation");
 const models_1 = require("../models");
 const middlewares_1 = require("../middlewares");
@@ -51,6 +51,17 @@ const getAllEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.getAllEvents = getAllEvents;
+const getNonMembersOnlyEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const events = yield models_1.Event.findAll({ where: { membersOnly: false } });
+        return res.status(200).json(events);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des évènements non réservés aux membres." });
+    }
+});
+exports.getNonMembersOnlyEvents = getNonMembersOnlyEvents;
 const getEventById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const eventId = req.params.id;

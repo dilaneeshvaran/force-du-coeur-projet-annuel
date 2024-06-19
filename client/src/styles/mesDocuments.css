@@ -72,3 +72,7 @@
     background: url('search_icon.png') no-repeat center center;
     background-size: contain;
   }
+
+  .nav-ged-link-selected {
+    background-color: #00e034; 
+}   

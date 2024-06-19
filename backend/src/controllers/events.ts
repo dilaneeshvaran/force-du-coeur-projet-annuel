@@ -42,6 +42,17 @@ const getAllEvents = async (req: Request, res: Response) => {
   }
 }
 
+const getNonMembersOnlyEvents = async (req: Request, res: Response) => {
+  try {
+    const events = await Event.findAll({ where: { membersOnly: false } });
+    return res.status(200).json(events);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des évènements non réservés aux membres." });
+  }
+}
+
+
 const getEventById = async (req: Request, res: Response) => {
   try {
     const eventId = req.params.id;
@@ -102,4 +113,4 @@ const deleteEvent = async (req: Request, res: Response) => {
   }
 }
 
-export { createEvent, getAllEvents, getEventById, updateEvent, deleteEvent };
+export {getNonMembersOnlyEvents, createEvent, getAllEvents, getEventById, updateEvent, deleteEvent };
