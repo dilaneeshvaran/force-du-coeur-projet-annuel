@@ -14,7 +14,7 @@ function Evenements() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const response = await fetch('http://localhost:8088/events');
+      const response = await fetch('http://localhost:8088/events/nonMembersOnly');
       const data = await response.json();
       setEvents(data);
     };

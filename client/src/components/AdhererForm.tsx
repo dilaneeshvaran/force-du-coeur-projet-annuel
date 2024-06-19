@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
+import '../styles/adhererForm.css'
 
 interface AdhererFormProps {
     handleCloseClick: () => void;
@@ -71,7 +72,7 @@ export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) =>
 
 
     return (
-        <div className='contentBox'>
+        <div className='contentBoxRegister'>
             <h3>Adhérer à 'Force du Coeur'</h3>
             <form onSubmit={handleValidateClick}>
                 <label>

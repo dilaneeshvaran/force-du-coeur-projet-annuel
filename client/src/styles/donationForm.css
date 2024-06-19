@@ -1,0 +1,70 @@
+.contentBoxDonation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.contentBoxDonation h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.contentBoxDonation form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.contentBoxDonation form label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.contentBoxDonation form label span {
+    width: 30%;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.contentBoxDonation form label input {
+    width: 68%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.contentBoxDonation form input[type="submit"] {
+    background-color: #930000;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.contentBoxDonation form input[type="submit"]:hover {
+    background-color: #5e0000;
+}
+
+.contentBoxDonation button {
+    padding: 10px;
+    background-color: #2d2d2d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.contentBoxDonation button:hover {
+    background-color: #161616;
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
+import '../styles/donationForm.css'
 
 const stripePromise = loadStripe('pk_test_51PScAqGc0PhuZBe9Uqm7XP3iXPKio8QNqbt4iNfSINUE06VzAPldOUwEgVn94rLLmQKd8STxK6fj12YKwBeiMRbS00DCyPSNGY');
 
@@ -50,7 +51,7 @@ export const DonationForm: React.FC<DonationFormProps> = ({ handleCloseClick }) 
     };
 
     return (
-        <div className='contentBox'>
+        <div className='contentBoxDonation'>
             <h3>Faire un don</h3>
             <form onSubmit={handleSubmit}>
                 <label>

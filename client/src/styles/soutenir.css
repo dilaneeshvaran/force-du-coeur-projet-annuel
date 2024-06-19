@@ -19,7 +19,7 @@
 }
 
 .buttonCB{
-    background-color: #ff5500;
+    background-color: #a70000;
     color: white;
     border: none;
     border-radius: 5px;
@@ -33,11 +33,11 @@
 }
 
 .buttonCB2{
-    background-color: #ff5500;
+    background-color: #a70000;
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 14px 20px;
+    padding: 11px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -48,12 +48,12 @@
 }
 
 .buttonCB:hover{
-    background-color: #ff908a;
+    background-color: #5e0500;
 }
 
 
 .buttonCB2:hover{
-    background-color: #ff908a;
+    background-color: #5e0500;
 }
 
 .btnCB{
