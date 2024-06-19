@@ -31,9 +31,8 @@ stripe trigger checkout.session.completed
 
 --------------------------------------CLIENT---------------------------------------------------
 TODO
-//soutenir nos actions button size fix
-//don punctual/periodic/cotisation with actual paiement (stripe)
 //Home screen add infos
+//Tasks should only appear to assigned users by id
 //activity visible to public only if membersOnly is falses
 //public : voir les evenements / votes / sondages
 //équipes real data

@@ -26,7 +26,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.status(400).json({ message: error.details[0].message });
     }
     try {
-        const { username, password, email, firstname, lastname, birthOfDate } = value;
+        const { username, password, email, firstname, lastname, birthOfDate, phoneNumber, country, city, address } = value;
         const hashedPassword = yield bcrypt_1.default.hash(password, 10);
         const newUser = yield models_1.User.create({
             username,
@@ -34,7 +34,11 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             email,
             firstname,
             lastname,
-            birthOfDate: new Date(value.birthOfDate)
+            birthOfDate: new Date(value.birthOfDate),
+            phoneNumber,
+            country,
+            city,
+            address,
         });
         const token = (0, services_1.generateToken)(newUser.id);
         return res.status(201).json({ newUser, token });
@@ -73,7 +77,7 @@ exports.login = login;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = req.params.id;
-        const { id, username, password, email, firstname, lastname, dateOfBirth, role } = req.body;
+        const { id, username, password, email, firstname, lastname, dateOfBirth, role, phoneNumber, country, city, address } = req.body;
         const user = yield models_1.User.findByPk(userId);
         if (user !== null) {
             if (id !== undefined)
@@ -92,6 +96,14 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 user.dateOfBirth = new Date(dateOfBirth);
             if (role !== undefined)
                 user.role = role;
+            if (phoneNumber !== undefined)
+                user.phoneNumber = phoneNumber;
+            if (country !== undefined)
+                user.country = country;
+            if (city !== undefined)
+                user.city = city;
+            if (address !== undefined)
+                user.address = address;
             yield user.save();
             res.status(200).json(user);
         }

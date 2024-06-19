@@ -8,6 +8,10 @@ const userValidation = joi.object ({
   lastname: joi.string().trim().optional(),
   birthOfDate: joi.date().optional(),
   role: joi.string().valid('user', 'admin').optional(),
+  phoneNumber: joi.string().optional(),
+  country: joi.string().trim().optional(),
+  city: joi.string().trim().optional(),
+  address: joi.string().trim().optional()
 });
 
 const userAuthValidation = joi.object ({

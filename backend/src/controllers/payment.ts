@@ -1,8 +1,11 @@
 import e, { Request, Response } from 'express';
-import { Donation, Payment } from '../models';
+import { Donation, Membership, Payment, User } from '../models';
 import stripe from 'stripe';
 import { IncomingMessage } from 'http';
 import { updateMembershipDetails } from './memberships';
+import {register,getUserById,getAllUsers } from './users';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 require('dotenv').config()
 
 const stripeClient = new stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -42,14 +45,54 @@ export const handleWebhook = async (req: any, res: Response) => {
 
     if (session.metadata) { 
       const membershipId = session.metadata.membershipId;
+      const typeDonation = session.metadata.typeDonation;
+      const typeRegister = session.metadata.typeRegister;
       const email = session.metadata.email;
       console.log(":::::::::::metzdayaaaaaaaaaaaaaaaaaaa", session.metadata);
 
+      
       let type = 'donation';
     if (session.mode === 'subscription') {
       type = 'membership';
     }
+
+    if(typeRegister){
+      let pwd = session.metadata.password;
+      const hashedPassword = await bcrypt.hash(pwd, 10);
+      const user = await User.create({
+        firstname: session.metadata.firstName,
+        lastname: session.metadata.lastName,
+        dateOfBirth: session.metadata.dob,
+        email: session.metadata.email,
+        password:hashedPassword,
+        phoneNumber: session.metadata.phoneNumber,
+        country: session.metadata.country,
+        city: session.metadata.city,
+        address: session.metadata.address,
+      });
+
+      const membership = await Membership.create({
+        amount: session.amount_total ? session.amount_total / 100 : undefined, //cents to dollars
+        paymentDate: new Date(),
+        status: 'active',
+        userId: user.id,
+      });
+      console.log("::::::::::::::::::::MEMBERSHIP ID",membership.id);
+
+      const paymentRecord = await Payment.create({
+        user_id: user.id, 
+        stripe_payment_intent_id: session.payment_intent,
+        stripe_customer_id: session.customer,
+        amount: session.amount_total ? session.amount_total / 100 : undefined, //cents to dollars
+        type: type,
+        datePaiement: new Date(),
+        typeId: membership.id,
+        email: user.email,
+      });
+      
+    }
     
+    if(typeDonation){
     try {
       console.log(":::::::::::::try payment");
       console.log("::::::::::::USER ID", session.metadata.userId);
@@ -80,6 +123,7 @@ export const handleWebhook = async (req: any, res: Response) => {
       console.error("Error creating payment or donation record: ", error);
       return res.status(500).json({ message: "Error creating payment or donation record" });
   }
+}
 
       if (membershipId) {
         try {
@@ -139,6 +183,7 @@ export const processPayment = async (req: Request, res: Response) => {
         email: req.body.email,
         amount: req.body.amount,
         name: req.body.name,
+        typeDonation: req.body.typeDonation,
       },
     });
 
@@ -175,6 +220,53 @@ export const processMembership = async (req: Request, res: Response) => {
         userId: req.body.userId,
         membershipId: req.body.membershipId,
         amount: req.body.amount,
+      },
+    });
+
+    
+
+    res.json({ id: session.id });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error creating checkout session" });
+  }
+};
+
+
+export const processRegister = async (req: Request, res: Response) => {
+  try {
+    const priceIdMap = {
+      10: 'price_1PT55qGc0PhuZBe9pQAMVC5K',
+      30: 'price_1PT524Gc0PhuZBe9P4aSkGZ1',
+      50: 'price_1PT55VGc0PhuZBe9K1bSAwKu',
+      100: 'price_1PT56AGc0PhuZBe9dPGecJRj',
+    };
+
+    const amount = req.body.amount as keyof typeof priceIdMap;
+
+    const session = await stripeClient.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price: priceIdMap[amount], 
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      success_url: 'http://localhost:5173/espaceMembres?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'http://localhost:5173/espaceMembres',
+      metadata: {
+        amount: req.body.amount,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        dob: req.body.dob,
+        email: req.body.email,
+        password: req.body.password,
+        phoneNumber: req.body.phoneNumber,
+        country: req.body.country,
+        city: req.body.city,
+        address: req.body.address,
+        typeRegister: req.body.typeRegister,
       },
     });
 

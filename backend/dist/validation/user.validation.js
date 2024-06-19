@@ -13,6 +13,10 @@ const userValidation = joi_1.default.object({
     lastname: joi_1.default.string().trim().optional(),
     birthOfDate: joi_1.default.date().optional(),
     role: joi_1.default.string().valid('user', 'admin').optional(),
+    phoneNumber: joi_1.default.string().optional(),
+    country: joi_1.default.string().trim().optional(),
+    city: joi_1.default.string().trim().optional(),
+    address: joi_1.default.string().trim().optional()
 });
 const userAuthValidation = joi_1.default.object({
     password: joi_1.default.string().min(8).max(20).required(),

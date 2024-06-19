@@ -6,6 +6,7 @@ import { generateToken } from '../services';
 import { User, UserVote } from '../models';
 import { RequestWithUser, logger } from '../middlewares';
 import { tokenRevocationList } from '../routers/users';
+import { add } from 'winston';
 
 const register = async (req: Request, res: Response) => {
   const { error, value } = validateUser(req.body);
@@ -14,7 +15,7 @@ const register = async (req: Request, res: Response) => {
   }
 
   try {
-    const { username, password, email, firstname, lastname, birthOfDate } = value;
+    const { username, password, email, firstname, lastname, birthOfDate,phoneNumber,country,city,address } = value;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       username,
@@ -22,10 +23,12 @@ const register = async (req: Request, res: Response) => {
       email,
       firstname,
       lastname,
-      birthOfDate: new Date(value.birthOfDate)
+      birthOfDate: new Date(value.birthOfDate),
+      phoneNumber,
+      country,
+      city,
+      address,
     });
-
-  
 
   const token = generateToken(newUser.id);
 
@@ -70,7 +73,7 @@ const login = async (req: RequestWithUser, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
-    const { id, username, password, email, firstname, lastname, dateOfBirth,role } = req.body;
+    const { id, username, password, email, firstname, lastname, dateOfBirth,role,phoneNumber,country,city,address } = req.body;
 
     const user = await User.findByPk(userId);
     if (user !== null) {
@@ -82,6 +85,10 @@ const updateUser = async (req: Request, res: Response) => {
       if (lastname !== undefined) user.lastname = lastname;
       if (dateOfBirth !== undefined) user.dateOfBirth = new Date(dateOfBirth);
       if (role !== undefined) user.role = role;
+      if (phoneNumber !== undefined) user.phoneNumber = phoneNumber;
+      if (country !== undefined) user.country = country;
+      if (city !== undefined) user.city = city;
+      if (address !== undefined) user.address = address;
 
       await user.save();
       res.status(200).json(user);

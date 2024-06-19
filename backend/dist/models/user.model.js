@@ -32,7 +32,7 @@ User.init({
     },
     username: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: true,
         set(value) {
             this.setDataValue('username', value.toLowerCase());
@@ -70,7 +70,7 @@ User.init({
     },
     verified: {
         type: sequelize_1.DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
         defaultValue: false
     }, role: {
         type: sequelize_1.DataTypes.ENUM,
@@ -86,7 +86,22 @@ User.init({
     dateOfBirth: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false
+    }, phoneNumber: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true
     },
+    country: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    city: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    address: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    }
 }, {
     sequelize: services_1.sequelize,
     modelName: 'User',

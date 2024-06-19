@@ -7,7 +7,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      // define other columns here
     });
   },
   down: (queryInterface, Sequelize) => {

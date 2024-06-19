@@ -21,6 +21,10 @@ export class User extends Model {
   public role!: "user" | "admin";
   public memberSince!: Date;
   public dateOfBirth!: Date;
+  public phoneNumber!:number
+  public country!: string;
+  public city!: string;
+  public address!: string;
 }
 
 export const generateValidationCode = (): string => {
@@ -40,7 +44,7 @@ User.init({
   },
   username: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true,
     set(value: string) {
       this.setDataValue('username', value.toLowerCase());
@@ -79,7 +83,7 @@ User.init({
   },
   verified: {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
+    allowNull: true,
     defaultValue: false
   },  role: {
     type: DataTypes.ENUM,
@@ -95,7 +99,23 @@ User.init({
   dateOfBirth: {
     type: DataTypes.DATE,
     allowNull: false
+  },  phoneNumber: {
+    type: DataTypes.INTEGER,
+    allowNull: true
   },
+  country: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  city: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  address: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+  
 }, {
   sequelize,
   modelName: 'User',

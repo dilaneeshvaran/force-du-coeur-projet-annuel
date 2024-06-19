@@ -26,6 +26,7 @@ export const DonationForm: React.FC<DonationFormProps> = ({ handleCloseClick }) 
                     name: name,
                     email: email,
                     userId: localStorage.getItem('userId') || null,
+                    typeDonation: 'donation',
                 }),
             });
 
