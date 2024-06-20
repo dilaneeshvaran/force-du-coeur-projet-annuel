@@ -16,24 +16,33 @@ const middlewares_1 = require("../middlewares");
 const createMessage = (req, res, fileAttachment) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateMessage)(req.body);
     if (error) {
-        res.status(400).json({ message: middlewares_1.logger.error(error.details[0].message) });
+        middlewares_1.logger.error(error.details[0].message);
+        return res.status(400).json({ message: error.details[0].message });
     }
     try {
-        const { subject, message, type } = value;
-        if (!subject || !type) {
-            res.status(400).json({ message: "Aucun champ ne doit être vide" });
+        const { userId, replyAdminId, fullName, email, createdAt, senderMail, receiverMail, subject, message, type, fileAttachment, replied } = value;
+        if (!email) {
+            return res.status(400).json({ message: "email champ ne doit être vide" });
         }
         const newMessage = yield models_1.Message.create({
+            userId,
+            replyAdminId,
+            fullName,
+            email,
             subject,
             message,
             type,
             fileAttachment,
+            createdAt,
+            senderMail,
+            receiverMail,
+            replied
         });
-        res.status(201).json(newMessage);
+        return res.status(201).json(newMessage);
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Erreur lors de la création d'un message." });
+        return res.status(500).json({ message: "Erreur lors de la création d'un message." });
     }
 });
 exports.createMessage = createMessage;

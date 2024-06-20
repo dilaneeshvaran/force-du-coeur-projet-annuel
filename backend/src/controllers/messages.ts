@@ -6,26 +6,35 @@ import { logger } from '../middlewares';
 const createMessage = async (req: Request, res: Response, fileAttachment: any) => {
   const { error, value } = validateMessage(req.body);
   if (error) {
-    res.status(400).json({ message: logger.error(error.details[0].message) });
+    logger.error(error.details[0].message);
+    return res.status(400).json({ message: error.details[0].message });
   }
   
   try {
-    const { subject, message, type } = value;
+    const {userId,replyAdminId,fullName,email,createdAt,senderMail,receiverMail, subject, message, type,fileAttachment,replied } = value;
     
-    if (!subject || !type) {
-      res.status(400).json({ message: "Aucun champ ne doit être vide"});
+    if (!email) {
+      return res.status(400).json({ message: "email champ ne doit être vide"});
     }
 
     const newMessage = await Message.create({
+      userId,
+      replyAdminId,
+      fullName,
+      email,
       subject,
       message,
       type,
-      fileAttachment, 
+      fileAttachment,
+      createdAt,
+      senderMail,
+      receiverMail,
+      replied
     });
-    res.status(201).json(newMessage);
+    return res.status(201).json(newMessage);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Erreur lors de la création d'un message."});
+    return res.status(500).json({ message: "Erreur lors de la création d'un message."});
   }
 }
 

@@ -5,6 +5,20 @@
   align-items: center;
   flex-direction: column; 
 }
+.messageStatus {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.messageStatus.success {
+  background-color: rgb(128, 0, 0);
+}
+
+.messageStatus.failure {
+  background-color: rgb(60, 0, 0);
+}
 
 .contactForm {
   margin-top: 1rem;
