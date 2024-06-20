@@ -27,7 +27,6 @@ const EspaceMembres: React.FC<EspaceMembresProps> = ({ isLoggedIn, setIsLoggedIn
     <div>
       {
         isLoggedIn ? <div>
-          <Logout />
           <div className='sidebarDiv'><Sidebar setCurrentMenuParent={(menu) => { setCurrentMenu(menu) }} /></div>
           <div className="content-container">
             {

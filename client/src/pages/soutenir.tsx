@@ -32,7 +32,7 @@ function Soutenir({ isLoggedIn }: SoutenirProps) {
 
   return (
     <>
-      <h1>Soutenir nos actions</h1>
+      <h1 className='soutenirTitle'>Soutenir nos actions</h1>
       <div className="containerCB">
         {!isPonctuelClicked && !isAdhererClicked ? (
           <>

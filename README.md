@@ -32,9 +32,6 @@ stripe trigger checkout.session.completed
 --------------------------------------CLIENT---------------------------------------------------
 TODO
 //Home screen add infos
-//Tasks should only appear to assigned users by id
-//activity visible to public only if membersOnly is falses
-//public : voir les evenements / votes / sondages
 //équipes real data
 //contact with real data
 //mot de passe oublié

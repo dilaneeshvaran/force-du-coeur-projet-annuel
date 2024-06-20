@@ -11,7 +11,7 @@ const voteValidation = joi.object ({
   description: joi.string().optional(),
   startDate: joi.date().optional(),
   endDate: joi.date().optional(),
-  votingType: joi.string().valid('one-round', 'two-round').optional,
+  votingType: joi.string().valid('one-round', 'two-round').optional(),
   ongoingRound: joi.string().valid('first-round', 'second-round').optional(),
   votingMethod: joi.string().valid('majority rule', 'absolute majority').optional(),
   status: joi.string().valid('open', 'closed').optional(),
