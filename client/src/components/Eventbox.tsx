@@ -21,7 +21,6 @@ const EventBox: React.FC<EventBoxProps> = ({ event }) => {
     const [availableSpots, setAvailableSpots] = useState(event.availableSpots);
     const userId = localStorage.getItem('userId');
 
-
     useEffect(() => {
         fetch(`http://localhost:8088/participations/user/${userId}/event/${event.id}`)
             .then(response => response.json())

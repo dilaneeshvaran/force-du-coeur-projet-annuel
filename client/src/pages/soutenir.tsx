@@ -16,6 +16,7 @@ interface SoutenirProps {
 function Soutenir({ isLoggedIn }: SoutenirProps) {
   const [isPonctuelClicked, setPonctuelClicked] = useState(false);
   const [isAdhererClicked, setAdhererClicked] = useState(false);
+  const [isTitleVisible, setIsTitleVisible] = useState(true);
 
   const handlePonctuelClick = () => {
     setPonctuelClicked(true);
@@ -23,6 +24,7 @@ function Soutenir({ isLoggedIn }: SoutenirProps) {
 
   const handleAdhererClick = () => {
     setAdhererClicked(true);
+    setIsTitleVisible(false);
   }
 
   const handleCloseClick = () => {
@@ -32,7 +34,7 @@ function Soutenir({ isLoggedIn }: SoutenirProps) {
 
   return (
     <>
-      <h1 className='soutenirTitle'>Soutenir nos actions</h1>
+      {isTitleVisible && <h1 className='soutenirTitle'>Soutenir nos actions</h1>}
       <div className="containerCB">
         {!isPonctuelClicked && !isAdhererClicked ? (
           <>

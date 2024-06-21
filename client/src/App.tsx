@@ -11,6 +11,9 @@ import Rejoindre from './pages/rejoindre';
 import EspaceMembres from './pages/espaceMembres';
 import { useState } from 'react';
 import ManageAccount from './pages/manageAccount';
+import ChatBot from './components/ChatBox';
+import cb1 from './assets/chatbox3.png'
+import { useLocation } from 'react-router-dom';
 
 function Logout() {
   const navigate = useNavigate();
@@ -27,7 +30,13 @@ function Logout() {
 }
 
 function App() {
+
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
+  const [isChatBotVisible, setChatBotVisible] = useState(false);
+
+  const toggleChatBot = () => {
+    setChatBotVisible(prev => !prev);
+  };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -48,7 +57,31 @@ function App() {
         <Route path="/espaceMembres" element={<EspaceMembres isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/manageAccount/*" element={<ManageAccount />} />
       </Routes>
+      <ChatBotButton toggleChatBot={toggleChatBot} isChatBotVisible={isChatBotVisible} />
+      {isChatBotVisible && <ChatBot />}
     </BrowserRouter>
+  );
+}
+interface ChatBotButtonProps {
+  toggleChatBot: () => void;
+  isChatBotVisible: boolean;
+}
+function ChatBotButton({ toggleChatBot, isChatBotVisible }: ChatBotButtonProps) {
+  const [isActive, setIsActive] = useState(false);
+  const location = useLocation();
+
+  const handleClick = () => {
+    toggleChatBot();
+    setIsActive(!isActive);
+  };
+
+  return (
+    location.pathname !== '/espaceMembres' && (
+      <button className={`chatbot-btn ${isActive ? 'active' : ''}`} onClick={handleClick}>
+        <img src={cb1} className={`chatbotlogo ${isActive ? 'active' : ''}`} alt='' />
+        {isChatBotVisible ? 'Fermer' : 'Assistance Bot'}
+      </button>
+    )
   );
 }
 

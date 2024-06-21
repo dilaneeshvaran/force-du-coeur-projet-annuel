@@ -33,7 +33,6 @@ stripe trigger checkout.session.completed
 TODO
 //Home screen add infos
 //équipes real data
-//contact with real data
 //mot de passe oublié
 //GED : edit & le classement
 //Chatbot (réponses automatique)

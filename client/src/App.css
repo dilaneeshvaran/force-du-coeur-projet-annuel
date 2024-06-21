@@ -4,10 +4,48 @@
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
-    background-color: rgb(255, 255, 255);
   }
-  
-  
+  .chatbot-btn{
+    position: fixed;
+    bottom: 0;
+    right: 3rem;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+  .chatbot-btn:hover {
+    background-color: rgb(174, 174, 174);
+  }
+   .chatbotlogo:hover {
+    filter: drop-shadow(0 0 2em #dddddd);
+  }
+
+  .chatbotlogo.active {
+    display: none;  
+  }
+
+  .chatbot-btn.active {
+    position: fixed;
+    bottom: 28.8rem;
+    right: 1rem;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  background-color: rgb(105, 105, 105);
+  color:rgb(255, 255, 255);
+height:2rem;
+width: 4rem;
+}
+
+.chatbot-btn.active:hover {
+  background-color: rgb(39, 39, 39);
+}
+
+  .chatbotlogo {
+    max-height: 2rem;
+    margin-right: 2rem;
+  }
   
   @keyframes logo-spin {
     from {

@@ -7,8 +7,6 @@ interface AdhererFormProps {
 }
 const stripePromise = loadStripe('pk_test_51PScAqGc0PhuZBe9Uqm7XP3iXPKio8QNqbt4iNfSINUE06VzAPldOUwEgVn94rLLmQKd8STxK6fj12YKwBeiMRbS00DCyPSNGY');
 
-
-
 export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) => {
     const [firstName, setFirstName] = useState<string>();
     const [lastName, setLastName] = useState<string>();
