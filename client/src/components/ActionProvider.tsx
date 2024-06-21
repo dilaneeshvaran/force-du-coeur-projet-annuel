@@ -7,6 +7,14 @@ interface ActionProviderProps {
 }
 
 const ActionProvider: React.FC<ActionProviderProps> = ({ createChatBotMessage, setState, children }) => {
+    const handleGreeting = () => {
+        const botMessage = createChatBotMessage(`Bonjour et bienvenue sur le siteweb de l'association "Force du coeur", je suis un bot, et je suis votre guide sur ce site. En quoi puis-je vous aider ?`);
+
+        setState((prev: any) => ({
+            ...prev,
+            messages: [...prev.messages, botMessage],
+        }));
+    };
     const handleDonation = () => {
         const botMessage = createChatBotMessage('Pour effectuer un don ou pour adhérer et devenir membre, veuillez vous rendre sur la page "Soutenir nos actions".');
 
@@ -42,7 +50,16 @@ const ActionProvider: React.FC<ActionProviderProps> = ({ createChatBotMessage, s
     };
 
     const handleUnknown = () => {
-        const botMessage = createChatBotMessage(`Je suis désolé, je n'ai pas les informations sur ce que vous me demandez. Je peux seulement vous guider à naviger sur ce site. Pour des informations plus précises, veuillez contacter un membre de FDC via le formulaire de contact de la page "Contact".`);
+        const botMessage = createChatBotMessage(`Désolé je suis un bot incapable de comprendre votre saisi, Pour une conversation plus profonde et pour des informations plus précises, veuillez contacter un membre de FDC via le formulaire de contact de la page "Contact".`);
+
+        setState((prev: any) => ({
+            ...prev,
+            messages: [...prev.messages, botMessage],
+        }));
+    };
+
+    const handleThanks = () => {
+        const botMessage = createChatBotMessage(`Je suis toujours là pour vous aider. N'hésitez pas à me contacter pour toute question ou assistance supplémentaire. Vous pouvez fermer la fenêtre de chat en cliquant sur le bouton "Fermer" en haut à droite. à bientôt !`);
 
         setState((prev: any) => ({
             ...prev,
@@ -55,7 +72,7 @@ const ActionProvider: React.FC<ActionProviderProps> = ({ createChatBotMessage, s
             {React.Children.map(children, (child: any) => {
                 return React.cloneElement(child, {
                     actions: {
-                        handleDonation, handleContact, handleVote, handleEvent, handleUnknown
+                        handleDonation, handleContact, handleVote, handleEvent, handleUnknown, handleGreeting, handleThanks
                     },
 
                 });

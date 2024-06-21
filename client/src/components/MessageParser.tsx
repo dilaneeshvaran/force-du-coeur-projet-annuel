@@ -8,21 +8,38 @@ interface MessageParserProps {
 const MessageParser: React.FC<MessageParserProps> = ({ children, actions }) => {
     const parse = (message: any) => {
         let handled = false;
+        const lowerCaseMessage = message.toLowerCase();
 
-        if (message.includes('don') || message.includes('adher') || message.includes('adhér') || message.includes('soutenir') || message.includes('aide') || message.includes('soutien')) {
+
+        const greetingKeywords = ['bonjour', 'hello', 'bonsoir', 'slt', 'salut'];
+        const donationKeywords = ['don', 'adher', 'adhér', 'soutenir', 'aide', 'soutien'];
+        const contactKeywords = ['contact'];
+        const voteKeywords = ['vote', 'voté'];
+        const eventKeywords = ['evenement', 'évenement', 'évènement', 'évènement', 'mission', 'activit', 'actualit'];
+        const thanksKeywords = ['merci', 'thank', 'remerci'];
+
+        if (greetingKeywords.some(keyword => lowerCaseMessage.includes(keyword))) {
+            actions.handleGreeting();
+            handled = true;
+        }
+        if (donationKeywords.some(keyword => lowerCaseMessage.includes(keyword))) {
             actions.handleDonation();
             handled = true;
         }
-        if (message.includes('contact')) {
+        if (contactKeywords.some(keyword => lowerCaseMessage.includes(keyword))) {
             actions.handleContact();
             handled = true;
         }
-        if (message.includes('vote') || message.includes('voté')) {
+        if (voteKeywords.some(keyword => lowerCaseMessage.includes(keyword))) {
             actions.handleVote();
             handled = true;
         }
-        if (message.includes('evenement') || message.includes('évenement') || message.includes('évènement') || message.includes('évènement') || message.includes('mission') || message.includes('activit') || message.includes('actualit')) {
+        if (eventKeywords.some(keyword => lowerCaseMessage.includes(keyword))) {
             actions.handleEvent();
+            handled = true;
+        }
+        if (thanksKeywords.some(keyword => lowerCaseMessage.includes(keyword))) {
+            actions.handleThanks();
             handled = true;
         }
         if (!handled) {

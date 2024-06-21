@@ -4,15 +4,14 @@ import { createChatBotMessage } from 'react-chatbot-kit';
 import MessageParser from './MessageParser';
 import ActionProvider from './ActionProvider';
 import '../styles/chatbot.css';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 
 const config = {
     initialMessages: [createChatBotMessage(`Bonjour, en quoi avez-vous besoin d'assistance ?`, { widget: 'options' })],
     botName: "Bot FDC",
-    customComponents: {
-        // Replaces the default header
-    },
 };
 
 interface ChatBoxProps {
@@ -21,6 +20,13 @@ interface ChatBoxProps {
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ messageHistory, setChatHistory }) => {
+
+    const location = useLocation();
+
+    if (location.pathname === '/espaceMembres') {
+        return null;
+    }
+
     return (
         <Chatbot
             config={config}

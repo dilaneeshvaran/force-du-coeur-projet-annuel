@@ -33,7 +33,7 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const [isChatBotVisible, setChatBotVisible] = useState(false);
-  const [chatHistory, setChatHistory] = useState([]); // Chat history state
+  const [chatHistory, setChatHistory] = useState([]);
 
   const toggleChatBot = () => {
     setChatBotVisible(prev => !prev);
@@ -42,6 +42,7 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', 'false');
+
   };
 
   return (
@@ -58,8 +59,11 @@ function App() {
         <Route path="/espaceMembres" element={<EspaceMembres isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/manageAccount/*" element={<ManageAccount />} />
       </Routes>
+
       <ChatBotButton toggleChatBot={toggleChatBot} isChatBotVisible={isChatBotVisible} />
       {isChatBotVisible && <ChatBot messageHistory={chatHistory} setChatHistory={setChatHistory} />}
+
+
     </BrowserRouter>
   );
 }
@@ -70,6 +74,10 @@ interface ChatBotButtonProps {
 function ChatBotButton({ toggleChatBot, isChatBotVisible }: ChatBotButtonProps) {
   const [isActive, setIsActive] = useState(false);
   const location = useLocation();
+
+  if (location.pathname === '/espaceMembres') {
+    return null;
+  }
 
   const handleClick = () => {
     toggleChatBot();
