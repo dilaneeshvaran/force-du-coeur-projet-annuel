@@ -33,6 +33,7 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const [isChatBotVisible, setChatBotVisible] = useState(false);
+  const [chatHistory, setChatHistory] = useState([]); // Chat history state
 
   const toggleChatBot = () => {
     setChatBotVisible(prev => !prev);
@@ -58,7 +59,7 @@ function App() {
         <Route path="/manageAccount/*" element={<ManageAccount />} />
       </Routes>
       <ChatBotButton toggleChatBot={toggleChatBot} isChatBotVisible={isChatBotVisible} />
-      {isChatBotVisible && <ChatBot />}
+      {isChatBotVisible && <ChatBot messageHistory={chatHistory} setChatHistory={setChatHistory} />}
     </BrowserRouter>
   );
 }

@@ -7,11 +7,12 @@
   }
   .chatbot-btn{
     position: fixed;
-    bottom: 0;
-    right: 3rem;
+    bottom: 1rem;
+    right: 1.5rem;
     display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgb(209, 209, 209);
   }
   .chatbot-btn:hover {
     background-color: rgb(174, 174, 174);
@@ -26,16 +27,16 @@
 
   .chatbot-btn.active {
     position: fixed;
-    bottom: 28.8rem;
-    right: 1rem;
+    bottom: 28.9rem;
+    right: 1.3rem;
     display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   background-color: rgb(105, 105, 105);
   color:rgb(255, 255, 255);
-height:2rem;
-width: 4rem;
+height:1.8rem;
+width: 4.5rem;
 }
 
 .chatbot-btn.active:hover {

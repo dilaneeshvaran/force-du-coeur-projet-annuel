@@ -7,8 +7,26 @@ interface MessageParserProps {
 
 const MessageParser: React.FC<MessageParserProps> = ({ children, actions }) => {
     const parse = (message: any) => {
-        if (message.includes('hello')) {
-            actions.handleHello();
+        let handled = false;
+
+        if (message.includes('don') || message.includes('adher') || message.includes('adhér') || message.includes('soutenir') || message.includes('aide') || message.includes('soutien')) {
+            actions.handleDonation();
+            handled = true;
+        }
+        if (message.includes('contact')) {
+            actions.handleContact();
+            handled = true;
+        }
+        if (message.includes('vote') || message.includes('voté')) {
+            actions.handleVote();
+            handled = true;
+        }
+        if (message.includes('evenement') || message.includes('évenement') || message.includes('évènement') || message.includes('évènement') || message.includes('mission') || message.includes('activit') || message.includes('actualit')) {
+            actions.handleEvent();
+            handled = true;
+        }
+        if (!handled) {
+            actions.handleUnknown();
         }
     };
 
