@@ -66,7 +66,7 @@ function Settings() {
             {isEditingProfile && (
                 <>
                     {editingAccount && <Account account={editingAccount} onAccountChange={handleAccountChange} />}
-                    <button onClick={() => setIsEditingProfile(false)}>Return</button>
+                    <button className='setting-return' onClick={() => setIsEditingProfile(false)}>Return</button>
                 </>
             )}
 
@@ -83,7 +83,7 @@ function Settings() {
                 {isEditingMembership && (
                     <>
                         {editingMembership && <Membership membership={editingMembership} onMembershipChange={handleMembershipChange} />}
-                        <button onClick={() => setIsEditingMembership(false)}>Return</button>
+                        <button className='setting-return' onClick={() => setIsEditingMembership(false)}>Return</button>
                     </>
                 )}
             </div>

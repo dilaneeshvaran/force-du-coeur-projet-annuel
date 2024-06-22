@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-
+import '../styles/membership.css';
 
 interface Membership {
     id: number;
@@ -85,9 +85,9 @@ const Membership: React.FC<MembershipProps> = ({ membership, onMembershipChange 
             </button>
             {showMembershipOptions && (
                 <>
-                    <label>
+                    <label className='mb-label'>
                         Membership:
-                        <select value={selectedAmount} onChange={handleAmountChange}>
+                        <select className='mb-select' value={selectedAmount} onChange={handleAmountChange}>
 
                             <option value="0">Deactivate Membership</option>
                             <option value="10">10€/mois ADHesion</option>
@@ -96,7 +96,7 @@ const Membership: React.FC<MembershipProps> = ({ membership, onMembershipChange 
                             <option value="100">100€/mois ADHesion bienfaiteur</option>
                         </select>
                     </label>
-                    <button onClick={handleValidateClick}>Validate</button>
+                    <button className='mb-validate' onClick={handleValidateClick}>Validate</button>
                 </>
             )}
         </div>

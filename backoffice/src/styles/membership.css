@@ -1,0 +1,47 @@
+.mb-label {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 16px;
+    color: #333;
+}
+
+.mb-select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+}
+
+.mb-select:focus {
+    border-color: #930000;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+}
+
+.mb-validate {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    color: #fff;
+    background-color: #b30000;
+
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.mb-validate:hover {
+    background-color: #700000;
+
+}
+
+.mb-validate:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}

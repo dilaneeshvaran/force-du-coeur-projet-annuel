@@ -39,17 +39,14 @@ TODO
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
 //real performance
-//content manage clean
 //content manager with real api
 //members with search+real api
 //task manage filter/search+real api
 //real finance info+clean up
 //ressources>inventory management/used+real api
 //clean mesages+real api(doc/message)
-//admin setting clean+real api
 //alerts with mail alert+ clean up
 //real logout
-//change email & password in admin settings
 --------------------------------------BACKEND--------------------------------------------------
 TODO
   //routes > authentification des tokens pour les routes, routes associées aux tables jointes

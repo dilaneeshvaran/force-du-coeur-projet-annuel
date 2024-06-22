@@ -1,0 +1,47 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+button {
+    transition: background-color 0.3s ease;
+}
+
+
+.setting-return {
+    background-color: #888888;
+    color: white;
+    margin-top: 2rem;
+}
+
+.setting-return:hover {
+    background-color: #000000;
+    color: white;}
+
+.setMembership {
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    button {
+        width: 100%; 
+        margin-bottom: 10px;
+    }
+}
+
+.btn-profil-change, .btn-membership-change{
+    color: white;
+    background-color: #888888;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-profil-change:hover, .btn-membership-change:hover{
+    background-color: #b90000;
+
+}
