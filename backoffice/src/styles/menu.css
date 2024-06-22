@@ -1,8 +1,11 @@
-.logofdc{
+    .logofdc{
     height: 100px;    
     width: 100px;
-    background-color: aliceblue;
     top: 0;
+}
+
+.logofdc:hover{
+    filter: drop-shadow(0 0 3em #cdcdcd);
 }
 
 
@@ -15,12 +18,36 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background-color: aqua;
     padding: 20px;
     box-sizing: border-box;
+    border-left: #dddddd 1px solid;
+    
 }
 
 .navbar-item {
-    margin-bottom: 25px;
-    background-color: aquamarine;
+    margin-bottom: 2rem;
+    display: flex;
+    border-top: #dddddd 1px solid;
+    box-sizing: border-box;
+    color: black;
+}
+
+.navbar-item:hover {
+    color: rgb(168, 0, 0);
+    filter: drop-shadow(0 0 0.5em rgb(170, 170, 170));
+
+}
+
+.navbar-logout{
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    border-top: #dddddd 1px solid;
+    color: rgb(168, 0, 0);
+}
+
+.navbar-logout:hover{
+    color: rgb(0, 0, 0);
 }

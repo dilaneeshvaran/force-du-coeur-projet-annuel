@@ -23,18 +23,46 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
 
-    const handleLogin = (event: React.FormEvent) => {
+    const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
+        try {
+            const response = await fetch('http://localhost:8088/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
 
-        // Call API
-        localStorage.setItem('isLoggedIn', 'true');
-        setIsLoggedIn(true);
-        navigate('/performance');
+            if (response.ok) {
+                const data = await response.json();
+
+                if (data && data.token) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userId', data.userId);
+                    localStorage.setItem('isLoggedIn', 'true');
+                    setIsLoggedIn(true);
+                    navigate('/performance');
+
+                    setErrorMessage('');
+                } else {
+                    console.error('Failed to login');
+                    setErrorMessage('Email or password is incorrect');
+                }
+            } else {
+                console.error('Failed to login');
+                setErrorMessage('Email or password is incorrect');
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+            setErrorMessage('An error occurred. Please try again.');
+        }
     };
 
     const handleLogout = () => {
@@ -92,14 +120,14 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
                         {<NavLink className={`navbar-item ${location.pathname === '/alert' ? 'is-active' : ''}`} to="/alert">
                             <CampaignIcon /> Alerts
                         </NavLink>}
-                        {<NavLink className={`navbar-item ${location.pathname === '/backofficeHome' ? 'is-active' : ''}`} to="/backofficeHome" onClick={handleLogout}>
+                        {<NavLink className={`navbar-logout ${location.pathname === '/backofficeHome' ? 'is-active' : ''}`} to="/backofficeHome" onClick={handleLogout}>
                             <RiShutDownLine className="logout-logo" size={30} />
                         </NavLink>}
                     </>
                 ) : (
                     <form onSubmit={handleLogin}>
-                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+                        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mot de passe" />
                         <button type="submit">Login</button>
                     </form>
                 )}

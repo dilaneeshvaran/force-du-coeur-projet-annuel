@@ -15,7 +15,6 @@ will-change: filter;
   transition: filter 300ms;
 }
 
-  .logout-logo:hover{
-    filter: drop-shadow(0 0 2em #ff5900);
-    
+.logout-logo:hover{
+    filter: drop-shadow(0 0 2em #ff5900); 
   }
