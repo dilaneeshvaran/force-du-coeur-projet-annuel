@@ -34,12 +34,10 @@ TODO
 //Home screen add infos
 //équipes real data
 //mot de passe oublié
-//GED : edit & le classement
-//Chatbot (réponses automatique)
+//resultat votes + date invalide
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
-//login with api
 //real performance
 //content manage clean
 //content manager with real api
@@ -52,21 +50,14 @@ TODO
 //alerts with mail alert+ clean up
 //real logout
 //change email & password in admin settings
-//replace fakedata with the database
-
 --------------------------------------BACKEND--------------------------------------------------
 TODO
   //routes > authentification des tokens pour les routes, routes associées aux tables jointes
-  //controllers pour les tables jointes
-  //services > gérer les envois d\'emails, les changements de mot passe, etc.
+  //services > gérer les envois d\'emails
   //tests > tests en tous genres
-  //validation > valider les données des cotisations
- //participer à un evenement/annuler la participation (respect capacité evenement+gestion du quorum = nombre requis de participants pour que la réunion puisse se tenir )
-//Rappels (automatique) : prévenir un prochain payment mensuel
+ //participer : respect capacité evenement+gestion du quorum = nombre requis de participants pour que la réunion puisse se tenir
   //manage members(ban/change role admin/member)
-    //Alerts and Notifications??>critical events like low inventory levels, unusual website traffic, or overdue tasks.
-
+  //Alerts && Rappels (automatique) : prévenir un prochain payment mensuel>critical events> low inventory levels, or overdue tasks.
+  //conditions> events/votes enddate + results
 --------------------------------------JAVA--------------------------------------------------
-
-```
 ```

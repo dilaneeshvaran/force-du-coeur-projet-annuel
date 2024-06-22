@@ -27,7 +27,6 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
     const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
     const [confirmationMessage, setConfirmationMessage] = useState<string>('');
 
-    const userId = localStorage.getItem('userId');
 
     const handleUserInfoSave = async () => {
 
@@ -52,22 +51,21 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
         };
 
 
-        if (userId) {
-            fetch(`http://localhost:8088/users/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updatedAccount)
+
+        fetch('http://localhost:8088/users/1', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedAccount)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        }
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
         if (onAccountChange) {
             onAccountChange(account.id, 'username', tempUsername);
@@ -99,22 +97,22 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
             password: tempPassword
         };
 
-        if (userId) {
-            fetch(`http://localhost:8088/users/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updatedAccount)
+
+        fetch('http://localhost:8088/users/1', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedAccount)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        }
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
         if (onAccountChange) {
             onAccountChange(account.id, 'password', tempPassword);
         }
