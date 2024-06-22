@@ -3,7 +3,7 @@
  */
 
 import { Router, Request, Response } from "express";
-import { getMembershipByUserId,createMembership, deleteMembership, getAllMemberships, getMembershipById, updateMembership } from '../controllers';
+import {getTotalMembership,getTotalMonthMembership, getMembershipByUserId,createMembership, deleteMembership, getAllMemberships, getMembershipById, updateMembership } from '../controllers';
 
 export const router = Router();
 
@@ -14,6 +14,8 @@ export const router = Router();
 //router.post('/', isAuth, createMembership); 
 router.post('/', createMembership); 
 router.get('/', getAllMemberships);
+router.get('/total', getTotalMembership);
+router.get('/totalMonth', getTotalMonthMembership);
 router.get('/:id', getMembershipById);
 //router.put('/:id', isAuth, updateMembership);
 router.put('/:id', updateMembership);

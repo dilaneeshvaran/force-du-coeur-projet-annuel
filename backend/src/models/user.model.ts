@@ -25,6 +25,7 @@ export class User extends Model {
   public country!: string;
   public city!: string;
   public address!: string;
+  public createdAt!: Date;
 }
 
 export const generateValidationCode = (): string => {
@@ -114,6 +115,11 @@ User.init({
   address: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
   }
   
 }, {

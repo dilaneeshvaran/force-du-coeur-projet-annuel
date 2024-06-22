@@ -12,6 +12,7 @@ exports.tokenRevocationList = [];
 exports.router.post('/register', controllers_1.register);
 exports.router.post('/login', controllers_1.login);
 //router.get('/', authenticateToken, getAllUsers);
+exports.router.get('/membersThisMonth', controllers_1.getUsersCreatedThisMonth);
 exports.router.get('/', controllers_1.getAllUsers);
 exports.router.get('/:id', controllers_1.getUserById);
 exports.router.delete('/:id', controllers_1.deleteUser);

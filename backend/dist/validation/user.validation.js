@@ -11,7 +11,7 @@ const userValidation = joi_1.default.object({
     email: joi_1.default.string().email().optional(),
     firstname: joi_1.default.string().trim().optional(),
     lastname: joi_1.default.string().trim().optional(),
-    birthOfDate: joi_1.default.date().optional(),
+    dateOfBirth: joi_1.default.date().optional(),
     role: joi_1.default.string().valid('user', 'admin').optional(),
     phoneNumber: joi_1.default.string().optional(),
     country: joi_1.default.string().trim().optional(),

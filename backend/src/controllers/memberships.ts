@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import { validateMembership } from '../validation';
 import { logger } from '../middlewares';
 import { Membership } from '../models';
+import { Op } from 'sequelize';
 require('dotenv').config()
 
 
@@ -131,4 +132,38 @@ const getMembershipByUserId = async (req: Request, res: Response) => {
     res.status(500).json({message: "Error while retrieving memberships"});
   }
 }
-export {getMembershipByUserId, createMembership, getAllMemberships, getMembershipById, updateMembership, deleteMembership };
+const getTotalMonthMembership = async (req: Request, res: Response) => {
+  const now = new Date();
+  const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+  try {
+    const memberships = await Membership.findAll({
+      where: {
+        paymentDate: {
+          [Op.gte]: firstDayOfMonth,
+          [Op.lte]: lastDayOfMonth,
+        },
+      },
+    });
+    const total = memberships.reduce((acc, membership) => acc + membership.amount, 0);
+    res.status(200).json({ totalMonthMembership: total });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error calculating total month membership" });
+  }
+};
+
+const getTotalMembership = async (req: Request, res: Response) => {
+  try {
+    const memberships = await Membership.findAll();
+    const total = memberships.reduce((acc, membership) => acc + membership.amount, 0);
+    res.status(200).json({ totalMembership: total });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error calculating total membership" });
+  }
+};
+
+
+export {getTotalMembership,getTotalMonthMembership,getMembershipByUserId, createMembership, getAllMemberships, getMembershipById, updateMembership, deleteMembership };

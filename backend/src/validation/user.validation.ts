@@ -6,7 +6,7 @@ const userValidation = joi.object ({
   email: joi.string().email().optional(),
   firstname: joi.string().trim().optional(),
   lastname: joi.string().trim().optional(),
-  birthOfDate: joi.date().optional(),
+  dateOfBirth: joi.date().optional(),
   role: joi.string().valid('user', 'admin').optional(),
   phoneNumber: joi.string().optional(),
   country: joi.string().trim().optional(),

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.getAllUsers = exports.getUserById = exports.logout = exports.adminAccess = exports.login = exports.register = exports.updateUser = exports.adminlogin = void 0;
+exports.deleteUser = exports.getAllUsers = exports.getUserById = exports.logout = exports.adminAccess = exports.login = exports.register = exports.updateUser = exports.adminlogin = exports.getUsersCreatedThisMonth = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const validation_1 = require("../validation");
@@ -20,13 +20,14 @@ const services_1 = require("../services");
 const models_1 = require("../models");
 const middlewares_1 = require("../middlewares");
 const users_1 = require("../routers/users");
+const sequelize_1 = require("sequelize");
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateUser)(req.body);
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
     }
     try {
-        const { username, password, email, firstname, lastname, birthOfDate, phoneNumber, country, city, address } = value;
+        const { username, password, email, firstname, lastname, dateOfBirth, phoneNumber, country, city, address } = value;
         const hashedPassword = yield bcrypt_1.default.hash(password, 10);
         const newUser = yield models_1.User.create({
             username,
@@ -34,7 +35,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             email,
             firstname,
             lastname,
-            birthOfDate: new Date(value.birthOfDate),
+            dateOfBirth: new Date(value.dateOfBirth),
             phoneNumber,
             country,
             city,
@@ -182,6 +183,31 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getUserById = getUserById;
+const getUsersCreatedThisMonth = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const startOfMonth = new Date();
+        startOfMonth.setDate(1);
+        startOfMonth.setHours(0, 0, 0, 0);
+        const endOfMonth = new Date();
+        endOfMonth.setMonth(endOfMonth.getMonth() + 1);
+        endOfMonth.setDate(0); // Set to the last day of the current month
+        endOfMonth.setHours(23, 59, 59, 999); // Set to the end of the day
+        const users = yield models_1.User.findAll({
+            where: {
+                createdAt: {
+                    [sequelize_1.Op.gte]: startOfMonth, // Greater than or equal to the start of the month
+                    [sequelize_1.Op.lte]: endOfMonth, // Less than or equal to the end of the month
+                },
+            },
+        });
+        return res.status(200).json(users);
+    }
+    catch (error) {
+        middlewares_1.logger.error(error);
+        return res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des utilisateurs créés ce mois." });
+    }
+});
+exports.getUsersCreatedThisMonth = getUsersCreatedThisMonth;
 const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield models_1.User.findAll();

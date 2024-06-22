@@ -13,6 +13,8 @@ exports.router = (0, express_1.Router)();
 //router.post('/', isAuth, createMembership); 
 exports.router.post('/', controllers_1.createMembership);
 exports.router.get('/', controllers_1.getAllMemberships);
+exports.router.get('/total', controllers_1.getTotalMembership);
+exports.router.get('/totalMonth', controllers_1.getTotalMonthMembership);
 exports.router.get('/:id', controllers_1.getMembershipById);
 //router.put('/:id', isAuth, updateMembership);
 exports.router.put('/:id', controllers_1.updateMembership);

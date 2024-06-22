@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMembership = exports.updateMembership = exports.getMembershipById = exports.getAllMemberships = exports.createMembership = exports.getMembershipByUserId = exports.updateMembershipDetails = void 0;
+exports.deleteMembership = exports.updateMembership = exports.getMembershipById = exports.getAllMemberships = exports.createMembership = exports.getMembershipByUserId = exports.getTotalMonthMembership = exports.getTotalMembership = exports.updateMembershipDetails = void 0;
 const validation_1 = require("../validation");
 const middlewares_1 = require("../middlewares");
 const models_1 = require("../models");
+const sequelize_1 = require("sequelize");
 require('dotenv').config();
 const createMembership = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateMembership)(req.body);
@@ -149,3 +150,37 @@ const getMembershipByUserId = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.getMembershipByUserId = getMembershipByUserId;
+const getTotalMonthMembership = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const now = new Date();
+    const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    try {
+        const memberships = yield models_1.Membership.findAll({
+            where: {
+                paymentDate: {
+                    [sequelize_1.Op.gte]: firstDayOfMonth,
+                    [sequelize_1.Op.lte]: lastDayOfMonth,
+                },
+            },
+        });
+        const total = memberships.reduce((acc, membership) => acc + membership.amount, 0);
+        res.status(200).json({ totalMonthMembership: total });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error calculating total month membership" });
+    }
+});
+exports.getTotalMonthMembership = getTotalMonthMembership;
+const getTotalMembership = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const memberships = yield models_1.Membership.findAll();
+        const total = memberships.reduce((acc, membership) => acc + membership.amount, 0);
+        res.status(200).json({ totalMembership: total });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error calculating total membership" });
+    }
+});
+exports.getTotalMembership = getTotalMembership;

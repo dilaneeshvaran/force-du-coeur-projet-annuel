@@ -3,7 +3,7 @@
  */
 
 import express, { Router, Request, Response } from "express";
-import { adminlogin,updateUser,register, login,adminAccess, logout, getAllUsers, getUserById, deleteUser } from '../controllers';
+import { getUsersCreatedThisMonth,adminlogin,updateUser,register, login,adminAccess, logout, getAllUsers, getUserById, deleteUser } from '../controllers';
 import { authenticateToken } from "../middlewares";
 
 export const router = Router();
@@ -14,6 +14,7 @@ export const tokenRevocationList: string[] = [];
 router.post('/register', register);
 router.post('/login', login);
 //router.get('/', authenticateToken, getAllUsers);
+router.get('/membersThisMonth' ,getUsersCreatedThisMonth)
 router.get('/', getAllUsers);
 router.get('/:id', getUserById);
 router.delete('/:id', deleteUser);

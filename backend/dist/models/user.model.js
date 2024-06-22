@@ -101,6 +101,11 @@ User.init({
     address: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
+    },
+    createdAt: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: sequelize_1.DataTypes.NOW
     }
 }, {
     sequelize: services_1.sequelize,

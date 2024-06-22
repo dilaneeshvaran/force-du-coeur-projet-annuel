@@ -7,6 +7,7 @@ import { User, UserVote } from '../models';
 import { RequestWithUser, logger } from '../middlewares';
 import { tokenRevocationList } from '../routers/users';
 import { add } from 'winston';
+import { Op } from 'sequelize';
 
 const register = async (req: Request, res: Response) => {
   const { error, value } = validateUser(req.body);
@@ -15,7 +16,7 @@ const register = async (req: Request, res: Response) => {
   }
 
   try {
-    const { username, password, email, firstname, lastname, birthOfDate,phoneNumber,country,city,address } = value;
+    const { username, password, email, firstname, lastname, dateOfBirth,phoneNumber,country,city,address } = value;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       username,
@@ -23,7 +24,7 @@ const register = async (req: Request, res: Response) => {
       email,
       firstname,
       lastname,
-      birthOfDate: new Date(value.birthOfDate),
+      dateOfBirth: new Date(value.dateOfBirth),
       phoneNumber,
       country,
       city,
@@ -172,6 +173,33 @@ const getUserById = async (req: Request, res: Response) => {
 }
 
 
+const getUsersCreatedThisMonth = async (req: Request, res: Response) => {
+  try {
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1); 
+    startOfMonth.setHours(0, 0, 0, 0); 
+
+    const endOfMonth = new Date();
+    endOfMonth.setMonth(endOfMonth.getMonth() + 1); 
+    endOfMonth.setDate(0); // Set to the last day of the current month
+    endOfMonth.setHours(23, 59, 59, 999); // Set to the end of the day
+
+    const users = await User.findAll({
+      where: {
+        createdAt: {
+          [Op.gte]: startOfMonth, // Greater than or equal to the start of the month
+          [Op.lte]: endOfMonth, // Less than or equal to the end of the month
+        },
+      },
+    });
+
+    return res.status(200).json(users);
+  } catch (error) {
+    logger.error(error);
+    return res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des utilisateurs créés ce mois." });
+  }
+};
+
 const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.findAll();
@@ -199,4 +227,4 @@ const deleteUser = async (req: Request, res: Response) => {
 }
 
 
-export {adminlogin,updateUser, register, login, adminAccess, logout, getUserById, getAllUsers, deleteUser };
+export {getUsersCreatedThisMonth,adminlogin,updateUser, register, login, adminAccess, logout, getUserById, getAllUsers, deleteUser };
