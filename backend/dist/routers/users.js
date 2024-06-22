@@ -16,5 +16,6 @@ exports.router.get('/', controllers_1.getAllUsers);
 exports.router.get('/:id', controllers_1.getUserById);
 exports.router.delete('/:id', controllers_1.deleteUser);
 exports.router.put('/:id', controllers_1.updateUser);
+exports.router.post('/adminlogin', controllers_1.adminlogin);
 //router.get('/admin', authenticateToken, authorizeAdmin, adminAccess);
 //router.post('/logout', authenticateToken, logout);

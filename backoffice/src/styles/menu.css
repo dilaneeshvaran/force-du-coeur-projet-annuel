@@ -8,7 +8,15 @@
     filter: drop-shadow(0 0 3em #cdcdcd);
 }
 
-
+.error-message {
+    color: red;
+    background-color: #ffe6e6;
+    border: 1px solid red;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    height: 2.5rem; 
+  }
 .container {
     position: fixed;
     right: 0;
@@ -50,4 +58,8 @@
 
 .navbar-logout:hover{
     color: rgb(0, 0, 0);
+}
+
+.navbar-item.is-active{
+    color: rgb(168, 0, 0);
 }

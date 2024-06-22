@@ -32,7 +32,7 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            const response = await fetch('http://localhost:8088/users/login', {
+            const response = await fetch('http://localhost:8088/users/adminlogin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -130,7 +130,10 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mot de passe" />
                         <button type="submit">Login</button>
                     </form>
+
                 )}
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
+
             </div>
         </nav >
     );

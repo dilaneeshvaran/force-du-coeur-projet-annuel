@@ -70,6 +70,40 @@ const login = async (req: RequestWithUser, res: Response) => {
   }
 }
 
+const adminlogin = async (req: RequestWithUser, res: Response) => {
+  const { error, value } = validateUserAuth(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
+  const { password, email } = value;
+
+  try {
+    const user = await User.findOne({ where: { email } });
+    // si l'user n'existe pas
+    if (!user) {
+      return res.status(401).send({ message: "nom d'utilisateur ou mot de passe erroné."});
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordCorrect) {
+      return res.status(401).send({ message: "le mot de passe est erroné."});
+    }
+
+    if (user.role !== 'admin') {
+      return res.status(403).send({ message: "Accès refusé. Seuls les administrateurs peuvent se connecter au backoffice."});
+    }
+
+    const token = jwt.sign({ id: user.id}, 'your_secret_key', { expiresIn: '3h'});
+
+    return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.id }); 
+  } catch (error) {
+    logger.error(error);
+    return res.status(500).send({ message: "erreur interne" });
+  }
+}
+
 const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
@@ -165,4 +199,4 @@ const deleteUser = async (req: Request, res: Response) => {
 }
 
 
-export {updateUser, register, login, adminAccess, logout, getUserById, getAllUsers, deleteUser };
+export {adminlogin,updateUser, register, login, adminAccess, logout, getUserById, getAllUsers, deleteUser };

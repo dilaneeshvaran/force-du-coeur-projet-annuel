@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import '../styles/admin.css';
 
 type AdminProps = {
     name: string;
@@ -10,49 +10,66 @@ type AdminProps = {
 };
 
 function Admin({ name, email, dob, membership, endMembership }: AdminProps) {
-    const [newName, setNewName] = useState(name);
+    const [firstname, setFirstname] = useState(name);
+    const [lastname, setLastname] = useState(name);
     const [newEmail, setNewEmail] = useState(email);
     const [newDob, setNewDob] = useState(dob);
     const [newMembership, setNewMembership] = useState(membership);
-    const [isEditing, setIsEditing] = useState(false);
+    const [isEditingMembership, setIsEditingMembership] = useState(false);
+    const [isEditingProfil, setIsEditingProfil] = useState(false);
+
 
     const handleSave = () => {
-        //call api
-        console.log('Saved new admin:', newName, newEmail, newDob, newMembership);
-        setIsEditing(false);
+        setIsEditingProfil(false);
     };
 
     return (
         <div>
-            <h2>Account Settings</h2>
-            {!isEditing ? (
-                <button onClick={() => setIsEditing(true)}>Change Account Information</button>
-            ) : (
-                <>
-                    <label>
-                        Name:
-                        <input type="text" value={newName} onChange={e => setNewName(e.target.value)} />
-                    </label>
-                    <label>
-                        Email:
-                        <input type="email" value={newEmail} onChange={e => setNewEmail(e.target.value)} />
-                    </label>
-                    <label>
-                        Date of Birth:
-                        <input type="date" value={newDob} onChange={e => setNewDob(e.target.value)} />
-                    </label>
-                    <label>
-                        Membership:
-                        <select value={newMembership} onChange={e => setNewMembership(e.target.value)}>
-                            <option value="basic">Basic</option>
-                            <option value="premium">Premium</option>
-                        </select>
-                    </label>
-                    <button onClick={handleSave}>Save Changes</button>
-                    <button onClick={() => setIsEditing(false)}>Cancel</button><br></br>
-                    <button onClick={endMembership}>End Membership</button>
-                </>
-            )}
+            <h2>Parametres de mon compte</h2>
+            <div className='setProfil'>
+                {!isEditingProfil ? (
+                    <button className='btn-profil-change' onClick={() => setIsEditingProfil(true)}>Modifer les infos de profile</button>
+                ) : (
+                    <>
+                        <label className='label-profil'>
+                            First Name:
+                            <input className='input-profil' type="text" value={firstname} onChange={e => setFirstname(e.target.value)} />
+                        </label>
+                        <label className='label-profil'>
+                            Last Name:
+                            <input className='input-profil' type="text" value={lastname} onChange={e => setLastname(e.target.value)} />
+                        </label>
+                        <label className='label-profil'>
+                            Email:
+                            <input className='input-profil' type="email" value={newEmail} onChange={e => setNewEmail(e.target.value)} />
+                        </label>
+
+                        <button className='btn-profil-validate' onClick={handleSave}>Save Changes</button>
+                        <button className='btn-profil-back' onClick={() => setIsEditingProfil(false)}>Retour</button><br></br>
+
+                    </>
+                )}
+            </div>
+            <div className='setMembership'>
+                {!isEditingMembership ? (
+                    <button className='btn-membership-change' onClick={() => setIsEditingMembership(true)}>Modifier l'adhésion</button>
+                ) : (
+                    <>
+                        <label className='label-membership'>
+                            Membership:
+                            <select className='select-membership' value={newMembership} onChange={e => setNewMembership(e.target.value)}>
+                                <option className='option-membership' value="basic">Basic</option>
+                                <option className='option-membership' value="premium">Premium</option>
+                            </select>
+                            <button className='btn-membership' onClick={endMembership}>End Membership</button>
+                        </label>
+
+                        <button className='btn-membership-validate' onClick={handleSave}>Valider</button>
+                        <button className='btn-membership-back' onClick={() => setIsEditingMembership(false)}>Retour</button><br></br>
+
+                    </>
+                )}
+            </div>
         </div>
     );
 }

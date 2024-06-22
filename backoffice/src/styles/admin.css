@@ -1,0 +1,62 @@
+/* Base styles for the profile and membership sections */
+.setProfil, .setMembership {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #f9f9f9;
+}
+
+/* Button styles */
+.btn-profil-change, .btn-membership-change, .btn-profil-validate, .btn-membership-validate, .btn-profil-back, .btn-membership-back, .btn-membership {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-profil-back, .btn-membership-back {
+    background-color: #6c757d;
+}
+
+.btn-membership {
+    background-color: #dc3545;
+}
+
+.btn-profil-change:hover, .btn-membership-change:hover, .btn-profil-validate:hover, .btn-membership-validate:hover, .btn-profil-back:hover, .btn-membership-back:hover, .btn-membership:hover {
+    background-color: #0056b3;
+}
+
+/* Input and Select styles */
+.input-profil, .select-membership {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Label styles */
+.label-profil, .label-membership {
+    display: block;
+    margin-bottom: 10px;
+    color: #495057;
+    font-size: 16px;
+}
+
+/* Option styles */
+.option-membership {
+    color: #495057;
+}
+
+/* Adjustments for better spacing and readability */
+br {
+    clear: both;
+}

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.getAllUsers = exports.getUserById = exports.logout = exports.adminAccess = exports.login = exports.register = exports.updateUser = void 0;
+exports.deleteUser = exports.getAllUsers = exports.getUserById = exports.logout = exports.adminAccess = exports.login = exports.register = exports.updateUser = exports.adminlogin = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const validation_1 = require("../validation");
@@ -74,6 +74,34 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.login = login;
+const adminlogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { error, value } = (0, validation_1.validateUserAuth)(req.body);
+    if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+    }
+    const { password, email } = value;
+    try {
+        const user = yield models_1.User.findOne({ where: { email } });
+        // si l'user n'existe pas
+        if (!user) {
+            return res.status(401).send({ message: "nom d'utilisateur ou mot de passe erroné." });
+        }
+        const isPasswordCorrect = yield bcrypt_1.default.compare(password, user.password);
+        if (!isPasswordCorrect) {
+            return res.status(401).send({ message: "le mot de passe est erroné." });
+        }
+        if (user.role !== 'admin') {
+            return res.status(403).send({ message: "Accès refusé. Seuls les administrateurs peuvent se connecter au backoffice." });
+        }
+        const token = jsonwebtoken_1.default.sign({ id: user.id }, 'your_secret_key', { expiresIn: '3h' });
+        return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.id });
+    }
+    catch (error) {
+        middlewares_1.logger.error(error);
+        return res.status(500).send({ message: "erreur interne" });
+    }
+});
+exports.adminlogin = adminlogin;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = req.params.id;
