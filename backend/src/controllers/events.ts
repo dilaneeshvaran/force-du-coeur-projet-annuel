@@ -6,14 +6,15 @@ import { logger } from '../middlewares';
 const createEvent = async (req: Request, res: Response) => {
   const { error, value } = validateEvent(req.body);
   if (error) {
-    res.status(400).json({ message: logger.error(error.details[0].message) });
+    logger.error(error.details[0].message);
+    return res.status(400).json({ message: error.details[0].message });
   }
-  
+
   try {
-    const { title, description, date, location, availableSpots,membersOnly,participations,quota } = value;
+    const { title, description, date, location, availableSpots, membersOnly, participations, quota } = value;
     
-    if (!title ) {
-      res.status(400).json({ message: "title peux pas etre vide"});
+    if (!title) {
+      return res.status(400).json({ message: "Le titre ne peut pas être vide." });
     }
 
     const newEvent = await Event.create({
@@ -24,12 +25,15 @@ const createEvent = async (req: Request, res: Response) => {
       availableSpots,
       membersOnly,
       participations,
-      quota
+      quota,
     });
-    res.status(201).json(newEvent);
+
+    const sanitizedEvent = JSON.parse(JSON.stringify(newEvent));
+
+    res.status(201).json(sanitizedEvent);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erreur lors de la création de l'évènement."});
+    console.error('Error creating event:', error);
+    res.status(500).json({ message: "Erreur lors de la création de l'évènement." });
   }
 }
 
@@ -66,16 +70,16 @@ const getEventById = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({message: "Erreur lors de la recherche de l'évènement"});
-  }
+  }  
 }
-
+   
 
 const updateEvent = async (req: Request, res: Response) => {
   try {
     const eventId = req.params.id;
     const { title, date , description, location , availableSpots,membersOnly,participations,quota} = req.body;
   
-    const event = await Event.findByPk(eventId);
+    const event = await Event.findByPk(eventId); 
     if (event !== null) {
       if (title !== undefined) event.title = title;
       if (date !== undefined) event.date = date;

@@ -16,12 +16,13 @@ const middlewares_1 = require("../middlewares");
 const createEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateEvent)(req.body);
     if (error) {
-        res.status(400).json({ message: middlewares_1.logger.error(error.details[0].message) });
+        middlewares_1.logger.error(error.details[0].message);
+        return res.status(400).json({ message: error.details[0].message });
     }
     try {
         const { title, description, date, location, availableSpots, membersOnly, participations, quota } = value;
         if (!title) {
-            res.status(400).json({ message: "title peux pas etre vide" });
+            return res.status(400).json({ message: "Le titre ne peut pas être vide." });
         }
         const newEvent = yield models_1.Event.create({
             title,
@@ -31,12 +32,13 @@ const createEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             availableSpots,
             membersOnly,
             participations,
-            quota
+            quota,
         });
-        res.status(201).json(newEvent);
+        const sanitizedEvent = JSON.parse(JSON.stringify(newEvent));
+        res.status(201).json(sanitizedEvent);
     }
     catch (error) {
-        console.error(error);
+        console.error('Error creating event:', error);
         res.status(500).json({ message: "Erreur lors de la création de l'évènement." });
     }
 });

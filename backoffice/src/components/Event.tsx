@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import '../styles/event.css';
 
 interface Event {
-    id: number;
+    id?: number;
     title: string;
     description: string;
     date: Date;
     location: string;
     availableSpots: number;
     membersOnly: boolean;
-    participations: number;
-    participants: string[];
+    participations?: number;
+    participants?: string[];
     quota: number | null;
 }
 
@@ -46,9 +46,9 @@ const Event: React.FC<EventProps> = ({ event, onUpdate, onDelete }) => {
         }
     };
 
-    const handleDateChange = (e: any) => {
+    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newDate = new Date(e.target.value);
-        if (!isNaN(newDate.getTime())) { // Check if the date conversion is successful
+        if (!isNaN(newDate.getTime())) {
             setUpdatedEvent({ ...updatedEvent, date: newDate });
         } else {
             console.error('Invalid date format:', e.target.value);
@@ -59,12 +59,17 @@ const Event: React.FC<EventProps> = ({ event, onUpdate, onDelete }) => {
     if (isEditing) {
         return (
             <div className='event-update-box'>
-                <input value={updatedEvent.title} onChange={e => setUpdatedEvent({ ...updatedEvent, title: e.target.value })} />
-                <input value={updatedEvent.description} onChange={e => setUpdatedEvent({ ...updatedEvent, description: e.target.value })} />
-                <input value={updatedEvent.date instanceof Date ? updatedEvent.date.toISOString().substring(0, 10) : 'Invalid Date'} onChange={handleDateChange} />                <input value={updatedEvent.location} onChange={e => setUpdatedEvent({ ...updatedEvent, location: e.target.value })} />
-                <input value={updatedEvent.availableSpots ? updatedEvent.availableSpots.toString() : ''} onChange={e => setUpdatedEvent({ ...updatedEvent, availableSpots: parseInt(e.target.value) })} />
-                <input value={updatedEvent.membersOnly !== undefined ? updatedEvent.membersOnly.toString() : ''} onChange={e => setUpdatedEvent({ ...updatedEvent, membersOnly: e.target.value === 'true' })} />
-                <input
+                Titre<input value={updatedEvent.title} onChange={e => setUpdatedEvent({ ...updatedEvent, title: e.target.value })} />
+                Description<input value={updatedEvent.description} onChange={e => setUpdatedEvent({ ...updatedEvent, description: e.target.value })} />
+                Date (JJ/MM/AAA HH/MM)<input
+                    type='datetime-local'
+                    value={updatedEvent.date instanceof Date ? updatedEvent.date.toISOString().substring(0, 16) : ''}
+                    onChange={handleDateChange}
+                />
+                Lieu (Address)<input value={updatedEvent.location} onChange={e => setUpdatedEvent({ ...updatedEvent, location: e.target.value })} />
+                Places Dispo<input value={updatedEvent.availableSpots ? updatedEvent.availableSpots.toString() : ''} onChange={e => setUpdatedEvent({ ...updatedEvent, availableSpots: parseInt(e.target.value) })} />
+                Uniquement Les Membres ? (true/false)<input value={updatedEvent.membersOnly !== undefined ? updatedEvent.membersOnly.toString() : ''} onChange={e => setUpdatedEvent({ ...updatedEvent, membersOnly: e.target.value === 'true' })} />
+                Quorum<input
                     value={updatedEvent.quota !== null ? updatedEvent.quota.toString() : ''}
                     onChange={e => setUpdatedEvent({ ...updatedEvent, quota: parseInt(e.target.value) || null })}
                     placeholder="Quorum"
@@ -74,11 +79,25 @@ const Event: React.FC<EventProps> = ({ event, onUpdate, onDelete }) => {
             </div>
         );
     }
+
+    const formatDate = (dateString: any) => {
+        const date = new Date(dateString);
+        const formattedDate = date.toLocaleDateString('fr-FR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        });
+        const formattedTime = date.toISOString().split('T')[1].substring(0, 5);
+        return `${formattedDate} ${formattedTime}`;
+    };
+
+    const formattedDate = formatDate(event.date);
+
     return (
         <div className='event-box'>
             <h2>Titre : {event.title}</h2>
             <p>Description : {event.description}</p>
-            <p>Date : {event.date.toString()}</p>
+            <p>Date : {formattedDate}</p>
             <p>Lieu : {event.location}</p>
             <p>Nb de Places Max : {event.availableSpots}</p>
             <p>Membres Uniquement : {event.membersOnly}</p>

@@ -1,3 +1,4 @@
+
 .contentBox {
     background-color: #f8f9fa; 
     padding: 20px;
@@ -5,6 +6,21 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
   }
   
+  .invalid {
+    border-color: red;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    height: 0.5rem;
+    width: 15rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10rem;
+}
+
   .creation-box {
     margin-bottom: 20px;
   }
@@ -50,3 +66,52 @@
   .content {
     flex-grow: 1;
   }
+
+  .creation-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.creation-form input[type="text"],
+.creation-form input[type="datetime-local"],
+.creation-form input[type="number"],
+.creation-form input[type="checkbox"] {
+      border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.creation-form input[type="checkbox"] {
+    margin-top: 0;
+}
+
+.creation-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.creation-form button:hover {
+    background-color: #0056b3;
+}
+
+.creation-form button:last-child {
+    background-color: #6c757d;
+}
+
+.creation-form button:last-child:hover {
+    background-color: #545b62;
+}
+
+.creation-form br:last-child {
+    display: none;
+}
