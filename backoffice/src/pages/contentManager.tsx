@@ -98,6 +98,9 @@ function ContentManager() {
 
         if (!validateForm()) {
             console.error('Form validation failed');
+            setConfirmationMessage('mauvais informations !');
+            setShowConfirmation(true);
+            setTimeout(() => setShowConfirmation(false), 5000);
             return;
         }
 
@@ -110,6 +113,9 @@ function ContentManager() {
         })
             .then(response => {
                 if (!response.ok) {
+                    setConfirmationMessage('échec de création !');
+                    setShowConfirmation(true);
+                    setTimeout(() => setShowConfirmation(false), 5000);
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
@@ -122,11 +128,21 @@ function ContentManager() {
                 setTimeout(() => setShowConfirmation(false), 5000);
             })
             .catch((error) => {
+                setConfirmationMessage('échec de création !');
+                setShowConfirmation(true);
+                setTimeout(() => setShowConfirmation(false), 5000);
                 console.error('Error:', error);
             });
     }
 
     async function createVote() {
+        //check for min options
+        if (newOptions.length < 2) {
+            setConfirmationMessage('Il faut ajouter minimum 2 options !');
+            setShowConfirmation(true);
+            setTimeout(() => setShowConfirmation(false), 5000);
+            return;
+        }
         try {
             //vote creation
             const voteResponse = await fetch('http://localhost:8088/votes', {
@@ -138,6 +154,9 @@ function ContentManager() {
             });
 
             if (!voteResponse.ok) {
+                setConfirmationMessage('il manque des informations ou les infos saisi sont incorrectes !');
+                setShowConfirmation(true);
+                setTimeout(() => setShowConfirmation(false), 5000);
                 throw new Error('Network response was not ok');
             }
 
@@ -157,6 +176,9 @@ function ContentManager() {
                 });
 
                 if (!optionResponse.ok) {
+                    setConfirmationMessage('Création des options échoué !');
+                    setShowConfirmation(true);
+                    setTimeout(() => setShowConfirmation(false), 5000);
                     throw new Error('Network response was not ok');
                 }
 
@@ -195,7 +217,9 @@ function ContentManager() {
     return (
         <div className="contentBox">
             <div className="creation-box">
-                <button onClick={() => setIsCreatingEvent(true)} style={{ backgroundColor: isCreatingEvent === true ? 'gray' : 'green' }}>Créer un Event</button>
+                <button onClick={() => { { } setIsCreatingEvent(true), setIsCreatingVote(false) }} style={{ backgroundColor: isCreatingEvent === true ? 'green' : 'gray' }}>Créer un Event</button>
+                <button onClick={() => { { } setIsCreatingVote(true), setIsCreatingEvent(false) }} style={{ backgroundColor: isCreatingVote === true ? 'green' : 'gray' }}>Créer un Vote</button>
+
                 {isCreatingEvent && (
                     <div className='creation-form'>
                         <label>Title</label>
@@ -258,30 +282,20 @@ function ContentManager() {
                         <button onClick={() => setIsCreatingEvent(false)}>Annuler</button>
                     </div>
                 )}
-                <button onClick={() => setIsCreatingVote(true)} style={{ backgroundColor: isCreatingVote === true ? 'gray' : 'green' }}>Créer un Vote</button>
                 {isCreatingVote && (
-                    <div>
-                        Title<input value={newVote.title} onChange={e => setNewVote({ ...newVote, title: e.target.value })} />
+                    <div className='creation-form'>
+                        Titre<input value={newVote.title} onChange={e => setNewVote({ ...newVote, title: e.target.value })} />
                         <br />Description<input value={newVote.description} onChange={e => setNewVote({ ...newVote, description: e.target.value })} />
-                        <br />Start Date<input type="date" onChange={e => setNewVote({ ...newVote, startDate: new Date(e.target.value) })} />
-                        <br />End Date<input type="date" onChange={e => setNewVote({ ...newVote, endDate: new Date(e.target.value) })} />
-                        <br />Voting Type<select value={newVote.votingType} onChange={e => setNewVote({ ...newVote, votingType: e.target.value as 'one-round' | 'two-round' })}>
-                            <option value="one-round">One Round</option>
-                            <option value="two-round">Two Round</option>
+                        <br />Date Début<input type="date" onChange={e => setNewVote({ ...newVote, startDate: new Date(e.target.value) })} />
+                        <br />Date Fin<input type="date" onChange={e => setNewVote({ ...newVote, endDate: new Date(e.target.value) })} />
+                        <br />Nb de Tours<select value={newVote.votingType} onChange={e => setNewVote({ ...newVote, votingType: e.target.value as 'one-round' | 'two-round' })}>
+                            <option value="one-round">1 Tour</option>
+                            <option value="two-round">2 Tours</option>
                         </select>
-                        <br />Ongoing Round<select value={newVote.ongoingRound} onChange={e => setNewVote({ ...newVote, ongoingRound: e.target.value as 'first-round' | 'second-round' })}>
-                            <option value="first-round">First Round</option>
-                            <option value="second-round">Second Round</option>
+                        <br />Décision<select value={newVote.votingMethod} onChange={e => setNewVote({ ...newVote, votingMethod: e.target.value as 'majority rule' | 'absolute majority' })}>
+                            <option value="majority rule">principe de la majorité</option>
+                            <option value="absolute majority">Majorité absolue</option>
                         </select>
-                        <br />Voting Method<select value={newVote.votingMethod} onChange={e => setNewVote({ ...newVote, votingMethod: e.target.value as 'majority rule' | 'absolute majority' })}>
-                            <option value="majority rule">Majority Rule</option>
-                            <option value="absolute majority">Absolute Majority</option>
-                        </select>
-                        <br />Status<select value={newVote.status} onChange={e => setNewVote({ ...newVote, status: e.target.value as 'open' | 'closed' })}>
-                            <option value="open">Open</option>
-                            <option value="closed">Closed</option>
-                        </select>
-
                         {newOptions.map((option, index) => (
                             <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
                                 Option {index + 1}
@@ -290,15 +304,14 @@ function ContentManager() {
                                     value={option.option || ''}
                                     onChange={e => handleOptionChange(index, e.target.value)}
                                 />
-                                <button onClick={() => handleRemoveOption(index)}>Remove Option</button>
+                                <button className='dlt-options' onClick={() => handleRemoveOption(index)}>Supprimer Option</button>
                             </div>
                         ))}
-                        <button onClick={() => setNewOptions([...newOptions, { option: '' }])}>Add Option</button>
-                        <button onClick={createVote}>Validate</button>
+                        <button className='add-options' onClick={() => setNewOptions([...newOptions, { option: '' }])}>Ajouter Option</button>
+                        <button onClick={createVote} style={{ backgroundColor: isCreatingVote === true ? 'green' : 'gray' }}>Validate</button>
                         <button onClick={() => setIsCreatingVote(false)}>Cancel</button>
                     </div>
                 )}
-
 
             </div>
             {
