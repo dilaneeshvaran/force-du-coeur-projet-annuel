@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import '../styles/menu.css'
 import fdcLogo from '../assets/fdc-logo.png'
@@ -27,7 +27,16 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
     const [password, setPassword] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const userId = localStorage.getItem('userId');
 
+    useEffect(() => {
+        const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        setIsLoggedIn(loggedIn);
+
+        if (!loggedIn || !userId) {
+            navigate('/login');
+        }
+    }, [navigate, userId]);
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();

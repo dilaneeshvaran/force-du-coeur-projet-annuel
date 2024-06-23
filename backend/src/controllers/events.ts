@@ -10,7 +10,7 @@ const createEvent = async (req: Request, res: Response) => {
   }
   
   try {
-    const { title, description, date, location, availableSpots,membersOnly,participations } = value;
+    const { title, description, date, location, availableSpots,membersOnly,participations,quota } = value;
     
     if (!title ) {
       res.status(400).json({ message: "title peux pas etre vide"});
@@ -23,7 +23,8 @@ const createEvent = async (req: Request, res: Response) => {
       location,
       availableSpots,
       membersOnly,
-      participations
+      participations,
+      quota
     });
     res.status(201).json(newEvent);
   } catch (error) {
@@ -72,7 +73,7 @@ const getEventById = async (req: Request, res: Response) => {
 const updateEvent = async (req: Request, res: Response) => {
   try {
     const eventId = req.params.id;
-    const { title, date , description, location , availableSpots,membersOnly,participations} = req.body;
+    const { title, date , description, location , availableSpots,membersOnly,participations,quota} = req.body;
   
     const event = await Event.findByPk(eventId);
     if (event !== null) {
@@ -83,6 +84,7 @@ const updateEvent = async (req: Request, res: Response) => {
       if (availableSpots !== undefined) event.availableSpots = availableSpots;
       if (membersOnly !== undefined) event.membersOnly = membersOnly;
       if (participations !== undefined) event.participations = participations;
+      if (quota !== undefined) event.quota = quota;
   
       await event.save();
       res.status(200).json(event);

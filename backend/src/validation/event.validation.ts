@@ -7,7 +7,8 @@ const eventValidation = joi.object ({
   location: joi.string().optional(),
   availableSpots: joi.number().optional(),
   membersOnly: joi.boolean().optional(),
-  participations: joi.number().optional()
+  participations: joi.number().optional(),
+  quota: joi.number().optional()
 });
 
 const validateEvent = (data: any) => {

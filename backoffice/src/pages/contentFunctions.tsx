@@ -1,29 +1,6 @@
-import Survey from "../components/Survey";
 import Vote from "../components/Vote";
 import Event from "../components/Event";
 
-
-export const createSurvey = (surveys: Survey[], newSurvey: Survey) => {
-    return [...surveys, newSurvey];
-};
-
-export const updateSurvey = (surveys: Survey[], updatedSurvey: Survey, index: number) => {
-    if (index < 0 || index >= surveys.length) {
-        console.error("Index out of bounds in updateSurvey");
-        return surveys;
-    }
-    const newSurveys = [...surveys];
-    newSurveys[index] = updatedSurvey;
-    return newSurveys;
-};
-
-export const deleteSurvey = (surveys: Survey[], index: number) => {
-    if (index < 0 || index >= surveys.length) {
-        console.error("Index out of bounds in deleteSurvey");
-        return surveys;
-    }
-    return surveys.filter((_, i) => i !== index);
-};
 
 export const createVote = (votes: Vote[], newVote: Vote) => {
     return [...votes, newVote];
@@ -47,8 +24,18 @@ export const deleteVote = (votes: Vote[], index: number) => {
     return votes.filter((_, i) => i !== index);
 };
 
-export const createEvent = (events: Event[], newEvent: Event) => {
-    return [...events, newEvent];
+export const createEvent = (prevEvents: any, newEventData: any) => {
+    const newEvent = {
+        ...newEventData,
+        location: '',
+        availableSpots: 100,
+        membersOnly: false,
+        participations: 0,
+        participants: [],
+        quota: 10,
+    };
+
+    return [...prevEvents, newEvent];
 };
 
 export const updateEvent = (events: Event[], updatedEvent: Event, index: number) => {

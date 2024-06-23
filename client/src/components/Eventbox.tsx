@@ -41,7 +41,7 @@ const EventBox: React.FC<EventBoxProps> = ({ event }) => {
             body: JSON.stringify({
                 ...event,
                 availableSpots: newAvailableSpots,
-                participations: isParticipating ? event.participations - 1 : event.participations + 1, // Update participations
+                participations: isParticipating ? event.participations - 1 : event.participations + 1,
             }),
         })
             .then(response => response.json())

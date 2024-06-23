@@ -10,6 +10,7 @@ export class Event extends Model {
   public availableSpots!: number;
   public participations!: number;
   public membersOnly!: boolean; 
+  public quota!: number | null;
 }
 
 Event.init({
@@ -47,6 +48,10 @@ Event.init({
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
+  },
+  quota: {
+    type: DataTypes.INTEGER,
+    allowNull: true
   }
 }, {
   sequelize,

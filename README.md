@@ -38,7 +38,6 @@ TODO
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
-//real performance
 //content manager with real api
 //members with search+real api
 //task manage filter/search+real api

@@ -1,22 +1,52 @@
-.contentBox{
-    position: absolute;
-    top: 30px;
-    right: 300px;
-    bottom: 30px;
-    left: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: yellow;
-    overflow: auto;
+.contentBox {
+    background-color: #f8f9fa; 
     padding: 20px;
-    box-sizing: border-box;
-}
-
-.content{
-    text-align: center;
-    width: 100%;
-    max-height: 100%;
-    overflow-y: auto;
-    background-color: red;
-}
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+  }
+  
+  .creation-box {
+    margin-bottom: 20px;
+  }
+  
+  .creation-box button, .manageContent button {
+    background-color: #007bff; 
+    color: white; 
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px; 
+    cursor: pointer; 
+    margin-right: 10px; 
+    transition: background-color 0.2s; 
+  }
+  
+  .creation-box button:hover, .manageContent button:hover {
+    background-color: #0056b3; 
+  }
+  
+  .creation-box div, .manageContent div {
+    margin-top: 10px; 
+  }
+  
+  input {
+    border: 1px solid #ced4da;
+    padding: 5px 10px; 
+    border-radius: 4px; 
+    margin: 5px 0; 
+  }
+  
+  .manageContent {
+    background-color: #ffffff;
+    padding: 20px; 
+    border-radius: 8px; 
+    display: flex;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+  }
+  
+  .manageContent > div:first-child {
+    margin-right: 20px; 
+  }
+  
+  .content {
+    flex-grow: 1;
+  }

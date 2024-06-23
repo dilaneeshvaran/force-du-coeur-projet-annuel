@@ -41,6 +41,10 @@ Event.init({
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    quota: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true
     }
 }, {
     sequelize: services_1.sequelize,

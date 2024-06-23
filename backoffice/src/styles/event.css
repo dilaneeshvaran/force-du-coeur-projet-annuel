@@ -1,0 +1,98 @@
+.event-box {
+    background-color: #fff;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px; 
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .event-box h2 {
+    color: #333; 
+    margin-bottom: 12px; 
+  }
+  
+  .event-box p {
+    color: #666; 
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  
+  .event-box p:nth-child(odd) {
+    font-weight: bold;
+  }
+  
+  .event-box button {
+    background-color: #007bff; 
+    color: #ffffff; 
+    border: none; 
+    border-radius: 4px; 
+    padding: 10px 20px; 
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s ease; 
+  }
+  
+  .event-box button:hover {
+    background-color: #0056b3; 
+  }
+  
+  .event-box button:last-child {
+    background-color: #dc3545;
+  }
+  
+  .event-box button:last-child:hover {
+    background-color: #c82333;
+  }
+  .event-update-box {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    max-width: calc(100% - 40px);
+    box-sizing: border-box; 
+  }
+  
+  .event-update-box input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .event-update-box input::placeholder {
+    color: #999;
+  }
+  
+  .event-update-box button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+  }
+  
+  .event-update-box button:first-child {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  .event-update-box button:first-child:hover {
+    background-color: #0056b3;
+  }
+  
+  .event-update-box button:last-child {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+  
+  .event-update-box button:last-child:hover {
+    background-color: #c82333;
+  }
