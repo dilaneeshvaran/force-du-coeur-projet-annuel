@@ -14,7 +14,6 @@ interface Event {
     quota: number | null;
 }
 
-
 interface EventProps {
     event: Event;
 }
@@ -24,6 +23,7 @@ const Event: React.FC<EventProps> = ({ event }) => {
     const [updatedEvent, setUpdatedEvent] = useState(event);
     const [message, setMessage] = useState('');
     const [isError, setIsError] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
 
     const handleUpdate = async () => {
         try {
@@ -56,11 +56,13 @@ const Event: React.FC<EventProps> = ({ event }) => {
             } else {
                 setMessage('Evenement supprimé !');
                 setIsError(false);
+                setShowConfirm(false);
             }
 
         } catch (error) {
             setMessage('Suppression a échoué : ' + error);
             setIsError(true);
+            setShowConfirm(false);
         }
     };
 
@@ -122,7 +124,14 @@ const Event: React.FC<EventProps> = ({ event }) => {
             <p>Participations Total : {event.participations}</p>
             <p>Quorum : {event.quota ?? 'No Quorum'}</p>
             <button onClick={() => setIsEditing(true)}>Update</button>
-            <button onClick={handleDelete}>Delete</button>
+            <button onClick={() => setShowConfirm(true)}>Delete</button>
+            {showConfirm && (
+                <div>
+                    <p>Etes vous sur de supprimer l'évenement "{event.title}" ?</p>
+                    <button onClick={handleDelete}>Oui</button>
+                    <button onClick={() => setShowConfirm(false)}>Non</button>
+                </div>
+            )}
             {message && (
                 <div style={{ color: isError ? 'red' : 'green' }}>
                     {message}

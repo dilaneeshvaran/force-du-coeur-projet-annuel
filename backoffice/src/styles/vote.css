@@ -1,0 +1,102 @@
+.vote-box {
+    background-color: #fff;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px; 
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+.vote-options{
+    list-style-type: none; 
+}
+
+  .vote-box h2 {
+    color: #333; 
+    margin-bottom: 12px; 
+  }
+  
+  .vote-box p {
+    color: #666; 
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  
+  .vote-box p:nth-child(odd) {
+    font-weight: bold;
+  }
+  
+  .vote-box button {
+    background-color: #007bff; 
+    color: #ffffff; 
+    border: none; 
+    border-radius: 4px; 
+    padding: 10px 20px; 
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s ease; 
+  }
+  
+  .vote-box button:hover {
+    background-color: #0056b3; 
+  }
+  
+  .vote-box button:last-child {
+    background-color: #dc3545;
+  }
+  
+  .vote-box button:last-child:hover {
+    background-color: #c82333;
+  }
+  .vote-update-box {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    max-width: calc(100% - 40px);
+    box-sizing: border-box; 
+  }
+  
+  .vote-update-box input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .vote-update-box input::placeholder {
+    color: #999;
+  }
+  
+  .vote-update-box button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+  }
+  
+  .vote-update-box button:first-child {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  .vote-update-box button:first-child:hover {
+    background-color: #0056b3;
+  }
+  
+  .vote-update-box button:last-child {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+  
+  .vote-update-box button:last-child:hover {
+    background-color: #c82333;
+  }

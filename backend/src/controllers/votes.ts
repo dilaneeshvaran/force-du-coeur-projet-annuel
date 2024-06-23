@@ -61,8 +61,33 @@ const getVoteById = async (req: Request, res: Response) => {
   }
 }
 
-const updateVote = (req: Request, res: Response) => {
+const updateVote = async (req: Request, res: Response) => {
+  try {
+    const voteId = req.params.id;
+    const { title, description, startDate, endDate, votingType, ongoingRound, votingMethod, status, createdBy, voterId } = req.body;
 
+    const vote = await Vote.findByPk(voteId);
+    if (vote !== null) {
+      if (title !== undefined) vote.title = title;
+      if (description !== undefined) vote.description = description;
+      if (startDate !== undefined) vote.startDate = new Date(startDate);
+      if (endDate !== undefined) vote.endDate = new Date(endDate);
+      if (votingType !== undefined) vote.votingType = votingType;
+      if (ongoingRound !== undefined) vote.ongoingRound = ongoingRound;
+      if (votingMethod !== undefined) vote.votingMethod = votingMethod;
+      if (status !== undefined) vote.status = status;
+      if (createdBy !== undefined) vote.createdBy = createdBy;
+      if (voterId !== undefined) vote.voterId = voterId;
+
+      await vote.save();
+      res.status(200).json(vote);
+    } else {
+      res.status(404).json({ message: "Vote not found." });
+    }
+  } catch (error) {
+    console.error('Error updating vote:', error);
+    res.status(500).json({ message: "Error updating the vote." });
+  }
 }
 
 

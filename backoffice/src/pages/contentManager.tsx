@@ -6,11 +6,10 @@ import AuthCheck from '../components/AuthCheck';
 
 export interface Option {
     id?: number;
-    option?: string;
+    label?: string;
     voteId?: number;
     votes?: number;
 }
-
 
 function ContentManager() {
     const [events, setEvents] = useState<Event[]>([]);
@@ -85,7 +84,7 @@ function ContentManager() {
 
     const handleOptionChange = (index: number, value: string) => {
         const updatedOptions = [...newOptions];
-        updatedOptions[index] = { ...updatedOptions[index], option: value };
+        updatedOptions[index] = { ...updatedOptions[index], label: value };
         setNewOptions(updatedOptions);
     };
     const handleRemoveOption = (indexToRemove: number) => {
@@ -172,7 +171,7 @@ function ContentManager() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ label: option.option, voteId }),
+                    body: JSON.stringify({ label: option.label, voteId }),
                 });
 
                 if (!optionResponse.ok) {
@@ -222,7 +221,7 @@ function ContentManager() {
 
                 {isCreatingEvent && (
                     <div className='creation-form'>
-                        <label>Title</label>
+                        <label>Titre</label>
                         <input
                             className={inputErrors.title ? 'invalid' : ''}
                             value={newEvent.title}
@@ -301,18 +300,17 @@ function ContentManager() {
                                 Option {index + 1}
                                 <input
                                     style={{ marginLeft: '10px', marginRight: '10px' }}
-                                    value={option.option || ''}
+                                    value={option.label || ''}
                                     onChange={e => handleOptionChange(index, e.target.value)}
                                 />
                                 <button className='dlt-options' onClick={() => handleRemoveOption(index)}>Supprimer Option</button>
                             </div>
                         ))}
-                        <button className='add-options' onClick={() => setNewOptions([...newOptions, { option: '' }])}>Ajouter Option</button>
-                        <button onClick={createVote} style={{ backgroundColor: isCreatingVote === true ? 'green' : 'gray' }}>Validate</button>
-                        <button onClick={() => setIsCreatingVote(false)}>Cancel</button>
+                        <button className='add-options' onClick={() => setNewOptions([...newOptions, { label: '' }])}>Ajouter Option</button>
+                        <button onClick={createVote} style={{ backgroundColor: isCreatingVote === true ? 'green' : 'gray' }}>Valider</button>
+                        <button onClick={() => setIsCreatingVote(false)}>Annuler</button>
                     </div>
                 )}
-
             </div>
             {
                 showConfirmation && (
@@ -327,7 +325,7 @@ function ContentManager() {
                         onClick={() => setSelectedOption('events')}
                         style={{ backgroundColor: selectedOption === 'events' ? '#007bff' : 'gray' }}
                     >
-                        Events
+                        Evenements
                     </button>
                     <button
                         onClick={() => setSelectedOption('votes')}
