@@ -107,7 +107,6 @@ const deleteEvent = async (req: Request, res: Response) => {
     const eventId = req.params.id;
     const event = await Event.findByPk(eventId);
     if (event !== null) {
-      // supprimer l'évènement de la BDD
       await event.destroy();
       res.status(200).json({ message: "Supression de l'évènement réussi"});
     } else {

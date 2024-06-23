@@ -24,6 +24,8 @@ interface EventProps {
 const Event: React.FC<EventProps> = ({ event, onUpdate, onDelete }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [updatedEvent, setUpdatedEvent] = useState(event);
+    const [message, setMessage] = useState('');
+    const [isError, setIsError] = useState(false);
 
     const handleUpdate = async () => {
         try {
@@ -43,6 +45,25 @@ const Event: React.FC<EventProps> = ({ event, onUpdate, onDelete }) => {
             setIsEditing(false);
         } catch (error) {
             console.error('Failed to update event:', error);
+        }
+    };
+
+    const handleDelete = async () => {
+        try {
+            const response = await fetch(`http://localhost:8088/events/${event.id}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            } else {
+                setMessage('Evenement supprimé !');
+                setIsError(false);
+            }
+
+        } catch (error) {
+            setMessage('Suppression a échoué : ' + error);
+            setIsError(true);
         }
     };
 
@@ -74,7 +95,7 @@ const Event: React.FC<EventProps> = ({ event, onUpdate, onDelete }) => {
                     onChange={e => setUpdatedEvent({ ...updatedEvent, quota: parseInt(e.target.value) || null })}
                     placeholder="Quorum"
                 />
-                <button onClick={handleUpdate}>Validate</button>
+                <button className='updateValidate' onClick={handleUpdate}>Validate</button>
                 <button onClick={() => setIsEditing(false)}>Cancel</button>
             </div>
         );
@@ -104,7 +125,12 @@ const Event: React.FC<EventProps> = ({ event, onUpdate, onDelete }) => {
             <p>Participations Total : {event.participations}</p>
             <p>Quorum : {event.quota ?? 'No Quorum'}</p>
             <button onClick={() => setIsEditing(true)}>Update</button>
-            <button onClick={onDelete}>Delete</button>
+            <button onClick={handleDelete}>Delete</button>
+            {message && (
+                <div style={{ color: isError ? 'red' : 'green' }}>
+                    {message}
+                </div>
+            )}
         </div>
     );
 }

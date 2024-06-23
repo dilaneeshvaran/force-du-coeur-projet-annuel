@@ -97,7 +97,7 @@ function ContentManager() {
     return (
         <div className="contentBox">
             <div className="creation-box">
-                <button onClick={() => setIsCreatingEvent(true)}>Créer un Event</button>
+                <button onClick={() => setIsCreatingEvent(true)} style={{ backgroundColor: isCreatingEvent === true ? 'gray' : 'green' }}>Créer un Event</button>
                 {isCreatingEvent && (
                     <div className='creation-form'>
                         <label>Title</label>
@@ -156,11 +156,11 @@ function ContentManager() {
                         <br />
                         <label>Quorum</label>
                         <input type="number" onChange={e => setNewEvent({ ...newEvent, quota: e.target.value ? parseInt(e.target.value, 10) : null })} />
-                        <button onClick={submitEvent}>Validate</button>
+                        <button onClick={submitEvent} style={{ backgroundColor: isCreatingEvent === true ? 'green' : 'gray' }}>Validate</button>
                         <button onClick={() => setIsCreatingEvent(false)}>Annuler</button>
                     </div>
                 )}
-                <button onClick={() => setIsCreatingVote(true)}>Créer un Vote</button>
+                <button onClick={() => setIsCreatingVote(true)} style={{ backgroundColor: isCreatingVote === true ? 'gray' : 'green' }}>Créer un Vote</button>
                 {isCreatingVote && (
                     <div>
                         Title<input value={newVote.title} onChange={e => setNewVote({ ...newVote, title: e.target.value })} />
@@ -175,10 +175,20 @@ function ContentManager() {
                     {confirmationMessage}
                 </div>
             )}
-            <div className='manageContent' style={{ backgroundColor: 'red', display: 'flex' }}>
+            <div className='manageContent' >
                 <div style={{ marginRight: '20px' }}>
-                    <button onClick={() => setSelectedOption('events')}>Events</button>
-                    <button onClick={() => setSelectedOption('votes')}>Votes</button>
+                    <button
+                        onClick={() => setSelectedOption('events')}
+                        style={{ backgroundColor: selectedOption === 'events' ? '#007bff' : 'gray' }}
+                    >
+                        Events
+                    </button>
+                    <button
+                        onClick={() => setSelectedOption('votes')}
+                        style={{ backgroundColor: selectedOption === 'votes' ? '#007bff' : 'gray' }}
+                    >
+                        Votes
+                    </button>
                 </div>
                 <div className="content">
                     {selectedOption === 'events' && events.map((event, index) => (

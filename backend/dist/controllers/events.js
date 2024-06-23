@@ -122,7 +122,6 @@ const deleteEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const eventId = req.params.id;
         const event = yield models_1.Event.findByPk(eventId);
         if (event !== null) {
-            // supprimer l'évènement de la BDD
             yield event.destroy();
             res.status(200).json({ message: "Supression de l'évènement réussi" });
         }

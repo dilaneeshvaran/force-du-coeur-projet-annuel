@@ -34,6 +34,7 @@
     cursor: pointer; 
     margin-right: 10px; 
     transition: background-color 0.2s; 
+    margin-top: 1rem;
   }
   
   .creation-box button:hover, .manageContent button:hover {
@@ -50,6 +51,7 @@
     border-radius: 4px; 
     margin: 5px 0; 
   }
+  
   
   .manageContent {
     background-color: #ffffff;
