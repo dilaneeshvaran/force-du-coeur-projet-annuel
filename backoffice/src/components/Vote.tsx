@@ -1,27 +1,32 @@
 import React from 'react';
+import { Option } from '../pages/contentManager';
 
 interface Vote {
-    title: string;
-    description: string;
-    options: string[];
-    deadline: Date;
+    id?: number;
+    title?: string;
+    description?: string;
+    startDate?: Date;
+    endDate?: Date;
+    votingType?: 'one-round' | 'two-round';
+    ongoingRound?: 'first-round' | 'second-round';
+    votingMethod?: 'majority rule' | 'absolute majority';
+    status?: 'open' | 'closed';
+    createdBy?: number;
+    options?: Option[];
 }
 
 interface VoteProps {
     vote: Vote;
-    onUpdate: (updatedVote: Vote) => void;
-    onDelete: () => void;
 }
 
-const Vote: React.FC<VoteProps> = ({ vote, onUpdate, onDelete }) => {
+const Vote: React.FC<VoteProps> = ({ vote }) => {
     return (
         <div>
             <h2>{vote.title}</h2>
             <p>{vote.description}</p>
-            <p>{vote.deadline.toString()}</p>
-            <button onClick={() => onUpdate({ ...vote, title: 'Updated title' })}>Update</button>
-            <button onClick={onDelete}>Delete Vote</button>
-        </div>
+            <button >Update</button>
+            <button >Delete Vote</button>
+        </div >
     );
 }
 

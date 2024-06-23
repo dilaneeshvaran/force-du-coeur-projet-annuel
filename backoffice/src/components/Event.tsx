@@ -17,11 +17,9 @@ interface Event {
 
 interface EventProps {
     event: Event;
-    onUpdate: (updatedEvent: Event) => void;
-    onDelete: () => void;
 }
 
-const Event: React.FC<EventProps> = ({ event, onUpdate, onDelete }) => {
+const Event: React.FC<EventProps> = ({ event }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [updatedEvent, setUpdatedEvent] = useState(event);
     const [message, setMessage] = useState('');
@@ -41,7 +39,6 @@ const Event: React.FC<EventProps> = ({ event, onUpdate, onDelete }) => {
                 throw new Error('Network response was not ok');
             }
 
-            onUpdate(updatedEvent);
             setIsEditing(false);
         } catch (error) {
             console.error('Failed to update event:', error);

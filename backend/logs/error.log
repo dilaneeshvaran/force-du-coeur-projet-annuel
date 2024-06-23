@@ -76,3 +76,6 @@
 {"level":"error","message":"\"date\" must be a valid date","timestamp":"2024-06-23T14:16:38+02:00"}
 {"level":"error","message":"\"date\" must be a valid date","timestamp":"2024-06-23T14:17:47+02:00"}
 {"level":"error","message":"\"date\" must be a valid date","timestamp":"2024-06-23T14:19:54+02:00"}
+{"level":"error","message":"\"value\" must be of type object","timestamp":"2024-06-23T20:02:39+02:00"}
+{"level":"error","message":"\"option\" is not allowed","timestamp":"2024-06-23T20:18:04+02:00"}
+{"level":"error","message":"\"option\" is not allowed","timestamp":"2024-06-23T20:23:00+02:00"}

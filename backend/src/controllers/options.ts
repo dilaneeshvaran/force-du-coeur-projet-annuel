@@ -7,7 +7,7 @@ const createOption = async (req: Request, res: Response) => {
   const { error, value } = optionValidation.validate(req.body);
   if (error) {
     res.status(400).json({ message: logger.error(error.details[0].message) });
-  }
+  } 
 
   try {
     const { label, voteId } = value;
@@ -22,7 +22,7 @@ const createOption = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({ message: "Erreur lors de la création de l'option."});
   }
-}
+} 
 
 const getAllOptions = async (req: Request, res: Response) => {
   try {
