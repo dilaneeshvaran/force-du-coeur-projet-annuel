@@ -16,7 +16,7 @@ const register = async (req: Request, res: Response) => {
   }
 
   try {
-    const { username, password, email, firstname, lastname, dateOfBirth,phoneNumber,country,city,address } = value;
+    const {isBan, username, password, email, firstname, lastname, dateOfBirth,phoneNumber,country,city,address } = value;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       username,
@@ -29,6 +29,7 @@ const register = async (req: Request, res: Response) => {
       country,
       city,
       address,
+      isBan
     });
 
   const token = generateToken(newUser.id);
@@ -38,7 +39,7 @@ const register = async (req: Request, res: Response) => {
     console.error(error);
     return res.status(500).json({ message: "Erreur lors de la création de l'utilisateur."});
   }
-} 
+}
  
 
 const login = async (req: RequestWithUser, res: Response) => {
@@ -51,9 +52,12 @@ const login = async (req: RequestWithUser, res: Response) => {
 
   try {
     const user = await User.findOne({ where: { email } });
-    // si l'user n'existe pas
     if (!user) {
       return res.status(401).send({ message: "nom d'utilisateur ou mot de passe erroné."});
+    }
+
+    if (user.isBan) {
+      return res.status(403).send({ message: "Ce compte est banni." });
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
@@ -108,7 +112,7 @@ const adminlogin = async (req: RequestWithUser, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
-    const { id, username, password, email, firstname, lastname, dateOfBirth,role,phoneNumber,country,city,address } = req.body;
+    const {isBan, id, username, password, email, firstname, lastname, dateOfBirth,role,phoneNumber,country,city,address } = req.body;
 
     const user = await User.findByPk(userId);
     if (user !== null) {
@@ -124,6 +128,7 @@ const updateUser = async (req: Request, res: Response) => {
       if (country !== undefined) user.country = country;
       if (city !== undefined) user.city = city;
       if (address !== undefined) user.address = address;
+      if (isBan !== undefined) user.isBan = isBan;
 
       await user.save();
       res.status(200).json(user);

@@ -27,7 +27,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.status(400).json({ message: error.details[0].message });
     }
     try {
-        const { username, password, email, firstname, lastname, dateOfBirth, phoneNumber, country, city, address } = value;
+        const { isBan, username, password, email, firstname, lastname, dateOfBirth, phoneNumber, country, city, address } = value;
         const hashedPassword = yield bcrypt_1.default.hash(password, 10);
         const newUser = yield models_1.User.create({
             username,
@@ -40,6 +40,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             country,
             city,
             address,
+            isBan
         });
         const token = (0, services_1.generateToken)(newUser.id);
         return res.status(201).json({ newUser, token });
@@ -58,9 +59,11 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { password, email } = value;
     try {
         const user = yield models_1.User.findOne({ where: { email } });
-        // si l'user n'existe pas
         if (!user) {
             return res.status(401).send({ message: "nom d'utilisateur ou mot de passe erroné." });
+        }
+        if (user.isBan) {
+            return res.status(403).send({ message: "Ce compte est banni." });
         }
         const isPasswordCorrect = yield bcrypt_1.default.compare(password, user.password);
         if (!isPasswordCorrect) {
@@ -106,7 +109,7 @@ exports.adminlogin = adminlogin;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = req.params.id;
-        const { id, username, password, email, firstname, lastname, dateOfBirth, role, phoneNumber, country, city, address } = req.body;
+        const { isBan, id, username, password, email, firstname, lastname, dateOfBirth, role, phoneNumber, country, city, address } = req.body;
         const user = yield models_1.User.findByPk(userId);
         if (user !== null) {
             if (id !== undefined)
@@ -133,6 +136,8 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 user.city = city;
             if (address !== undefined)
                 user.address = address;
+            if (isBan !== undefined)
+                user.isBan = isBan;
             yield user.save();
             res.status(200).json(user);
         }

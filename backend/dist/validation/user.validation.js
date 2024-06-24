@@ -16,7 +16,8 @@ const userValidation = joi_1.default.object({
     phoneNumber: joi_1.default.string().optional(),
     country: joi_1.default.string().trim().optional(),
     city: joi_1.default.string().trim().optional(),
-    address: joi_1.default.string().trim().optional()
+    address: joi_1.default.string().trim().optional(),
+    isBan: joi_1.default.boolean().optional()
 });
 const userAuthValidation = joi_1.default.object({
     password: joi_1.default.string().min(8).max(20).required(),

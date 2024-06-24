@@ -1,0 +1,74 @@
+.contentBoxUsers {
+    background-color: #f8f9fa; 
+    padding: 20px;
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    width: 60rem;
+}
+
+.content-users {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #333; 
+    margin-bottom: 20px; 
+}
+
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.userList {
+    background-color: #fafafa; 
+    padding: 15px;
+    margin-bottom: 3rem; 
+    border-radius: 5px;
+    border-left: 5px solid #007bff; 
+}
+
+.userList p {
+    margin: 5px 0; 
+    color: #666;
+}
+
+button {
+    padding: 10px 15px;
+    border:rem none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px; 
+    color: white; 
+    font-weight: bold;
+}
+
+button[disabled] {
+    background-color: #ccc; 
+}
+
+button:not([disabled]) {
+    background-color: #dc3545;
+}
+
+button:last-child {
+    background-color: #2865a7;
+}
+
+@media (max-width: 768px) {
+    .content {
+        width: 95%;
+    }
+
+    .userList {
+        flex-direction: column; 
+    }
+}

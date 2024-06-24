@@ -26,6 +26,7 @@ export class User extends Model {
   public city!: string;
   public address!: string;
   public createdAt!: Date;
+  public isBan!: boolean;
 }
 
 export const generateValidationCode = (): string => {
@@ -120,7 +121,11 @@ User.init({
     type: DataTypes.DATE,
     allowNull: false,
     defaultValue: DataTypes.NOW
-  }
+  },isBan: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+    defaultValue: false
+  },
   
 }, {
   sequelize,

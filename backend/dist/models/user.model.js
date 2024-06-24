@@ -106,7 +106,11 @@ User.init({
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
         defaultValue: sequelize_1.DataTypes.NOW
-    }
+    }, isBan: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
+    },
 }, {
     sequelize: services_1.sequelize,
     modelName: 'User',

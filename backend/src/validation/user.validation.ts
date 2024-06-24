@@ -11,7 +11,8 @@ const userValidation = joi.object ({
   phoneNumber: joi.string().optional(),
   country: joi.string().trim().optional(),
   city: joi.string().trim().optional(),
-  address: joi.string().trim().optional()
+  address: joi.string().trim().optional(),
+  isBan: joi.boolean().optional()
 });
 
 const userAuthValidation = joi.object ({

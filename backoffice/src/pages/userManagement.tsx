@@ -1,73 +1,142 @@
-import React, { useState } from 'react';
-import "../styles/content.css"
+import React, { useState, useEffect } from 'react';
+import "../styles/userManage.css";
 import AuthCheck from '../components/AuthCheck';
+import { FirstPage } from '@mui/icons-material';
 
 interface User {
     id: number;
-    name: string;
-    role: 'member' | 'admin';
-    isBanned: boolean;
-    banPeriod: 'day' | 'week' | 'month' | 'permanent' | null;
+    firstname: string;
+    lastname: string;
+    email: string;
+    dateOfBirth: Date;
+    memberSince: Date;
+    phoneNumber: number;
+    address: string;
+    city: string;
+    country: string;
+    role: 'user' | 'admin';
+    isBan: boolean;
 }
 
 function UserManagement() {
-    const [users, setUsers] = useState<User[]>([
-        { id: 1, name: 'User 1', role: 'member', isBanned: false, banPeriod: null },
-        { id: 2, name: 'User 2', role: 'member', isBanned: false, banPeriod: null },
-        // Add more users as needed
-    ]);
-
-    const [selectedBanPeriod, setSelectedBanPeriod] = useState<'day' | 'week' | 'month' | 'permanent' | null>(null);
-    const [selectedRole, setSelectedRole] = useState<'member' | 'admin' | null>(null);
+    const [users, setUsers] = useState<User[]>([]);
+    const [filter, setFilter] = useState<'all' | 'banned' | 'admin' | 'user'>('all');
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [confirmationMessage, setConfirmationMessage] = useState('');
+    const [actionToConfirm, setActionToConfirm] = useState<() => void>(() => { });
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
-    const changeRole = (id: number, role: 'member' | 'admin') => {
-        setUsers(users.map(user => user.id === id ? { ...user, role } : user));
-        setSelectedRole(null);
-        setSelectedUserId(null);
+    useEffect(() => {
+        fetch('http://localhost:8088/users')
+            .then(response => response.json())
+            .then(data => setUsers(data))
+            .catch(error => console.error('Error fetching votes:', error));
+    }, []);
+
+    const updateUser = async (id: number, updates: Partial<User>) => {
+        const response = await fetch(`http://localhost:8088/users/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updates),
+        });
+
+        if (response.ok) {
+            setUsers(users.map(user => user.id === id ? { ...user, ...updates } : user));
+        }
     };
 
-    const banUser = (id: number, period: 'day' | 'week' | 'month' | 'permanent') => {
-        setUsers(users.map(user => user.id === id ? { ...user, isBanned: true, banPeriod: period } : user));
-        setSelectedBanPeriod(null);
-        setSelectedUserId(null);
+    const changeRole = (id: number, role: 'user' | 'admin', firstname: string, lastname: string) => {
+        setConfirmationMessage(`Etes vous sur de changer le role de ${firstname} ${lastname} en ${role}?`);
+        setActionToConfirm(() => () => updateUser(id, { role }));
+        setSelectedUserId(id);
+        setShowConfirmation(true);
+    };
+
+    const toggleBanStatus = (id: number, isCurrentlyBanned: boolean, firstname: string, lastname: string) => {
+        const newBanStatus = !isCurrentlyBanned;
+        setConfirmationMessage(`Etes vous sur de ${newBanStatus ? 'ban' : 'unban'} ${firstname} ${lastname}?`);
+        setActionToConfirm(() => () => updateUser(id, { isBan: newBanStatus }));
+        setSelectedUserId(id);
+
+        setShowConfirmation(true);
+    };
+
+    const filteredUsers = users.filter(user => {
+        switch (filter) {
+            case 'banned':
+                return user.isBan;
+            case 'admin':
+                return user.role === 'admin';
+            case 'user':
+                return user.role === 'user';
+            default:
+                return true;
+        }
+    });
+
+    function validateDateTime(inputDateTime: any): string {
+        if (isNaN(Date.parse(inputDateTime))) {
+            return "Invalid Date";
+        } else {
+            const date = new Date(inputDateTime);
+            return date.toLocaleDateString();
+        }
+    }
+
+    const handleConfirmAction = () => {
+        actionToConfirm();
+        setShowConfirmation(false);
+    };
+
+    const handleCancelAction = () => {
+        setShowConfirmation(false);
     };
 
     return (
-        <div className='contentBox'>
-            <div className='content'>
-                <h2>User Management</h2>
-                {users.map(user => (
-                    <div key={user.id}>
-                        <p>{user.name} ({user.role}) {user.isBanned && `(Banned for ${user.banPeriod})`}</p>
-                        {selectedUserId === user.id && selectedRole !== null ? (
-                            <>
-                                <select onChange={(e) => setSelectedRole(e.target.value as 'member' | 'admin')}>
-                                    <option value="member">Member</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                                <button onClick={() => changeRole(user.id, selectedRole)}>Validate Role Change</button>
-                                <button onClick={() => { setSelectedRole(null); setSelectedUserId(null); }}>Cancel</button>
-                            </>
-                        ) : (
-                            <button onClick={() => { setSelectedUserId(user.id); setSelectedRole(user.role); }}>Change Role</button>
+        <div className='contentBoxUsers'>
+
+            <div className='content-users'>
+                <h2>Gestion des membres</h2>
+                <select onChange={(e) => setFilter(e.target.value as 'all' | 'banned' | 'admin' | 'user')}>
+                    <option value="all">All Users</option>
+                    <option value="banned">Banned Users</option>
+                    <option value="admin">Admins</option>
+                    <option value="user">Members</option>
+                </select>
+
+                {filteredUsers.map(user => (
+                    <div className='userList' key={user.id}>
+                        <p>({user.role}) {user.isBan ? 'Banni' : ''}</p>
+                        <p>Nom: {user.firstname}</p>
+                        <p>Prenom: {user.lastname}</p>
+                        <p>Email: {user.email}</p>
+                        <p>Date de Naissance: {validateDateTime(user.dateOfBirth)}</p>
+                        <p>Membre depuis: {validateDateTime(user.memberSince)}</p>
+                        <p>Numero de tél: {user.phoneNumber}</p>
+                        <p>Address: {user.address}</p>
+                        <p>Ville: {user.city}</p>
+                        <p>Pays: {user.country}</p>
+                        {showConfirmation && selectedUserId === user.id && (
+                            <div className="confirmationDialog">
+                                <p>{confirmationMessage}</p>
+                                <button onClick={handleConfirmAction}>Oui</button>
+                                <button onClick={() => {
+                                    handleCancelAction();
+                                    setSelectedUserId(null);
+                                }}>Non</button>
+                            </div>
                         )}
-                        {selectedUserId === user.id && selectedBanPeriod !== null ? (
-                            <>
-                                <select onChange={(e) => setSelectedBanPeriod(e.target.value as 'day' | 'week' | 'month' | 'permanent')}>
-                                    <option value="day">Day</option>
-                                    <option value="week">Week</option>
-                                    <option value="month">Month</option>
-                                    <option value="permanent">Permanent</option>
-                                </select>
-                                <button onClick={() => banUser(user.id, selectedBanPeriod)}>Confirm Ban</button>
-                                <button onClick={() => { setSelectedBanPeriod(null); setSelectedUserId(null); }}>Cancel</button>
-                            </>
-                        ) : (
-                            <button onClick={() => { setSelectedUserId(user.id); setSelectedBanPeriod('day'); }}>Ban User</button>
-                        )}
+                        <button onClick={() => toggleBanStatus(user.id, user.isBan, user.firstname, user.lastname)} disabled={false}>
+                            {user.isBan ? 'Unban' : 'Ban'}
+                        </button>
+                        <button onClick={() => changeRole(user.id, user.role === 'admin' ? 'user' : 'admin', user.firstname, user.lastname,)}>
+                            Changer le role en {user.role === 'admin' ? 'membre' : 'admin'}
+                        </button>
                     </div>
                 ))}
+
             </div>
         </div>
     );

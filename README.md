@@ -38,7 +38,6 @@ TODO
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
-//content manager with real api
 //members with search+real api
 //task manage filter/search+real api
 //real finance info+clean up
