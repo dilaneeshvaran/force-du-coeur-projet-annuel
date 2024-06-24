@@ -1,38 +1,44 @@
 .navbar {
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .container {
-display: flex;
+  display: flex;
   align-items: center;
   background-color: rgb(255, 255, 255);
 }
 
 .navbar-item {
-    display: inline;
-    margin-right: 70px;
+  display: inline;
+  margin-right: 70px;
+  color: #000000;
 }
+
+.navbar-item:hover {
+  color: #ff0000;
+}
+
 .is-active {
-    color: red;
-  }
+  color: red;
+}
 
 .logo {
-    padding: 1.5em;
+  padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
-  }
-  .logofdc:hover {
-    filter: drop-shadow(0 0 2em #ff5900);
-  }
+}
+.logofdc:hover {
+  filter: drop-shadow(0 0 2em #ff5900);
+}
 
-  .logofdc {
-    max-height: 100px;
-    margin-right: 20px;
-  }
+.logofdc {
+  max-height: 100px;
+  margin-right: 20px;
+}
 
-  .sidebar{
-    display:flex;
-    float:right;
-    margin-top:50px;
-    
-  }
+.sidebar {
+  display: flex;
+  float: right;
+  margin-top: 50px;
+}

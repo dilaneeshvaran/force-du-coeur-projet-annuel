@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import '../styles/navbar.css'
-import fdcLogo from '../assets/fdc-logo.png'
+import '../styles/Navbar.css'
+import fdcLogo from '../assets/logo2.png'
 import Logout from '../components/Logout';
 import Sidebar from "./Sidebar";
 
@@ -35,7 +35,7 @@ const Navbar: React.FC<NavbarProps> = ({ className, isLoggedIn, onLogout }) => {
         </NavLink>
 
         <NavLink className={`navbar-item ${location.pathname === '/evenements' ? 'is-active' : ''}`} to="/evenements">
-          Evenements
+          Evènements
         </NavLink>
 
         <NavLink className={`navbar-item ${location.pathname === '/missions' ? 'is-active' : ''}`} to="/missions">
@@ -53,7 +53,6 @@ const Navbar: React.FC<NavbarProps> = ({ className, isLoggedIn, onLogout }) => {
         <NavLink className={`navbar-item ${location.pathname === '/soutenir' ? 'is-active' : ''}`} to="/soutenir">
           Soutenir nos actions
         </NavLink>
-
 
 
         <NavLink className={`navbar-item ${location.pathname === '/espaceMembres' ? 'is-active' : ''}`} to="/espaceMembres">

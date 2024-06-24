@@ -24,7 +24,7 @@ function Evenements() {
 
   return (
     <>
-      <h1>Evenements</h1>
+      <h1>Evènements</h1>
       {events.map((event, index) => (
         <div className="ec-container">
           <div key={index} className="event-card">
@@ -36,7 +36,7 @@ function Evenements() {
         </div>
       ))}
       <p>
-        email : fdc@fdc.com
+        email : contact@forceducoeur.com
       </p>
     </>
   )
