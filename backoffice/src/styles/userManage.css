@@ -41,7 +41,7 @@ select {
     color: #666;
 }
 
-button {
+.userM-btn {
     padding: 10px 15px;
     border:rem none;
     border-radius: 5px;
@@ -51,15 +51,15 @@ button {
     font-weight: bold;
 }
 
-button[disabled] {
+.userM-btn[disabled] {
     background-color: #ccc; 
 }
 
-button:not([disabled]) {
+.userM-btn:not([disabled]) {
     background-color: #dc3545;
 }
 
-button:last-child {
+.userM-btn:last-child {
     background-color: #2865a7;
 }
 

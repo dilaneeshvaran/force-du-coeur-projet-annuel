@@ -121,17 +121,17 @@ function UserManagement() {
                         {showConfirmation && selectedUserId === user.id && (
                             <div className="confirmationDialog">
                                 <p>{confirmationMessage}</p>
-                                <button onClick={handleConfirmAction}>Oui</button>
-                                <button onClick={() => {
+                                <button className='userM-btn' onClick={handleConfirmAction}>Oui</button>
+                                <button className='userM-btn' onClick={() => {
                                     handleCancelAction();
                                     setSelectedUserId(null);
                                 }}>Non</button>
                             </div>
                         )}
-                        <button onClick={() => toggleBanStatus(user.id, user.isBan, user.firstname, user.lastname)} disabled={false}>
+                        <button className='userM-btn' onClick={() => toggleBanStatus(user.id, user.isBan, user.firstname, user.lastname)} disabled={false}>
                             {user.isBan ? 'Unban' : 'Ban'}
                         </button>
-                        <button onClick={() => changeRole(user.id, user.role === 'admin' ? 'user' : 'admin', user.firstname, user.lastname,)}>
+                        <button className='userM-btn' onClick={() => changeRole(user.id, user.role === 'admin' ? 'user' : 'admin', user.firstname, user.lastname,)}>
                             Changer le role en {user.role === 'admin' ? 'membre' : 'admin'}
                         </button>
                     </div>

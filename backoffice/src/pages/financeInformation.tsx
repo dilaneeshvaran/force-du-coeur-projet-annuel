@@ -1,84 +1,138 @@
-import React, { useState } from 'react';
-import Donation from '../components/Donation';
-import Membership from '../components/Membership';
+import React, { useState, useEffect } from 'react';
 import AuthCheck from '../components/AuthCheck';
+import '../styles/finance.css';
 
 type DonationType = {
-    fullName: string;
-    email: string;
-    donationTime: Date;
-    donationType: 'periodic' | 'onetime';
-    donationPeriod: 'monthly' | 'yearly' | null;
-    donationAmount: number;
-    donationDate: Date;
+    id?: number;
+    amount?: number;
+    donationDate?: Date;
+    fullname?: string;
+    email?: string;
+    donatorId?: number;
 };
 
 type MembershipType = {
-    userName: string;
+    id?: number;
+    amount?: number;
+    paymentDate?: Date;
+    userId?: number;
+};
+
+type UserType = {
+    id: number;
     email: string;
-    startDate: Date;
-    amountPaid: number;
+    firstname: string;
+    lastname: string;
+};
+
+type UsersStateType = {
+    [key: number]: UserType;
 };
 
 function FinanceInformation() {
     const [donations, setDonations] = useState<DonationType[]>([]);
     const [memberships, setMemberships] = useState<MembershipType[]>([]);
-    const [filter, setFilter] = useState<'all' | 'donations' | 'memberships'>('all');
-    const [donationFilter, setDonationFilter] = useState<'all' | 'periodic' | 'onetime'>('all');
     const [startDateFilter, setStartDateFilter] = useState<Date | null>(null);
     const [endDateFilter, setEndDateFilter] = useState<Date | null>(null);
+    const [viewType, setViewType] = useState<'donations' | 'memberships'>('donations');
+    const [users, setUsers] = useState<UsersStateType>({});
 
-    const totalDonations = donations.reduce((total, donation) => total + donation.donationAmount, 0);
-    const totalMemberships = memberships.reduce((total, membership) => total + membership.amountPaid, 0);
-    const totalRaised = totalDonations + totalMemberships;
+    useEffect(() => {
+        const fetchDonations = async () => {
+            const response = await fetch('http://localhost:8088/donations');
+            const data = await response.json();
+            setDonations(data);
+        };
+
+        const fetchMemberships = async () => {
+            const response = await fetch('http://localhost:8088/memberships');
+            const data = await response.json();
+            setMemberships(data);
+        };
+
+        fetchDonations();
+        fetchMemberships();
+    }, []);
+
+    const fetchUserById = async (userId: number) => {
+        if (!users[userId]) {
+            const response = await fetch(`http://localhost:8088/users/${userId}`);
+            const data: UserType = await response.json();
+            setUsers((prevUsers) => ({ ...prevUsers, [userId]: data }));
+        }
+    };
+
+    useEffect(() => {
+        donations.forEach(donation => {
+            if (donation.donatorId) {
+                fetchUserById(donation.donatorId);
+            }
+        });
+
+        memberships.forEach(membership => {
+            if (membership.userId) {
+                fetchUserById(membership.userId);
+            }
+        });
+    }, [donations, memberships]);
 
     const filteredDonations = donations.filter(donation => {
-        return (donationFilter === 'all' || donation.donationType === donationFilter) &&
-            (!startDateFilter || donation.donationDate >= startDateFilter) &&
-            (!endDateFilter || donation.donationDate <= endDateFilter);
+        const donationDate = donation.donationDate ? new Date(donation.donationDate) : null;
+        return (!startDateFilter || (donationDate && donationDate >= startDateFilter)) &&
+            (!endDateFilter || (donationDate && donationDate <= endDateFilter));
     });
 
     const filteredMemberships = memberships.filter(membership => {
-        return (filter === 'all' || filter === 'memberships') &&
-            (!startDateFilter || membership.startDate >= startDateFilter) &&
-            (!endDateFilter || membership.startDate <= endDateFilter);
+        const paymentDate = membership.paymentDate ? new Date(membership.paymentDate) : null;
+        return (!startDateFilter || (paymentDate && paymentDate >= startDateFilter)) &&
+            (!endDateFilter || (paymentDate && paymentDate <= endDateFilter));
     });
 
     return (
-        <div>
-            <h2>Finance Information</h2>
-            <p>Total Amount Raised: {totalRaised}</p>
-            <p>Total Donations: {totalDonations}</p>
-            <p>Total Membership Amount: {totalMemberships}</p>
+        <div className='content-dons-cotisations'>
+            <h2 className='header-title'>Dons & Cotisations</h2>
 
-            <h3>Filter</h3>
-            <select value={filter} onChange={e => setFilter(e.target.value as 'all' | 'donations' | 'memberships')}>
-                <option value="all">All</option>
-                <option value="donations">Donations</option>
-                <option value="memberships">Memberships</option>
-            </select>
+            <label className='date-label'>Date Début</label>
+            <input type="date" className='date-input' onChange={e => setStartDateFilter(e.target.value ? new Date(e.target.value) : null)} />
+            <label className='date-label'>Date Fin</label>
+            <input type="date" className='date-input' onChange={e => setEndDateFilter(e.target.value ? new Date(e.target.value) : null)} />
 
-            {filter === 'donations' && (
-                <select value={donationFilter} onChange={e => setDonationFilter(e.target.value as 'all' | 'periodic' | 'onetime')}>
-                    <option value="all">All Donations</option>
-                    <option value="periodic">Periodic Donations</option>
-                    <option value="onetime">One-time Donations</option>
-                </select>
+            <div className='finance-options'>
+                <button className='finance-button' onClick={() => setViewType('donations')} style={{ backgroundColor: viewType === "donations" ? 'gray' : ' #0056b3' }}>Voir les Dons</button>
+                <button className='finance-button' onClick={() => setViewType('memberships')} style={{ backgroundColor: viewType === "memberships" ? 'gray' : ' #0056b3' }}>Voir les Adhésions</button>
+            </div>
+
+            {viewType === 'donations' ? (
+                <div className='donations-list'>
+                    <h3 className='list-title'>Dons</h3>
+                    {filteredDonations.map((donation, index) => (
+                        <div className='dons-labels' key={donation.id}>
+                            <p className='label-text'>Nom et Prénom: {donation.fullname}</p>
+                            <p className='label-text'>Date de don : {donation.donationDate?.toString()}</p>
+                            <p className='label-text'>Email: {donation.email}</p>
+                            <p className='label-text'>Montant: {donation.amount}</p>
+                            {donation.donatorId && users[donation.donatorId] && (
+                                <p className='label-text'>Membre adhéré: {users[donation.donatorId].firstname} {users[donation.donatorId].lastname} (email: {users[donation.donatorId].email})</p>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className='memberships-list'>
+                    <h3 className='list-title'>Adhésions</h3>
+                    {filteredMemberships.map((membership, index) => (
+                        <div className='cotisations-labels' key={membership.id}>
+                            {membership.userId && users[membership.userId] && (
+                                <p className='label-text'>Nom et Prénom: {users[membership.userId].firstname} {users[membership.userId].lastname} (email: {users[membership.userId].email})</p>
+                            )}
+                            <p className='label-text'>Montant: {membership.amount}</p>
+                            <p className='label-text'>Date de Payment: {membership.paymentDate?.toString()}</p>
+                        </div>
+                    ))}
+                </div>
             )}
-
-            <label>Start Date</label><input type="date" onChange={e => setStartDateFilter(e.target.value ? new Date(e.target.value) : null)} />
-            <label>End Date</label><input type="date" onChange={e => setEndDateFilter(e.target.value ? new Date(e.target.value) : null)} />
-
-            <h3>Donations</h3>
-            {filteredDonations.map((donation, index) => (
-                <Donation key={index} donation={donation} />
-            ))}
-
-            <h3>Memberships</h3>
-            {filteredMemberships.map((membership, index) => (
-                <Membership key={index} membership={membership} />
-            ))}
         </div>
+
     );
 }
 

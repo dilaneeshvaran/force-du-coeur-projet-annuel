@@ -76,6 +76,8 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
 
     const handleLogout = () => {
         localStorage.setItem('isLoggedIn', 'false');
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
         setIsLoggedIn(false);
     };
 

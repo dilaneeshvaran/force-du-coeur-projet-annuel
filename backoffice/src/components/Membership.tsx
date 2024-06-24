@@ -7,7 +7,7 @@ interface Membership {
     amount: number;
     paymentDate: Date;
     userId: number;
-    status: 'active' | 'inactive';
+    status?: 'active' | 'inactive';
 }
 
 interface MembershipProps {

@@ -38,13 +38,11 @@ TODO
 
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
-//members with search+real api
+//add search for members
 //task manage filter/search+real api
-//real finance info+clean up
 //ressources>inventory management/used+real api
 //clean mesages+real api(doc/message)
 //alerts with mail alert+ clean up
-//real logout
 --------------------------------------BACKEND--------------------------------------------------
 TODO
   //routes > authentification des tokens pour les routes, routes associées aux tables jointes
