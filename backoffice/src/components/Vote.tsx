@@ -34,7 +34,8 @@ const Vote: React.FC<VoteProps> = ({ vote }) => {
     const [isErrorOption, setIsErrorOption] = useState(false);
     const [showConfirmOption, setShowConfirmOption] = useState(false);
     const [optionsLab, setOptionsLab] = useState('');
-
+    const [isCreatingOption, setIsCreatingOption] = useState(false);
+    const [newOptionLabel, setNewOptionLabel] = useState<string>('');
 
     useEffect(() => {
         fetch(`http://localhost:8088/options/${vote.id}`)
@@ -45,6 +46,28 @@ const Vote: React.FC<VoteProps> = ({ vote }) => {
             })
             .catch(error => console.error('Error fetching votes:', error));
     }, [vote.id]);
+
+    const handleCreateOptionClick = () => {
+        setIsCreatingOption(true);
+    };
+
+    const handleCreateOptionSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (!newOptionLabel) {
+            console.error('Option label cannot be empty');
+            return;
+        }
+
+        await handleCreateOptions(newOptionLabel);
+        setIsCreatingOption(false);
+        setNewOptionLabel('');
+    };
+
+    const handleCloseCreateOption = () => {
+        setIsCreatingOption(false);
+        setNewOptionLabel('');
+    };
 
     const handleUpdate = async () => {
         try {
@@ -59,8 +82,11 @@ const Vote: React.FC<VoteProps> = ({ vote }) => {
             if (!response.ok) {
                 throw new Error('Erreur avec votre demande');
             }
-
             setIsEditing(false);
+            setMessage('Vote mis à jour !');
+            setIsError(false);
+            const timeoutId = setTimeout(() => setMessage(''), 5000);
+            return () => clearTimeout(timeoutId);
         } catch (error) {
             console.error('Failed to update event:', error);
         }
@@ -84,19 +110,43 @@ const Vote: React.FC<VoteProps> = ({ vote }) => {
             if (!response.ok) {
                 throw new Error('Erreur avec votre demande');
             }
-
             setOptions(prevOptions =>
                 prevOptions.map(option =>
                     option.id === optionId ? { ...option, label: newLabel } : option
                 )
             );
-
-            console.log("Option updated successfully");
+            setMessageOption(`Option a été renomé en ${newLabel} !`);
+            setIsErrorOption(false);
+            const timeoutId = setTimeout(() => setMessageOption(''), 5000);
+            return () => clearTimeout(timeoutId);
         } catch (error) {
             console.error('Failed to update option:', error);
         }
     };
 
+    const handleCreateOptions = async (newOption: string) => {
+        try {
+            const response = await fetch(`http://localhost:8088/options`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ label: newOption, voteId: vote.id }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Erreur avec votre demande');
+            }
+
+            setOptions(prevOptions => [...prevOptions, { label: newOption }]);
+            setMessageOption('Option ajoutée !');
+            setIsErrorOption(false);
+            const timeoutId = setTimeout(() => setMessageOption(''), 5000);
+            return () => clearTimeout(timeoutId);
+        } catch (error) {
+            console.error('Failed to create option:', error);
+        }
+    };
 
 
     const handleDeleteOptions = async (optionId: number | undefined) => {
@@ -117,12 +167,17 @@ const Vote: React.FC<VoteProps> = ({ vote }) => {
             setMessageOption('Option supprimée !');
             setIsErrorOption(false);
             setShowConfirmOption(false);
+            const timeoutId = setTimeout(() => setMessageOption(''), 5000);
+
             setOptions(prevOptions => prevOptions.filter(option => option.id !== optionId));
+            return () => clearTimeout(timeoutId);
         } catch (error) {
             console.error('Failed to delete option:', error);
             setMessageOption('Suppression a échoué : ' + error);
             setIsErrorOption(true);
             setShowConfirmOption(false);
+            const timeoutId = setTimeout(() => setMessageOption(''), 5000);
+            return () => clearTimeout(timeoutId);
         }
     };
 
@@ -221,13 +276,14 @@ const Vote: React.FC<VoteProps> = ({ vote }) => {
                             />
                             <button
                                 className='saveOptionButton'
-                                onClick={() => handleUpdateOptions(option.id, option.label)}
+                                onClick={() => { handleUpdateOptions(option.id, option.label); }}
                             >
                                 Enregistrer
                             </button>
                             <button
                                 className='saveOptionButton'
                                 onClick={() => {
+                                    setIsErrorOption(true);
                                     setShowConfirmOption(true);
                                     setOptionsLab(option.label ?? '');
                                 }}
@@ -236,11 +292,34 @@ const Vote: React.FC<VoteProps> = ({ vote }) => {
                             </button>
                         </li>
                     ))}
+                    <button onClick={handleCreateOptionClick}>Ajouter</button>
+                    {isCreatingOption && (
+                        <form onSubmit={handleCreateOptionSubmit}>
+                            <label>
+                                Option Label:
+                                <input
+                                    type="text"
+                                    value={newOptionLabel}
+                                    onChange={(e) => setNewOptionLabel(e.target.value)}
+                                    required
+                                />
+                            </label>
+                            <button type="submit">Create</button>
+                            <button type="button" onClick={handleCloseCreateOption}>
+                                Close
+                            </button>
+                        </form>
+                    )}
                     {showConfirmOption && (
                         <div>
                             <p>Etes vous sur de supprimer l'option "{optionsLab}" ?</p>
                             <button onClick={() => handleDeleteOptions(options.find(opt => opt.label === optionsLab)?.id)}>Oui</button>
                             <button onClick={() => setShowConfirmOption(false)}>Non</button>
+                        </div>
+                    )}
+                    {messageOption && (
+                        <div style={{ color: isErrorOption ? 'red' : 'green' }}>
+                            {messageOption}
                         </div>
                     )}
 
@@ -279,11 +358,14 @@ const Vote: React.FC<VoteProps> = ({ vote }) => {
             <p>Décision : {vote.votingMethod}</p>
             <p>Status : {vote.status}</p>
             {options && options.length > 0 && (
-                <ul>Options :
-                    {options.map((option) => (
-                        <li className='vote-options' key={option.id}>{option.label}</li>
-                    ))}
-                </ul>
+                <>
+                    <ul>Options:
+                        {options.map((option) => (
+                            <li className='vote-options' key={option.id}>{option.label} - Votes: {option.votes}</li>
+                        ))}
+                    </ul>
+                    <p>Total Votes: {options.reduce((acc, option) => acc + (option.votes ? option.votes : 0), 0)}</p>
+                </>
             )}
             <button onClick={() => setIsEditing(true)}>Update Vote</button>
             <button onClick={() => setIsEditingOptions(true)}>Update Options</button>
