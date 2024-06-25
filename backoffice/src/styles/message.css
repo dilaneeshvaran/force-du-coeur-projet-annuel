@@ -1,0 +1,114 @@
+
+
+.msg-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.btn-reply{
+    background-color: #007f22;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    
+}
+
+
+
+.msg-options button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.msg-options button:hover {
+  background-color: #0056b3;
+}
+
+.msgReplyForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.msgReplyForm label {
+  display: flex;
+  flex-direction: column;
+}
+
+.msgReplyForm input, .msgReplyForm textarea {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.msgReplyForm button {
+  padding: 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-close:hover {
+  background-color: #525252;
+}
+.btn-send:hover {
+    background-color: #00490b;
+  }
+
+.message-box {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px; 
+  padding: 20px;    
+  margin-bottom: 20px; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.confirmation-message {
+    background-color: #dff0d8; 
+    color: #3c763d; 
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #d6e9c6;
+    text-align: center;
+}
+.message-box p {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin-bottom: 10px; 
+  }
+@media (max-width: 600px) {
+    .message-box {
+      padding: 15px; 
+    }
+  }
+
+  .btn-close{
+    background-color: #939393;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+.btn-send{
+    background-color: #007f22;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}

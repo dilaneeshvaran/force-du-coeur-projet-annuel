@@ -7,13 +7,14 @@ const messageValidation = joi.object ({
   type: joi.string().valid('sent', 'received').optional(),
   fileAttachment: joi.string().uri().optional(),
   createdAt: joi.date().optional(),
-  senderMail: joi.number().optional(),
-  receiverMail: joi.number().optional(),
+  senderMail: joi.string().optional(),
+  receiverMail: joi.string().optional(),
   userId: joi.number().optional(),
   fullName: joi.string().optional(),
   email: joi.string().email().optional(),
   replied: joi.boolean().optional(),
   replyAdminId: joi.number().optional(),
+  concernedMsgId: joi.number().optional(),
 });
 
 const validateMessage = (data: any) => {

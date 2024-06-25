@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMessage = exports.updateMessage = exports.getMessageById = exports.getAllMessages = exports.createMessage = void 0;
+exports.deleteMessage = exports.updateMessage = exports.getMessageById = exports.getAllMessages = exports.createMessage = exports.isMessageReplied = void 0;
 const validation_1 = require("../validation");
 const models_1 = require("../models");
 const middlewares_1 = require("../middlewares");
@@ -20,7 +20,7 @@ const createMessage = (req, res, fileAttachment) => __awaiter(void 0, void 0, vo
         return res.status(400).json({ message: error.details[0].message });
     }
     try {
-        const { userId, replyAdminId, fullName, email, createdAt, senderMail, receiverMail, subject, message, type, fileAttachment, replied } = value;
+        const { concernedMsgId, userId, replyAdminId, fullName, email, createdAt, senderMail, receiverMail, subject, message, type, fileAttachment, replied } = value;
         if (!email) {
             return res.status(400).json({ message: "email champ ne doit être vide" });
         }
@@ -36,7 +36,8 @@ const createMessage = (req, res, fileAttachment) => __awaiter(void 0, void 0, vo
             createdAt,
             senderMail,
             receiverMail,
-            replied
+            replied,
+            concernedMsgId
         });
         return res.status(201).json(newMessage);
     }
@@ -46,9 +47,38 @@ const createMessage = (req, res, fileAttachment) => __awaiter(void 0, void 0, vo
     }
 });
 exports.createMessage = createMessage;
+const isMessageReplied = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const messageId = req.params.id;
+        const message = yield models_1.Message.findByPk(messageId);
+        if (message !== null) {
+            message.replied = true;
+            yield message.save();
+            res.status(200).json(message);
+        }
+        else {
+            res.status(404).json({ message: "Message non retrouvé" });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur lors de la mise à jour du message" });
+    }
+});
+exports.isMessageReplied = isMessageReplied;
 const getAllMessages = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const messages = yield models_1.Message.findAll();
+        const { type, replied } = req.query;
+        let queryObj = {};
+        if (type) {
+            queryObj['type'] = type;
+        }
+        if (replied) {
+            queryObj['replied'] = replied === 'true';
+        }
+        const messages = yield models_1.Message.findAll({
+            where: queryObj,
+        });
         return res.status(200).json(messages);
     }
     catch (error) {
@@ -74,16 +104,22 @@ const getMessageById = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getMessageById = getMessageById;
-const updateMessage = (req, res, fileAttachment) => __awaiter(void 0, void 0, void 0, function* () {
+const updateMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const messageId = req.params.id;
-        const { subject, message, type } = req.body;
+        const { subject, message, type, replied, concernedMsgId } = req.body;
         const existingMessage = yield models_1.Message.findByPk(messageId);
         if (existingMessage !== null) {
-            existingMessage.subject = subject;
-            existingMessage.message = message;
-            existingMessage.type = type;
-            existingMessage.fileAttachment = fileAttachment;
+            if (subject !== undefined)
+                existingMessage.subject = subject;
+            if (message !== undefined)
+                existingMessage.message = message;
+            if (type !== undefined)
+                existingMessage.type = type;
+            if (replied !== undefined)
+                existingMessage.replied = replied;
+            if (concernedMsgId !== undefined)
+                existingMessage.concernedMsgId = concernedMsgId;
             yield existingMessage.save();
             res.status(200).json(existingMessage);
         }

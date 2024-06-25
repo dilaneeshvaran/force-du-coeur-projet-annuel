@@ -8,3 +8,5 @@ exports.router.get('/', controllers_1.getAllMessages);
 exports.router.post('/', controllers_1.createMessage);
 exports.router.get('/:id', controllers_1.getMessageById);
 exports.router.delete('/:id', controllers_1.deleteMessage);
+exports.router.get('/:id/isReplied', controllers_1.isMessageReplied);
+exports.router.put('/:id', controllers_1.updateMessage);

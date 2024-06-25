@@ -1,78 +1,207 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import emailjs from "@emailjs/browser";
 import AuthCheck from '../components/AuthCheck';
+import '../styles/message.css';
 
-function Messages() {
-    const [tab, setTab] = useState('send');
-    const [subject, setSubject] = useState('');
-    const [body, setBody] = useState('');
-    const [file, setFile] = useState<File | null>(null);
+interface Message {
+    id: number;
+    userId: number;
+    fullName: string;
+    email: string;
+    subject: string;
+    message: string;
+    type: "received" | "sent";
+    createdAt: string;
+    senderMail: string;
+    receiverMail: string;
+    replyAdminId: number;
+    replied: boolean;
+}
+
+const Messages: React.FC = () => {
+    const [tab, setTab] = useState('received');
+    const [messages, setMessages] = useState<Message[]>([]);
     const [receiver, setReceiver] = useState('');
-    const [group, setGroup] = useState('');
+    const [subject, setSubject] = useState('');
+    const [message, setMessage] = useState('');
+    const [selectedMessageId, setSelectedMessageId] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const userId = localStorage.getItem('userId');
+    const [confirmationMessage, setConfirmationMessage] = useState('');
 
-    const apiAdress = 'http://localhost:8088/messages';
+    useEffect(() => {
+        emailjs.init("y8pOzkgAPd8PgXyKt");
+        fetchMessages();
+    }, [tab]);
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files[0]) {
-            setFile(event.target.files[0]);
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const serviceId = "service_7z0c25j";
+        const templateId = "template_xxv2hnr";
+        try {
+            setLoading(true);
+            await emailjs.send(serviceId, templateId, {
+                name: messages.find(message => message.id === selectedMessageId)?.fullName,
+                recipient: receiver,
+                subject: subject,
+                message: message
+            });
+
+            await fetch(`http://localhost:8088/messages/${selectedMessageId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ replied: true })
+            });
+
+            await fetch('http://localhost:8088/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fullName: messages.find(message => message.id === selectedMessageId)?.fullName,
+                    email: messages.find(message => message.id === selectedMessageId)?.email,
+                    createdAt: new Date().toISOString(),
+                    replyAdminId: userId,
+                    type: 'sent',
+                    replied: false,
+                    subject: subject,
+                    message: message,
+                    receiverMail: receiver,
+                    concernedMsgId: selectedMessageId
+                })
+            });
+
+            setConfirmationMessage("Mail déposé.");
+            setTimeout(() => setConfirmationMessage(''), 5000);
+            setReceiver('');
+            setSubject('');
+            setMessage('');
+            setTab('replied');
+            fetchMessages();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        // use api
-        const apiAddress = file ? 'http://localhost:8088/documents' : 'http://localhost:8088/messages';
-        console.log({ subject, body, file, receiver, group, apiAddress });
+    const apiAddress = 'http://localhost:8088/messages';
+
+    const fetchMessages = async () => {
+        let queryParams = '';
+        switch (tab) {
+            case 'received':
+                queryParams = `type=received&replied=false`;
+                break;
+            case 'sent':
+                queryParams = `type=sent`;
+                break;
+            case 'replied':
+                queryParams = `replied=true`;
+                break;
+            default:
+                break;
+        }
+
+        const response = await fetch(`${apiAddress}?${queryParams}`);
+        const data = await response.json();
+        setMessages(data);
     };
 
     return (
         <div className="contentBox">
-            <div>
-                <button onClick={() => setTab('send')}>Send</button>
-                <button onClick={() => setTab('sent')}>Sent</button>
-                <button onClick={() => setTab('received')}>Received</button>
+            <div className='msg-options'>
+                <button onClick={() => setTab('sent')} style={{ backgroundColor: tab === "sent" ? 'gray' : ' #007bff' }}>Sent</button>
+                <button onClick={() => setTab('received')} style={{ backgroundColor: tab === "received" ? 'gray' : ' #007bff' }}>Received</button>
+                <button onClick={() => setTab('replied')} style={{ backgroundColor: tab === "replied" ? 'gray' : ' #007bff' }}>Replied</button>
             </div>
-            {tab === 'send' && (
-                <form onSubmit={handleSubmit}>
+            {tab === 'reply' && (
+                <form className='msgReplyForm' onSubmit={handleSubmit}>
                     <label>
                         Receiver:
-                        <input type="email" value={receiver} onChange={e => setReceiver(e.target.value)} disabled={group !== ""} />
-                    </label>
-                    <label>
-                        Group:
-                        <select value={group} onChange={e => setGroup(e.target.value)}>
-                            <option value="">Select group</option>
-                            <option value="members">Members</option>
-                            <option value="admins">Admins</option>
-                            <option value="everyone">Everyone</option>
-                            <option value="donators">Donators</option>
-                            <option value="presidents">Presidents</option>
-                        </select>
+                        <input
+                            type="email"
+                            value={receiver}
+                            onChange={e => setReceiver(e.target.value)}
+                            required
+                        />
                     </label>
                     <label>
                         Subject:
-                        <input type="text" value={subject} onChange={e => setSubject(e.target.value)} />
+                        <input
+                            type="text"
+                            value={subject}
+                            onChange={e => setSubject(e.target.value)}
+                            required
+                        />
                     </label>
                     <label>
-                        Body:
-                        <textarea value={body} onChange={e => setBody(e.target.value)} />
+                        Message:
+                        <textarea
+                            value={message}
+                            onChange={e => setMessage(e.target.value)}
+                            required
+                        />
                     </label>
-                    <label>
-                        Attach document:
-                        <input type="file" accept=".txt,.pdf,image/*" onChange={handleFileChange} />
-                    </label>
-                    <button type="submit">Send</button>
+                    <button className='btn-send' type="submit" disabled={loading}>{loading ? 'Envoie en cours...' : 'Envoyer'}</button>
+                    <button className='btn-close' onClick={() => setTab('received')}>Fermer</button>
                 </form>
             )}
+            {confirmationMessage && <div className="confirmation-message">{confirmationMessage}</div>}
+
             {tab === 'sent' && (
-                <div>
-                    {/*call api*/}
-                    <p>No messages sent yet.</p>
+                <div >
+                    {messages.length > 0 ? (
+                        messages.map((message) => (
+                            <div className='message-box' key={message.id}>
+                                <p>Nom et Prénom Destinaire : {message.fullName}</p>
+                                <p>Email Destinaire : {message.email}</p>
+                                <p>Objet : {message.subject}</p>
+                                <p>Message : {message.message}</p>
+                                <p> Message Envoyé le : {message.createdAt}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No messages sent yet.</p>
+                    )}
                 </div>
             )}
             {tab === 'received' && (
                 <div>
-                    {/*call api*/}
-                    <p>No messages received yet.</p>
+                    {messages.length > 0 ? (
+                        messages.map((message) => (
+                            <div className='message-box' key={message.id}>
+                                <p>Nom et Prénom Destinaire : {message.fullName}</p>
+                                <p>Email Destinaire : {message.email}</p>
+                                <p>Objet : {message.subject}</p>
+                                <p>Message : {message.message}</p>
+                                <p> Message Envoyé le : {message.createdAt}</p>
+                                <button className='btn-reply' onClick={() => { setTab('reply'); setSelectedMessageId(message.id); setReceiver(message.email); }}>Reply</button>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No messages received yet.</p>
+                    )}
+                </div>
+            )}
+            {tab === 'replied' && (
+                <div>
+                    {messages.length > 0 ? (
+                        messages.map((message) => (
+                            <div className='message-box' key={message.id}>
+                                <p>Nom et Prénom Destinaire : {message.fullName}</p>
+                                <p>Email Destinaire : {message.email}</p>
+                                <p>Objet : {message.subject}</p>
+                                <p>Message : {message.message}</p>
+                                <p> Message Envoyé le : {message.createdAt}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No messages replied to yet.</p>
+                    )}
                 </div>
             )}
         </div>

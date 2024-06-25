@@ -47,11 +47,11 @@ Message.init({
         defaultValue: sequelize_1.DataTypes.NOW,
     },
     senderMail: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
     receiverMail: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
     replyAdminId: {
@@ -61,7 +61,10 @@ Message.init({
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: false
-    }
+    }, concernedMsgId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true,
+    },
 }, {
     sequelize: services_1.sequelize,
     modelName: 'Message',

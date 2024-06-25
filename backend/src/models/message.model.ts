@@ -12,10 +12,11 @@ export class Message extends Model {
   public type?: 'sent' | 'received';
   public fileAttachment?: string;
   public createdAt?: Date;
-  public senderMail?: number;
-  public receiverMail?: number;
+  public senderMail?: string;
+  public receiverMail?: string;
   public replyAdminId?: number;
   public replied?: boolean;
+  public concernedMsgId?: number;
 }
 
 Message.init({
@@ -58,11 +59,11 @@ Message.init({
     defaultValue: DataTypes.NOW,
   },
   senderMail: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   receiverMail: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   replyAdminId: {
@@ -72,7 +73,10 @@ Message.init({
     type: DataTypes.BOOLEAN,
     allowNull: true,
     defaultValue: false
-  }
+  },concernedMsgId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
 }, {
   sequelize,
   modelName: 'Message',

@@ -11,7 +11,7 @@ const createMessage = async (req: Request, res: Response, fileAttachment: any) =
   }
   
   try {
-    const {userId,replyAdminId,fullName,email,createdAt,senderMail,receiverMail, subject, message, type,fileAttachment,replied } = value;
+    const {concernedMsgId,userId,replyAdminId,fullName,email,createdAt,senderMail,receiverMail, subject, message, type,fileAttachment,replied } = value;
     
     if (!email) {
       return res.status(400).json({ message: "email champ ne doit être vide"});
@@ -29,7 +29,8 @@ const createMessage = async (req: Request, res: Response, fileAttachment: any) =
       createdAt,
       senderMail,
       receiverMail,
-      replied
+      replied,
+      concernedMsgId
     });
     return res.status(201).json(newMessage);
   } catch (error) {
@@ -38,9 +39,39 @@ const createMessage = async (req: Request, res: Response, fileAttachment: any) =
   }
 }
 
+const isMessageReplied = async (req: Request, res: Response) => {
+  try {
+    const messageId = req.params.id;
+    const message = await Message.findByPk(messageId);
+    if (message !== null) {
+      message.replied = true;
+      await message.save();
+      res.status(200).json(message);
+    } else {
+      res.status(404).json({ message: "Message non retrouvé"});
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erreur lors de la mise à jour du message"});
+  }
+}
+
 const getAllMessages = async (req: Request, res: Response) => {
   try {
-    const messages = await Message.findAll();
+    const { type, replied } = req.query;
+
+    let queryObj :any = {};
+    if (type) {
+      queryObj['type'] = type;
+    }
+    if (replied) {
+      queryObj['replied'] = replied === 'true'; 
+    }
+
+    const messages = await Message.findAll({
+      where: queryObj,
+    });
+
     return res.status(200).json(messages);
   } catch (error) {
     console.error(error);
@@ -63,25 +94,27 @@ const getMessageById = async (req: Request, res: Response) => {
   }
 }
 
-const updateMessage = async (req: Request, res: Response, fileAttachment: any) => {
+const updateMessage = async (req: Request, res: Response) => {
   try {
     const messageId = req.params.id;
-    const { subject, message, type } = req.body;
+    const { subject, message, type, replied,concernedMsgId } = req.body;
 
     const existingMessage = await Message.findByPk(messageId);
     if (existingMessage !== null) {
-      existingMessage.subject = subject;
-      existingMessage.message = message;
-      existingMessage.type = type;
-      existingMessage.fileAttachment = fileAttachment; 
+      if (subject !== undefined) existingMessage.subject = subject;
+      if (message !== undefined) existingMessage.message = message;
+      if (type !== undefined) existingMessage.type = type;
+      if (replied !== undefined) existingMessage.replied = replied;
+      if (concernedMsgId !== undefined) existingMessage.concernedMsgId = concernedMsgId;
+
       await existingMessage.save();
       res.status(200).json(existingMessage);
     } else {
-      res.status(404).json({ message: "Message non retrouvé"});
+      res.status(404).json({ message: "Message non retrouvé" });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Erreur lors de la mise à jour du message"});
+    res.status(500).json({ message: "Erreur lors de la mise à jour du message" });
   }
 }
 
@@ -102,4 +135,4 @@ const deleteMessage = async (req: Request, res: Response) => {
   }
 }
 
-export { createMessage, getAllMessages, getMessageById, updateMessage, deleteMessage };
+export {isMessageReplied, createMessage, getAllMessages, getMessageById, updateMessage, deleteMessage };
