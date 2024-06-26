@@ -46,7 +46,6 @@ function MonAssociation() {
       .then(response => {
         if (!response.ok) {
           console.log('No options found for this voteId');
-          throw new Error('No options found for this voteId');
         }
         return response.json();
       })
