@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import { validateDocument } from '../validation';
 import { Document } from '../models';
 import { logger } from '../middlewares';
+import { Op, or } from 'sequelize';
 
 
 const createDocument = async (req: Request, res: Response) => {
@@ -97,7 +98,14 @@ const getDocumentByUserId = async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
     console.log("userId", userId);
-    const documents = await Document.findAll({ where: { receiverId: userId }});
+    const documents = await Document.findAll({
+      where: {
+        [Op.or]: [
+          { receiverId: userId },
+          { receiverId: null }
+        ]
+      }
+    });
     console.log("documents", documents);
     if (!documents.length) {
       return res.status(404).json({ message: 'No documents found for this user.' });

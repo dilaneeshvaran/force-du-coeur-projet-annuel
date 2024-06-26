@@ -8,6 +8,6 @@ export const router = Router();
 
 router.post('/', createOption); 
 router.get('/', getAllOptions);
+router.get('/:voteId', getOptionsByVoteId);
 router.put('/:id', updateOption);
 router.delete('/:id', deleteOption);
-router.get('/:voteId', getOptionsByVoteId);

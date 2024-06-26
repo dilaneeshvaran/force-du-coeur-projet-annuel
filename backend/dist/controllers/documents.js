@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteDocument = exports.updateDocument = exports.getDocumentById = exports.getAllDocuments = exports.createDocument = exports.getDocumentByUserId = void 0;
 const validation_1 = require("../validation");
 const models_1 = require("../models");
+const sequelize_1 = require("sequelize");
 const createDocument = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateDocument)(req.body);
     if (error) {
@@ -101,7 +102,14 @@ const getDocumentByUserId = (req, res) => __awaiter(void 0, void 0, void 0, func
     try {
         const userId = req.params.userId;
         console.log("userId", userId);
-        const documents = yield models_1.Document.findAll({ where: { receiverId: userId } });
+        const documents = yield models_1.Document.findAll({
+            where: {
+                [sequelize_1.Op.or]: [
+                    { receiverId: userId },
+                    { receiverId: null }
+                ]
+            }
+        });
         console.log("documents", documents);
         if (!documents.length) {
             return res.status(404).json({ message: 'No documents found for this user.' });
