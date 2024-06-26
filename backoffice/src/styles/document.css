@@ -1,0 +1,128 @@
+
+.container-doc {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.btns-doc {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.btns-doc button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btns-doc button:hover {
+    background-color: #0056b3;
+}
+
+.doc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.doc-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: #555;
+}
+
+.doc-form input[type="text"],
+.doc-form select,
+.doc-form input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.doc-form input[type="text"]:focus,
+.doc-form select:focus,
+.doc-form input[type="file"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.docSumbit {
+    padding: 12px 20px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    align-self: center;
+    transition: background-color 0.3s ease;
+}
+
+.docSumbit:hover {
+    background-color: #218838;
+}
+
+.sent-docs {
+    margin-top: 20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sent-docs ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sent-docs li {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+}
+
+.sent-docs li strong {
+    color: #555;
+}
+
+.docDownload {
+    padding: 8px 15px;
+    background-color: #ffc107;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.docDownload:hover {
+    background-color: #e0a800;
+}
+
+.message {
+    text-align: center;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    margin-top: 20px;
+    color: #333;
+}

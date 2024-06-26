@@ -40,8 +40,7 @@ TODO
 TODO
 //add search for members
 //task manage filter/search+real api
-//ressources>inventory management/used+real api
-//clean mesages+real api(doc/message)
+//create document
 //alerts with mail alert+ clean up
 --------------------------------------BACKEND--------------------------------------------------
 TODO

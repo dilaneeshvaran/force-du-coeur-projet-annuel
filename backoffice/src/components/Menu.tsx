@@ -11,6 +11,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import SavingsIcon from '@mui/icons-material/Savings';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import SpeedIcon from '@mui/icons-material/Speed';
+import TopicIcon from '@mui/icons-material/Topic';
 import '../styles/logout.css';
 import { RiShutDownLine } from "react-icons/ri";
 
@@ -117,8 +118,8 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
                             <SavingsIcon />Finance
                         </NavLink>}
 
-                        {<NavLink className={`navbar-item ${location.pathname === '/inventory' ? 'is-active' : ''}`} to="/inventory">
-                            <InventoryIcon />Inventory
+                        {<NavLink className={`navbar-item ${location.pathname === '/documentManager' ? 'is-active' : ''}`} to="/documentManager">
+                            <TopicIcon />Documents
                         </NavLink>}
                         {<NavLink className={`navbar-item ${location.pathname === '/message' ? 'is-active' : ''}`} to="/message">
                             <MailOutlineIcon /> Messages

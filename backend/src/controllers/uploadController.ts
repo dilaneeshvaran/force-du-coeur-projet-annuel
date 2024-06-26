@@ -9,8 +9,8 @@ export async function uploadDocument(req: Request, res: Response) {
         res.status(400).json({ error: 'No file was attached to the request.' });
         return;
     }
-    if (!senderId || !receiverId) {
-        res.status(400).json({ error: 'userId or receiverId is missing.' });
+    if (!senderId) { 
+        res.status(400).json({ error: 'senderId is missing.' });
         return;
     }
     const file = req.file.path;
@@ -19,7 +19,7 @@ export async function uploadDocument(req: Request, res: Response) {
         description,
         file,
         senderId: senderId,
-        receiverId: receiverId, // changed from userId to receiverId
+        receiverId: receiverId,
     });
 
     res.json(newDocument);

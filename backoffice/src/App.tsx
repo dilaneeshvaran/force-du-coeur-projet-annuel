@@ -11,6 +11,7 @@ import Settings from './pages/settings';
 import Alerts from './pages/alert';
 import Messages from './pages/message';
 import BackofficeHome from './pages/backofficeHome';
+import DocumentManager from './pages/documentManager';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/alert" element={<Alerts />} />
         <Route path="/message" element={<Messages />} />
         <Route path="/backofficeHome" element={<BackofficeHome />} />
+        <Route path="/documentManager" element={<DocumentManager />} />
       </Routes>
     </BrowserRouter>
   )

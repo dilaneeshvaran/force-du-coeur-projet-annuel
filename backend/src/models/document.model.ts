@@ -51,7 +51,7 @@ Document.init({
   },
   receiverId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: User,
       key: 'id'

@@ -44,7 +44,7 @@ Document.init({
     },
     receiverId: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: _1.User,
             key: 'id'
