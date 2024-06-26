@@ -88,7 +88,7 @@ const Event: React.FC<EventProps> = ({ event }) => {
                 />
                 Lieu (Address)<input value={updatedEvent.location} onChange={e => setUpdatedEvent({ ...updatedEvent, location: e.target.value })} />
                 Places Dispo<input value={updatedEvent.availableSpots ? updatedEvent.availableSpots.toString() : ''} onChange={e => setUpdatedEvent({ ...updatedEvent, availableSpots: parseInt(e.target.value) })} />
-                Uniquement Les Membres ? (true/false)<input value={updatedEvent.membersOnly !== undefined ? updatedEvent.membersOnly.toString() : ''} onChange={e => setUpdatedEvent({ ...updatedEvent, membersOnly: e.target.value === 'true' })} />
+                Uniquement Les Membres ? <input type="checkbox" checked={updatedEvent.membersOnly} onChange={e => setUpdatedEvent({ ...updatedEvent, membersOnly: e.target.checked })} />
                 Quorum<input
                     value={updatedEvent.quota !== null ? updatedEvent.quota.toString() : ''}
                     onChange={e => setUpdatedEvent({ ...updatedEvent, quota: parseInt(e.target.value) || null })}
