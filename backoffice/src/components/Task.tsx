@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import authCheck from './AuthCheck';
+import React, { useState, useEffect } from 'react';
 
-type TaskProps = {
+export type TaskProps = {
     task: {
+        id?: number;
         title: string;
         description: string;
         deadline: Date;
         assignedTo: string;
         assignedDate: Date;
-        status: 'ongoing' | 'completed' | 'failed'; // Add status property
+        status: 'ongoing' | 'completed' | 'failed';
     };
     onUpdate: (updatedTask: TaskProps['task']) => void;
     onDelete: () => void;
@@ -17,6 +17,10 @@ type TaskProps = {
 function Task({ task, onUpdate, onDelete }: TaskProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [editedTask, setEditedTask] = useState(task);
+
+    useEffect(() => {
+        setEditedTask(task);
+    }, [task]);
 
     const handleUpdate = () => {
         onUpdate(editedTask);
@@ -43,9 +47,9 @@ function Task({ task, onUpdate, onDelete }: TaskProps) {
                 <>
                     <h2>{task.title}</h2>
                     <p>{task.description}</p>
-                    <p>Deadline: {task.deadline.toString()}</p>
+                    <p>Deadline: {task.deadline.toLocaleDateString()}</p>
                     <p>Assigned to: {task.assignedTo}</p>
-                    <p>Assigned date: {task.assignedDate.toString()}</p>
+                    <p>Assigned date: {task.assignedDate.toLocaleDateString()}</p>
                     <p>Status: {task.status}</p>
                     <button onClick={() => setIsEditing(true)}>Edit</button>
                     <button onClick={onDelete}>Delete</button>

@@ -35,21 +35,19 @@ TODO
 //équipes real data
 //mot de passe oublié
 //resultat votes + date invalide
-
+//div msg when logout
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
 //add search for members
 //task manage filter/search+real api
-//create document
 //alerts with mail alert+ clean up
+//div msg when logout
 --------------------------------------BACKEND--------------------------------------------------
 TODO
   //routes > authentification des tokens pour les routes, routes associées aux tables jointes
-  //services > gérer les envois d\'emails
-  //tests > tests en tous genres
- //participer : respect capacité evenement+gestion du quorum = nombre requis de participants pour que la réunion puisse se tenir
-  //manage members(ban/change role admin/member)
+ //participer : respect capacité+ quorum = nombre requis de participants pour que la réunion puisse se tenir
+   //conditions> events/votes enddate + results
+
   //Alerts && Rappels (automatique) : prévenir un prochain payment mensuel>critical events> low inventory levels, or overdue tasks.
-  //conditions> events/votes enddate + results
 --------------------------------------JAVA--------------------------------------------------
 ```
