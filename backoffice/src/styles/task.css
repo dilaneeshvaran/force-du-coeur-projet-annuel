@@ -1,0 +1,49 @@
+.task-container {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.task-container h2, .task-container p {
+    margin: 10px 0;
+}
+
+.task-container input, .task-container select {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.task-container button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.task-save-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.task-cancel-btn, .task-delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.task-edit-btn {
+    background-color: #ffc107;
+    color: white;
+}
+
+.task-container button:hover {
+    opacity: 0.8;
+}

@@ -1,0 +1,67 @@
+.create-task {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.create-task h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+.create-task input, .create-task select {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.task-create-btn, .task-cancel-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.task-create-btn:hover, .task-cancel-btn:hover {
+    opacity: 0.9;
+}
+
+.task-create-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.task-cancel-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.task-list {
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.task-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-item h3 {
+    margin-top: 0;
+}
+
+.input-task:focus, select:focus {
+    border-color: #4CAF50;
+}
+
