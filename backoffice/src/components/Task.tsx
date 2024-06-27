@@ -85,6 +85,7 @@ function Task({ task, onUpdate, onDelete }: TaskProps) {
                     <button className='task-delete-btn' onClick={onDelete}>Delete</button>
                 </>
             )}
+
         </div>
     );
 }

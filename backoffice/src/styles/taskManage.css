@@ -5,6 +5,7 @@
     max-width: 600px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 30rem;
 }
 
 .create-task h2 {
@@ -30,17 +31,15 @@
     font-weight: bold;
 }
 
-.task-create-btn:hover, .task-cancel-btn:hover {
-    opacity: 0.9;
-}
+
 
 .task-create-btn {
-    background-color: #4CAF50;
+    background-color: green;
     color: white;
 }
 
 .task-cancel-btn {
-    background-color: #f44336;
+    background-color: gray;
     color: white;
 }
 
@@ -62,6 +61,22 @@
 }
 
 .input-task:focus, select:focus {
-    border-color: #4CAF50;
+    border-color: #009d05;
 }
 
+.message-task {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.message-task.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.message-task.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

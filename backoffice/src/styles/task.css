@@ -5,6 +5,7 @@
     max-width: 600px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 30rem;
 }
 
 .task-container h2, .task-container p {
@@ -29,21 +30,23 @@
     font-weight: bold;
 }
 
-.task-save-btn {
-    background-color: #4CAF50;
+.task-save-btn-create {
     color: white;
+    background-color: green;
+}
+
+.task-save-btn {
+    color: white;
+    background-color: #0056cf;
 }
 
 .task-cancel-btn, .task-delete-btn {
-    background-color: #f44336;
+    background-color: #c40d00;
     color: white;
 }
 
 .task-edit-btn {
-    background-color: #ffc107;
+    background-color: #0056cf;
     color: white;
 }
 
-.task-container button:hover {
-    opacity: 0.8;
-}
