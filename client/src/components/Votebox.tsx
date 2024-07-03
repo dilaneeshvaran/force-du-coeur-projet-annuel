@@ -33,6 +33,7 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
     const userId = localStorage.getItem('userId');
     const [userVote, setUserVote] = useState<Option | null>(null);
     const [showConfirm, setShowConfirm] = useState(false);
+    const [winner, setWinner] = useState<Option | null>(null);
 
     const handleVote = () => {
         if (selectedOption) {
@@ -62,6 +63,20 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
             })
             .catch(error => console.error('Error:', error));
     }, [userId, vote.id]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8088/user_votes/winner/${vote.id}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.winnerOptionLabel) {
+                    const winnerOption = options.find(option => option.label === data.winnerOptionLabel);
+                    setWinner(winnerOption ?? null);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+        , [vote.id]);
+
 
     const updateOptionVotes = (optionId: string) => {
         fetch(`http://localhost:8088/options/${optionId}`, {
@@ -162,7 +177,7 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
             {vote.status === 'closed' && (
                 <div className="votebox-result">
                     <h3>Result</h3>
-                    <p>{vote.result}</p>
+                    <p>{winner?.label}</p>
                 </div>
             )}
         </div>

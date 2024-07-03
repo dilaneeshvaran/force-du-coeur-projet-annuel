@@ -48,6 +48,8 @@ const getOptionById = async (req: Request, res: Response) => {
   }
 }
 
+
+
 const updateOption = async (req: Request, res: Response) => {
   try {
     const optionId = req.params.id;

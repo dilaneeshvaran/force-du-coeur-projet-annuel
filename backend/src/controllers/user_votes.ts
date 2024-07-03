@@ -46,6 +46,7 @@ const getAllVotesByUserId = async (req: Request, res: Response) => {
   }
 }
 
+
 const getAllUserVotes = async (req: Request, res: Response) => {
   try {
     const userVotes = await UserVote.findAll();
@@ -53,6 +54,39 @@ const getAllUserVotes = async (req: Request, res: Response) => {
   } catch (error: any) {
     console.error("Failed to retrieve user votes:", error);
     res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+}
+
+const getWinnerByVoteId = async (req: Request, res: Response) => {
+  try {
+    const voteId = req.params.voteId;
+    const userVotes = await UserVote.findAll({
+      where: { voteId }
+    });
+
+    if (userVotes.length === 0) {
+      return res.status(404).json({ message: "No votes found for this vote ID." });
+    }
+
+    const voteCount: Record<string, number> = {};
+    userVotes.forEach(vote => {
+      voteCount[vote.optionId] = (voteCount[vote.optionId] || 0) + 1;
+    });
+
+    const winnerOptionId = Object.keys(voteCount).reduce((a, b) => voteCount[a] > voteCount[b] ? a : b);
+
+    const winnerOption = await Option.findOne({
+      where: { id: winnerOptionId }
+    });
+
+    if (!winnerOption) {
+      return res.status(404).json({ message: "Winner option details not found." });
+    }
+
+    return res.status(200).json({ winnerOptionLabel: winnerOption.label });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error occurred while trying to calculate the winner." });
   }
 }
 
@@ -172,4 +206,4 @@ const getUserOptionByVoteId = async (req: Request, res: Response) => {
   }
 }
 
-export {getUserOptionByVoteId,hasVoted,getAllVotesByUserId,updateUserVote,createUserVote, getAllUserVotes, getUserVoteById, deleteUserVote, getUserVotesByUserId};
+export {getWinnerByVoteId,getUserOptionByVoteId,hasVoted,getAllVotesByUserId,updateUserVote,createUserVote, getAllUserVotes, getUserVoteById, deleteUserVote, getUserVotesByUserId};
