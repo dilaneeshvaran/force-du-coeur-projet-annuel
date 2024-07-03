@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import '../styles/contact.css'
+import { FaFacebookF } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa6";
+import { FaXTwitter } from "react-icons/fa6";
+
 
 function Contact() {
   const [fullName, setfullName] = useState("");
@@ -52,17 +56,20 @@ function Contact() {
           </form>
           {messageStatus && <div className={isMessageSent ? "messageStatus success" : "messageStatus failure"}>{messageStatus}</div>}
         </div>
-        <div className="card">
+        <div className="socialmedia-box">
           <p>
             <h3>Suivez la Force du Coeur sur les Réseau Sociaux</h3><br></br>
-            Facebook : <a href="https://www.facebook.com/ForceDuCoeur">Force Du Coeur</a><br></br>
-            X : <a href="https://www.facebook.com/ForceDuCoeur">Force Du Coeur</a><br></br>
-            Instagram : <a href="https://www.instagram.com/forceducoeur/">@forceducoeur</a><br></br>
+            <a className='sm-link' href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel">
+              <FaFacebookF />
+            </a>
+            <a className='sm-link' href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel">
+              <FaInstagram />
+            </a>
+            <a className='sm-link' href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel">
+              <FaXTwitter />
+            </a>
           </p>
         </div>
-        <p>
-          email : fdc@gmail.com
-        </p>
       </div>
     </>
   )

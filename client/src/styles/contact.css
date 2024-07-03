@@ -54,3 +54,23 @@
 .contactForm button:hover {
   background-color: #a40000;
 }
+
+.socialmedia-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6rem;
+}
+
+.socialmedia-box a {
+  margin: 0 10px;
+}
+
+
+.sm-link{
+  color: black;
+}
+
+.sm-link:hover{
+  color: #a40000;
+}
