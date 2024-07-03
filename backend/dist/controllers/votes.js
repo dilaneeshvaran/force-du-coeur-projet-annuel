@@ -8,11 +8,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteVote = exports.updateVote = exports.getVoteById = exports.getAllVotes = exports.createVote = void 0;
 const validation_1 = require("../validation");
 const models_1 = require("../models");
 const middlewares_1 = require("../middlewares");
+const node_cron_1 = __importDefault(require("node-cron"));
+node_cron_1.default.schedule('0 * * * *', () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('Running a task every hour');
+    try {
+        const votesToUpdate = yield models_1.Vote.findAll({
+            where: {
+                endDate: {
+                    lt: new Date(), // 'lt' : "less than"
+                },
+                status: {
+                    ne: 'closed', // 'ne' : "not equal"
+                },
+            },
+        });
+        for (const vote of votesToUpdate) {
+            vote.status = 'closed';
+            yield vote.save();
+            console.log(`Vote avec  l'ID ${vote.id} est déja fermé`);
+        }
+        console.log(`Total de  ${votesToUpdate.length} ont été mis a jour`);
+    }
+    catch (error) {
+        console.error('erreur de la mise a jour du vote:', error);
+    }
+}));
 const createVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { error, value } = (0, validation_1.validateVote)(req.body);
     if (error) {

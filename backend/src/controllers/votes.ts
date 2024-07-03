@@ -2,6 +2,34 @@ import express, { Request, Response } from 'express';
 import { validateVote } from '../validation';
 import { Vote } from '../models';
 import { logger } from '../middlewares';
+import cron from 'node-cron'; 
+
+cron.schedule('0 * * * *', async () => {
+  console.log('Running a task every hour');
+
+  try {
+    const votesToUpdate = await Vote.findAll({
+      where: {
+        endDate: {
+          lt: new Date(), // 'lt' : "less than"
+        },
+        status: {
+          ne: 'closed', // 'ne' : "not equal"
+        },
+      },
+    });
+
+    for (const vote of votesToUpdate) {
+      vote.status = 'closed';
+      await vote.save();
+      console.log(`Vote avec  l'ID ${vote.id} est déja fermé`);
+    }
+
+    console.log(`Total de  ${votesToUpdate.length} ont été mis a jour`);
+  } catch (error) {
+    console.error('erreur de la mise a jour du vote:', error);
+  }
+});
 
 const createVote = async (req: Request, res: Response) => {
   const { error, value } = validateVote(req.body);
