@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import '../styles/menu.css'
-import fdcLogo from '../assets/fdc-logo.png'
+import '../styles/menu.css';
+import fdcLogo from '../assets/fdc-logo.png';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import InventoryIcon from '@mui/icons-material/Inventory';
 import SavingsIcon from '@mui/icons-material/Savings';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import SpeedIcon from '@mui/icons-material/Speed';
 import TopicIcon from '@mui/icons-material/Topic';
-import '../styles/logout.css';
 import { RiShutDownLine } from "react-icons/ri";
+import '../styles/logout.css';
 
 interface MenuProps {
     className?: string;
 }
-
 
 const Menu: React.FC<MenuProps> = ({ className }) => {
     const location = useLocation();
@@ -62,16 +60,16 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
 
                     setErrorMessage('');
                 } else {
-                    console.error('Failed to login');
-                    setErrorMessage('Email or password is incorrect');
+                    console.error('Login échoué');
+                    setErrorMessage('Email ou mot de passe incorrecte');
                 }
             } else {
                 console.error('Failed to login');
-                setErrorMessage('Email or password is incorrect');
+                setErrorMessage('Email ou mot de passe incorrecte');
             }
         } catch (error) {
             console.error('An error occurred:', error);
-            setErrorMessage('An error occurred. Please try again.');
+            setErrorMessage('Une erreur est survenue Réessayer.');
         }
     };
 
@@ -83,71 +81,59 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
     };
 
     return (
-        <nav
-            className={`navbar is-primary ${className}`}
-            role="navigation"
-            aria-label="main navigation"
-        >
-
+        <nav className={`navbar is-primary ${className}`} role="navigation" aria-label="main navigation">
             <div className="container">
                 <div className="logo">
-                    <a href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel" target="_blank">
+                    <a href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel" target="_blank" rel="noopener noreferrer">
                         <img src={fdcLogo} className="logofdc" alt="fdc logo" />
                     </a>
                 </div>
                 {isLoggedIn ? (
                     <>
-                        {
-                            <NavLink className={`navbar-item ${location.pathname === '/performance' ? 'is-active' : ''}`} to="/performance">
-                                <SpeedIcon />Performance
-                            </NavLink>}
-
-                        {<NavLink className={`navbar-item ${location.pathname === '/contentManager' ? 'is-active' : ''}`} to="/contentManager">
-                            <NewspaperIcon />Content Manage
-                        </NavLink>}
-
-                        {<NavLink className={`navbar-item ${location.pathname === '/userManagement' ? 'is-active' : ''}`} to="/userManagement">
+                        <NavLink className={`navbar-item ${location.pathname === '/performance' ? 'is-active' : ''}`} to="/performance">
+                            <SpeedIcon /> Performance
+                        </NavLink>
+                        <NavLink className={`navbar-item ${location.pathname === '/contentManager' ? 'is-active' : ''}`} to="/contentManager">
+                            <NewspaperIcon /> Content Manage
+                        </NavLink>
+                        <NavLink className={`navbar-item ${location.pathname === '/userManagement' ? 'is-active' : ''}`} to="/userManagement">
                             <Diversity1Icon /> Members
-                        </NavLink>}
-
-                        {<NavLink className={`navbar-item ${location.pathname === '/taskManage' ? 'is-active' : ''}`} to="/taskManage">
-                            <ChecklistRtlIcon />Tasks Manage
-                        </NavLink>}
-
-                        {<NavLink className={`navbar-item ${location.pathname === '/financeInformation' ? 'is-active' : ''}`} to="/financeInformation">
-                            <SavingsIcon />Finance
-                        </NavLink>}
-
-                        {<NavLink className={`navbar-item ${location.pathname === '/documentManager' ? 'is-active' : ''}`} to="/documentManager">
-                            <TopicIcon />Documents
-                        </NavLink>}
-                        {<NavLink className={`navbar-item ${location.pathname === '/message' ? 'is-active' : ''}`} to="/message">
+                        </NavLink>
+                        <NavLink className={`navbar-item ${location.pathname === '/taskManage' ? 'is-active' : ''}`} to="/taskManage">
+                            <ChecklistRtlIcon /> Tasks Manage
+                        </NavLink>
+                        <NavLink className={`navbar-item ${location.pathname === '/financeInformation' ? 'is-active' : ''}`} to="/financeInformation">
+                            <SavingsIcon /> Finance
+                        </NavLink>
+                        <NavLink className={`navbar-item ${location.pathname === '/documentManager' ? 'is-active' : ''}`} to="/documentManager">
+                            <TopicIcon /> Documents
+                        </NavLink>
+                        <NavLink className={`navbar-item ${location.pathname === '/message' ? 'is-active' : ''}`} to="/message">
                             <MailOutlineIcon /> Messages
-                        </NavLink>}
-
-                        {<NavLink className={`navbar-item ${location.pathname === '/settings' ? 'is-active' : ''}`} to="/settings">
-                            <VerifiedUserIcon />Settings
-                        </NavLink>}
-
-                        {<NavLink className={`navbar-item ${location.pathname === '/alert' ? 'is-active' : ''}`} to="/alert">
+                        </NavLink>
+                        <NavLink className={`navbar-item ${location.pathname === '/settings' ? 'is-active' : ''}`} to="/settings">
+                            <VerifiedUserIcon /> Settings
+                        </NavLink>
+                        <NavLink className={`navbar-item ${location.pathname === '/alert' ? 'is-active' : ''}`} to="/alert">
                             <CampaignIcon /> Alerts
-                        </NavLink>}
-                        {<NavLink className={`navbar-logout ${location.pathname === '/backofficeHome' ? 'is-active' : ''}`} to="/backofficeHome" onClick={handleLogout}>
+                        </NavLink>
+                        <NavLink className={`navbar-logout ${location.pathname === '/backofficeHome' ? 'is-active' : ''}`} to="/backofficeHome" onClick={handleLogout}>
                             <RiShutDownLine className="logout-logo" size={30} />
-                        </NavLink>}
+                        </NavLink>
+
                     </>
                 ) : (
-                    <form onSubmit={handleLogin}>
+                    <form className="login-form" onSubmit={handleLogin}>
                         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mot de passe" />
+                        <input className="input-login" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mot de passe" />
                         <button type="submit">Login</button>
                     </form>
-
                 )}
-                {errorMessage && <div className="error-message">{errorMessage}</div>}
 
             </div>
-        </nav >
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+        </nav>
     );
 };
 

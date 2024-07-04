@@ -34,15 +34,14 @@ TODO
 //Home screen add infos
 //équipes real data
 //mot de passe oublié
-//div msg when logout
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
 //add search for members
 //alerts with mail alert+ clean up
 //div msg when logout
 //content manage (filter finished and ongoing)
-//alerts if task is not success before deadline
-//alerts if new donation/new membership
+//alerts if task is not success before deadline/if new donation/new membership
+//alerts 
 //mot de passe oublié
 --------------------------------------BACKEND---------------------------------------------------
 TODO
