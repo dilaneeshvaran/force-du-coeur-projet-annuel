@@ -1,8 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
 import { User } from './user.model';
+import { Alert } from './alert.model';
 
-export class Donation extends Model {
+class Donation extends Model {
   public id!: number;
   public amount!: number;
   public donationDate!: Date;
@@ -27,11 +28,11 @@ Donation.init({
     type: DataTypes.DATE,
     allowNull: false
   },
-  fullname: { // New field
+  fullname: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  email: { // New field
+  email: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -44,7 +45,7 @@ Donation.init({
     allowNull: true,
     references: {
       model: User,
-      key: 'userId'
+      key: 'id'
     }
   }, 
   paymentMethod: {
@@ -59,3 +60,15 @@ Donation.init({
 });
 
 User.hasMany(Donation, { foreignKey: 'donatorId' });
+
+Donation.belongsTo(User, { foreignKey: 'donatorId' });
+
+Donation.addHook('afterCreate', async (donation: Donation) => {
+  await Alert.create({
+    label: 'Nouveau Don',
+    description: `Un don de ${donation.amount} euros a été fait par ${donation.fullname}, email :  (${donation.email}).`,
+    date: new Date()
+  });
+});
+
+export { Donation };

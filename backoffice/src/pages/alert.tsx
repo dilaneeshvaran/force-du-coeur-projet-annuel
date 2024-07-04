@@ -67,9 +67,21 @@ function Alerts() {
         setShowConfirm(null);
     };
 
-    const filteredAlerts = alerts.filter(alert => {
-        return filter === 'archived' ? alert.isArchived : !alert.isArchived;
-    });
+    const filteredAlerts = alerts
+        .filter(alert => (filter === 'archived' ? alert.isArchived : !alert.isArchived))
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    const formatDate = (dateString: string) => {
+        const options: Intl.DateTimeFormatOptions = {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        };
+        return new Date(dateString).toLocaleString('en-GB', options).replace(',', '');
+    };
 
     return (
         <div className="contentBox">
@@ -86,7 +98,7 @@ function Alerts() {
                     <div key={alert.id} className="alertBox">
                         <h3>{alert.label}</h3>
                         <p>{alert.description}</p>
-                        <p>{alert.date}</p>
+                        <p>{formatDate(alert.date)}</p>
                         <label className='archive-label'>
                             <input
                                 type="checkbox"

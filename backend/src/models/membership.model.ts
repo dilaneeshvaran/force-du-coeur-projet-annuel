@@ -1,8 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from './../services';
 import { User } from './user.model';
+import { Alert } from './alert.model';
 
-export class Membership extends Model {
+class Membership extends Model {
   public id!: number;
   public amount!: number;
   public paymentDate!: Date;
@@ -46,4 +47,17 @@ Membership.init({
 });
 
 User.hasMany(Membership, { foreignKey: 'userId' });
-Membership.belongsTo(User, { foreignKey: 'userId' }); 
+Membership.belongsTo(User, { foreignKey: 'userId' });
+
+Membership.addHook('afterCreate', async (membership: Membership) => {
+  const user = await User.findByPk(membership.userId);
+  if (user) {
+    await Alert.create({
+      label: 'Nouveau Membre',
+      description: `${user.firstname} ${user.lastname} (${user.email}) vient d'adhérer, avec un montant de ${membership.amount}.`,
+      date: new Date()
+    });
+  }
+});
+
+export { Membership };
