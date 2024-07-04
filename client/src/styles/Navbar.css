@@ -1,7 +1,7 @@
 .navbar {
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
-
 
 .parent-container {
   display: flex;
@@ -16,43 +16,41 @@
   margin-left: 4rem;
 }
 
-
-.logout-box{
+.logout-box {
   margin-left: auto;
   display: flex;
   align-items: center;
 }
 
 .navbar-item {
-    display: inline;
-    margin-right: 70px;
-    color:black;
+  display: inline;
+  margin-right: 70px;
+  color: black;
 }
 .navbar-item:hover {
-  color: #a40000;
-
+  color: #ff0000;
 }
 
 .navbar-item.is-active {
-  color: #a40000;
+  color: #ff0000;
 }
 
 .logo {
-    padding: 1.5em;
+  padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
-  }
-  .logofdc:hover {
-    filter: drop-shadow(0 0 2em #dddddd);
-  }
+}
+.logofdc:hover {
+  filter: drop-shadow(0 0 2em #ff5900);
+}
 
-  .logofdc {
-    max-height: 100px;
-    margin-right: 20px;
-  }
+.logofdc {
+  max-height: 100px;
+  margin-right: 20px;
+}
 
-  .sidebar{
-    display:flex;
-    float:right;
-    margin-top:50px;
-  }
+.sidebar {
+  display: flex;
+  float: right;
+  margin-top: 50px;
+}

@@ -1,70 +1,72 @@
 .account {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-    border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .account p {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-.account input[type="text"], .account input[type="email"], .account input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.account input[type="text"],
+.account input[type="email"],
+.account input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 .account button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #8d8d8d;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-left: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #8d8d8d;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 1rem;
 }
 
 .account button:hover {
-    background-color: #b30000;
+  background-color: #ff0000;
 }
 
 .confirmation-popup {
-    padding: 20px;
-    background-color: #6c6c6c;
-    color: white;
-    text-align: center;
-    border-radius: 4px;
-    margin-top: 20px;
+  padding: 20px;
+  background-color: #6c6c6c;
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  margin-top: 20px;
 }
 
 .account-info {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .info-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    background-color: #dadada;
-    padding: 1%;
-    border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  background-color: #dadada;
+  padding: 1%;
+  border-radius: 1rem;
 }
 
 .info-value {
-    font-size: 1.2em;
-    color: #8d0000;
-    margin-right: 10px;
+  font-size: 1.2em;
+  color: #ff0000;
+  margin-right: 10px;
 }
 
-.info-title{
-    font-size: 1.2em;
+.info-title {
+  font-size: 1.2em;
 }

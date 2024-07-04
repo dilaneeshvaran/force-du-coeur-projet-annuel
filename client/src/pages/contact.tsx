@@ -59,13 +59,13 @@ function Contact() {
         <div className="socialmedia-box">
           <p>
             <h3>Suivez la Force du Coeur sur les Réseau Sociaux</h3><br></br>
-            <a className='sm-link' href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel">
+            <a className='sm-link' href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel" target="_blank">
               <FaFacebookF />
             </a>
-            <a className='sm-link' href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel">
+            <a className='sm-link' href="https://www.instagram.com/forceducoeur.asso/" target="_blank">
               <FaInstagram />
             </a>
-            <a className='sm-link' href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel">
+            <a className='sm-link' href="https://github.com/dilaneeshvaran/force-du-coeur-projet-annuel" target="_blank">
               <FaXTwitter />
             </a>
           </p>

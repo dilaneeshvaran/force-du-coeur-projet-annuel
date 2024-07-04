@@ -3,87 +3,85 @@
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  top:2rem;
+  top: 2rem;
 }
 
-.contentBox{
-    height: 250px;
-    width: 320px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    margin-left: 100px;
-    align-items: center;
-
+.contentBox {
+  height: 250px;
+  width: 320px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+  align-items: center;
 }
 
-.buttonCB{
-    background-color: #a70000;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+.buttonCB {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
-.buttonCB2{
-    background-color: #a70000;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 11px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    margin-bottom: 5px;
+.buttonCB2 {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 11px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin-bottom: 5px;
 }
 
-.buttonCB:hover{
-    background-color: #5e0500;
+.buttonCB:hover {
+  background-color: #5e0500;
 }
 
-
-.buttonCB2:hover{
-    background-color: #5e0500;
+.buttonCB2:hover {
+  background-color: #5e0500;
 }
 
-.btnCB{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: auto;
+.btnCB {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
 }
 
-.btnCB2{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: auto;
+.btnCB2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
 }
 
 .ulCB {
-    display: inline-block;
+  display: inline-block;
   align-self: flex-start;
   background-color: #ffffff;
-  }
-
-  .btnContainer {
-    display: flex;
-    margin-top: auto;
-    bottom: 0;
 }
 
-.soutenirTitle{
-    font-weight: bold;
-    margin-top: 5rem;
+.btnContainer {
+  display: flex;
+  margin-top: auto;
+  bottom: 0;
+}
+
+.soutenirTitle {
+  font-weight: bold;
+  margin-top: 5rem;
 }
