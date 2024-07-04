@@ -1,4 +1,10 @@
-
+.manageContentStatus{
+  background-color: #ffffff;
+  padding: 20px; 
+  border-radius: 8px; 
+  display: flex;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
 
 .contentBox {
     background-color: #f8f9fa; 

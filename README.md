@@ -41,7 +41,6 @@ TODO
 //div msg when logout
 //content manage (filter finished and ongoing)
 //alerts if task is not success before deadline/if new donation/new membership
-//alerts 
 //mot de passe oublié
 --------------------------------------BACKEND---------------------------------------------------
 TODO

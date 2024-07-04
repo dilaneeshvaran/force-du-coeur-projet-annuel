@@ -17,7 +17,6 @@ function ContentManager() {
     const [isCreatingEvent, setIsCreatingEvent] = useState(false);
     const userId = localStorage.getItem('userId');
     const [newOptions, setNewOptions] = useState<Option[]>([]);
-
     const [newEvent, setNewEvent] = useState<Event>({
         date: new Date(),
         description: '',
@@ -28,7 +27,6 @@ function ContentManager() {
         membersOnly: false,
         quota: null
     });
-
     const [isCreatingVote, setIsCreatingVote] = useState(false);
     const [newVote, setNewVote] = useState<Vote>({
         title: '',
@@ -41,11 +39,9 @@ function ContentManager() {
         status: 'open',
         createdBy: parseInt(userId || '0', 10)
     });
-
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [confirmationMessage, setConfirmationMessage] = useState('');
-    const [selectedOption, setSelectedOption] = useState<'events' | 'votes' | 'surveys'>('events');
-
+    const [selectedOption, setSelectedOption] = useState<'events' | 'votes'>('events');
     const [inputErrors, setInputErrors] = useState({
         title: false,
         description: false,
@@ -53,8 +49,9 @@ function ContentManager() {
         location: false,
         availableSpots: false,
     });
+    const [eventFilter, setEventFilter] = useState<'ongoing' | 'finished'>('ongoing');
+    const [voteFilter, setVoteFilter] = useState<'open' | 'closed'>('open');
 
-    //fetch data
     useEffect(() => {
         fetch('http://localhost:8088/events')
             .then(response => response.json())
@@ -69,7 +66,6 @@ function ContentManager() {
             .catch(error => console.error('Error fetching votes:', error));
     }, []);
 
-    //validate the inputs for event creation
     function validateForm() {
         const errors = {
             title: !newEvent.title,
@@ -87,11 +83,11 @@ function ContentManager() {
         updatedOptions[index] = { ...updatedOptions[index], label: value };
         setNewOptions(updatedOptions);
     };
+
     const handleRemoveOption = (indexToRemove: number) => {
         setNewOptions(newOptions.filter((_, index) => index !== indexToRemove));
     };
 
-    //form submission for event creation
     function submitEvent(e: any) {
         e.preventDefault();
 
@@ -135,7 +131,6 @@ function ContentManager() {
     }
 
     async function createVote() {
-        //check for min options
         if (newOptions.length < 2) {
             setConfirmationMessage('Il faut ajouter minimum 2 options !');
             setShowConfirmation(true);
@@ -143,7 +138,6 @@ function ContentManager() {
             return;
         }
         try {
-            //vote creation
             const voteResponse = await fetch('http://localhost:8088/votes', {
                 method: 'POST',
                 headers: {
@@ -164,7 +158,6 @@ function ContentManager() {
 
             const voteId = voteData.id;
 
-            //create the options one by one for the vote
             for (const option of newOptions) {
                 const optionResponse = await fetch('http://localhost:8088/options', {
                     method: 'POST',
@@ -206,18 +199,27 @@ function ContentManager() {
         }
     }
 
-    //date and time validation
     function validateDateTime(inputDateTime: any) {
         const inputDate = new Date(inputDateTime);
         const currentDate = new Date();
         return inputDate >= currentDate;
     }
 
+    const filteredEvents = events.filter(event =>
+        eventFilter === 'ongoing'
+            ? new Date(event.date) >= new Date()
+            : new Date(event.date) < new Date()
+    );
+
+    const filteredVotes = votes.filter(vote =>
+        voteFilter === 'open' ? vote.status === 'open' : vote.status === 'closed'
+    );
+
     return (
         <div className="contentBox">
             <div className="creation-box">
-                <button onClick={() => { { } setIsCreatingEvent(true), setIsCreatingVote(false) }} style={{ backgroundColor: isCreatingEvent === true ? 'green' : 'gray' }}>Créer un Event</button>
-                <button onClick={() => { { } setIsCreatingVote(true), setIsCreatingEvent(false) }} style={{ backgroundColor: isCreatingVote === true ? 'green' : 'gray' }}>Créer un Vote</button>
+                <button onClick={() => { setIsCreatingEvent(true); setIsCreatingVote(false); }} style={{ backgroundColor: isCreatingEvent === true ? 'green' : 'gray' }}>Créer un Event</button>
+                <button onClick={() => { setIsCreatingVote(true); setIsCreatingEvent(false); }} style={{ backgroundColor: isCreatingVote === true ? 'green' : 'gray' }}>Créer un Vote</button>
 
                 {isCreatingEvent && (
                     <div className='creation-form'>
@@ -246,6 +248,7 @@ function ContentManager() {
                                 const isValid = validateDateTime(e.target.value);
                                 if (isValid) {
                                     setNewEvent({ ...newEvent, date: new Date(e.target.value) });
+                                    setInputErrors(prev => ({ ...prev, date: false }));
                                 } else {
                                     setInputErrors(prev => ({ ...prev, date: true }));
                                     console.error("Selected date and time cannot be in the past.");
@@ -312,14 +315,12 @@ function ContentManager() {
                     </div>
                 )}
             </div>
-            {
-                showConfirmation && (
-                    <div className="confirmation-message">
-                        {confirmationMessage}
-                    </div>
-                )
-            }
-            <div className='manageContent' >
+            {showConfirmation && (
+                <div className="confirmation-message">
+                    {confirmationMessage}
+                </div>
+            )}
+            <div className='manageContent'>
                 <div style={{ marginRight: '20px' }}>
                     <button
                         onClick={() => setSelectedOption('events')}
@@ -333,15 +334,47 @@ function ContentManager() {
                     >
                         Votes
                     </button>
+                    {selectedOption === 'events' && (
+                        <div>
+                            <button
+                                onClick={() => setEventFilter('ongoing')}
+                                style={{ backgroundColor: eventFilter === 'ongoing' ? 'green' : 'gray' }}
+                            >
+                                Encours
+                            </button>
+                            <button
+                                onClick={() => setEventFilter('finished')}
+                                style={{ backgroundColor: eventFilter === 'finished' ? 'green' : 'gray' }}
+                            >
+                                Terminé
+                            </button>
+                        </div>
+                    )}
+                    {selectedOption === 'votes' && (
+                        <div>
+                            <button
+                                onClick={() => setVoteFilter('open')}
+                                style={{ backgroundColor: voteFilter === 'open' ? 'green' : 'gray' }}
+                            >
+                                Ouvert
+                            </button>
+                            <button
+                                onClick={() => setVoteFilter('closed')}
+                                style={{ backgroundColor: voteFilter === 'closed' ? 'green' : 'gray' }}
+                            >
+                                Fermé
+                            </button>
+                        </div>
+                    )}
                 </div>
                 <div className="content">
-                    {selectedOption === 'events' && events.map((event, index) => (
+                    {selectedOption === 'events' && filteredEvents.map((event, index) => (
                         <Event
                             key={index}
                             event={event}
                         />
                     ))}
-                    {selectedOption === 'votes' && votes.map((vote, index) => (
+                    {selectedOption === 'votes' && filteredVotes.map((vote, index) => (
                         <Vote
                             key={index}
                             vote={vote}
@@ -349,7 +382,7 @@ function ContentManager() {
                     ))}
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 
