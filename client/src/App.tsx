@@ -14,6 +14,8 @@ import ManageAccount from './pages/manageAccount';
 import ChatBot from './components/ChatBox';
 import cb1 from './assets/chatbox3.png'
 import { useLocation } from 'react-router-dom';
+import PasswordReset from './components/PasswordReset';
+import PasswordResetPage from './components/PasswordResetPage';
 
 function Logout() {
   const navigate = useNavigate();
@@ -50,6 +52,8 @@ function App() {
       <Navbar className="navContainer" isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/request-password-reset" element={<PasswordReset onClose={() => { }} />} />
+        <Route path="/reset-password/:token" element={<PasswordResetPage />} />
         <Route path="/evenements" element={<Evenements />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/soutenir" element={<Soutenir isLoggedIn={isLoggedIn} />} />

@@ -29,12 +29,11 @@ Pour démarrer le client/backoffice, exécutez les commandes suivantes une aprè
 command to trigger successful payment :
 stripe trigger checkout.session.completed
 
---------------------------------------CLIENT---------------------------------------------------
+--------------------------------------CLIENT----------------------------------------------------
 TODO
 //mot de passe oublié
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
-//alerts if task is not success before deadline/if new donation/new membership+with mail alert
 //mot de passe oublié
 --------------------------------------BACKEND---------------------------------------------------
 TODO

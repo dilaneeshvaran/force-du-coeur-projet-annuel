@@ -34,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = ({ className, isLoggedIn, onLogout }) => {
           </NavLink>
 
           <NavLink className={`navbar-item ${location.pathname === '/evenements' ? 'is-active' : ''}`} to="/evenements">
-            ACTUALITÉS DE L'ASSO
+            ACTUALITÉS
           </NavLink>
 
           <NavLink className={`navbar-item ${location.pathname === '/equipes' ? 'is-active' : ''}`} to="/equipes">

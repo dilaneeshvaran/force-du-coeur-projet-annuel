@@ -89,3 +89,5 @@
 {"level":"error","message":"\"receiverMail\" must be a number","timestamp":"2024-06-25T20:13:06+02:00"}
 {"level":"error","message":"\"receiverMail\" must be a number","timestamp":"2024-06-25T20:14:02+02:00"}
 {"level":"error","message":"\"receiverMail\" must be a number","timestamp":"2024-06-25T20:14:39+02:00"}
+{"level":"error","message":"\"email\" must be a valid email","timestamp":"2024-07-04T13:51:16+02:00"}
+{"level":"error","message":"\"email\" must be a valid email","timestamp":"2024-07-04T13:51:22+02:00"}

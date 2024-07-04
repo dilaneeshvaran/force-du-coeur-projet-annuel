@@ -11,6 +11,8 @@ exports.router = (0, express_1.Router)();
 exports.tokenRevocationList = [];
 exports.router.post('/register', controllers_1.register);
 exports.router.post('/login', controllers_1.login);
+exports.router.post('/request-reset-password', controllers_1.requestPasswordReset);
+exports.router.post('/reset-password/:token', controllers_1.resetPassword);
 //router.get('/', authenticateToken, getAllUsers);
 exports.router.get('/membersThisMonth', controllers_1.getUsersCreatedThisMonth);
 exports.router.get('/', controllers_1.getAllUsers);

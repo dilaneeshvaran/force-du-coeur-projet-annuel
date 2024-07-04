@@ -8,6 +8,52 @@ import { RequestWithUser, logger } from '../middlewares';
 import { tokenRevocationList } from '../routers/users';
 import { add } from 'winston';
 import { Op } from 'sequelize';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const requestPasswordReset = async (req: Request, res: Response) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+
+    // Send token back to the client
+    res.status(200).json({ resetToken: token });
+  } catch (error) {
+    console.error('Error requesting password reset:', error);
+    res.status(500).json({ message: 'Error requesting password reset' });
+  }
+};
+
+const resetPassword = async (req: Request, res: Response) => {
+  const { token } = req.params; 
+  const { newPassword } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string };
+
+    const user = await User.findByPk(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'utilisateur pas trouvé' });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.status(200).json({ message: 'Mot de passe mis a jour' });
+  } catch (error) {
+    console.error('Error resetting password:', error);
+    res.status(500).json({ message: 'Error resetting password' });
+  }
+};
 
 const register = async (req: Request, res: Response) => {
   const { error, value } = validateUser(req.body);
@@ -16,7 +62,7 @@ const register = async (req: Request, res: Response) => {
   }
 
   try {
-    const {isBan, username, password, email, firstname, lastname, dateOfBirth,phoneNumber,country,city,address } = value;
+    const { isBan, username, password, email, firstname, lastname, dateOfBirth, phoneNumber, country, city, address } = value;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       username,
@@ -32,15 +78,14 @@ const register = async (req: Request, res: Response) => {
       isBan
     });
 
-  const token = generateToken(newUser.id);
+    const token = generateToken(newUser.id);
 
-  return res.status(201).json({ newUser, token });
+    return res.status(201).json({ newUser, token });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erreur lors de la création de l'utilisateur."});
+    return res.status(500).json({ message: "Erreur lors de la création de l'utilisateur." });
   }
-}
- 
+};
 
 const login = async (req: RequestWithUser, res: Response) => {
   const { error, value } = validateUserAuth(req.body);
@@ -53,7 +98,7 @@ const login = async (req: RequestWithUser, res: Response) => {
   try {
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(401).send({ message: "nom d'utilisateur ou mot de passe erroné."});
+      return res.status(401).send({ message: "nom d'utilisateur ou mot de passe erroné." });
     }
 
     if (user.isBan) {
@@ -63,17 +108,17 @@ const login = async (req: RequestWithUser, res: Response) => {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      return res.status(401).send({ message: "le mot de passe est erroné."});
+      return res.status(401).send({ message: "le mot de passe est erroné." });
     }
 
-    const token = jwt.sign({ id: user.id}, 'your_secret_key', { expiresIn: '3h'});
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, { expiresIn: '3h' });
 
-    return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.id }); 
+    return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.id });
   } catch (error) {
     logger.error(error);
     return res.status(500).send({ message: "erreur interne" });
   }
-}
+};
 
 const adminlogin = async (req: RequestWithUser, res: Response) => {
   const { error, value } = validateUserAuth(req.body);
@@ -87,32 +132,32 @@ const adminlogin = async (req: RequestWithUser, res: Response) => {
     const user = await User.findOne({ where: { email } });
     // si l'user n'existe pas
     if (!user) {
-      return res.status(401).send({ message: "nom d'utilisateur ou mot de passe erroné."});
+      return res.status(401).send({ message: "nom d'utilisateur ou mot de passe erroné." });
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      return res.status(401).send({ message: "le mot de passe est erroné."});
+      return res.status(401).send({ message: "le mot de passe est erroné." });
     }
 
     if (user.role !== 'admin') {
-      return res.status(403).send({ message: "Accès refusé. Seuls les administrateurs peuvent se connecter au backoffice."});
+      return res.status(403).send({ message: "Accès refusé. Seuls les administrateurs peuvent se connecter au backoffice." });
     }
 
-    const token = jwt.sign({ id: user.id}, 'your_secret_key', { expiresIn: '3h'});
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, { expiresIn: '3h' });
 
-    return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.id }); 
+    return res.status(200).send({ message: "authentification de l'user réussie", token, userId: user.id });
   } catch (error) {
     logger.error(error);
     return res.status(500).send({ message: "erreur interne" });
   }
-}
+};
 
 const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
-    const {isBan, id, username, password, email, firstname, lastname, dateOfBirth,role,phoneNumber,country,city,address } = req.body;
+    const { isBan, id, username, password, email, firstname, lastname, dateOfBirth, role, phoneNumber, country, city, address } = req.body;
 
     const user = await User.findByPk(userId);
     if (user !== null) {
@@ -139,12 +184,11 @@ const updateUser = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({ message: "Error updating the user." });
   }
-}
+};
 
 const adminAccess = (req: Request, res: Response) => {
   // TODO
-}
-
+};
 
 const logout = async (req: RequestWithUser, res: Response) => {
   try {
@@ -152,15 +196,14 @@ const logout = async (req: RequestWithUser, res: Response) => {
 
     if (token) {
       tokenRevocationList.push(token);
-      return res.status(200).json({ message: 'Deconnexion réussie'});
+      return res.status(200).json({ message: 'Deconnexion réussie' });
     } else {
-      return res.status(400).json({ message: 'Pas de jeton fourni'});
+      return res.status(400).json({ message: 'Pas de jeton fourni' });
     }
   } catch (error: any) {
     return res.status(500).json({ message: 'Erreur interne', error: error.message });
   }
- 
-}
+};
 
 const getUserById = async (req: Request, res: Response) => {
   try {
@@ -169,31 +212,30 @@ const getUserById = async (req: Request, res: Response) => {
     if (user !== null) {
       return res.status(200).json(user);
     } else {
-      return res.status(404).json({ message: "utilisateur non retrouvé"});
+      return res.status(404).json({ message: "utilisateur non retrouvé" });
     }
-  } catch(error) {
+  } catch (error) {
     logger.error(error);
-    return res.status(500).json({ message: "Erreur lors de la recherche de l'utilisateur"});
+    return res.status(500).json({ message: "Erreur lors de la recherche de l'utilisateur" });
   }
-}
-
+};
 
 const getUsersCreatedThisMonth = async (req: Request, res: Response) => {
   try {
     const startOfMonth = new Date();
-    startOfMonth.setDate(1); 
-    startOfMonth.setHours(0, 0, 0, 0); 
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
 
     const endOfMonth = new Date();
-    endOfMonth.setMonth(endOfMonth.getMonth() + 1); 
-    endOfMonth.setDate(0); // Set to the last day of the current month
-    endOfMonth.setHours(23, 59, 59, 999); // Set to the end of the day
+    endOfMonth.setMonth(endOfMonth.getMonth() + 1);
+    endOfMonth.setDate(0);
+    endOfMonth.setHours(23, 59, 59, 999);
 
     const users = await User.findAll({
       where: {
         createdAt: {
-          [Op.gte]: startOfMonth, // Greater than or equal to the start of the month
-          [Op.lte]: endOfMonth, // Less than or equal to the end of the month
+          [Op.gte]: startOfMonth,
+          [Op.lte]: endOfMonth,
         },
       },
     });
@@ -211,9 +253,9 @@ const getAllUsers = async (req: Request, res: Response) => {
     return res.status(200).json(users);
   } catch (error) {
     logger.error(error);
-    return res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des utilisateurs."});
+    return res.status(500).json({ message: "Erreur survenue lors de la tentative de récupération des utilisateurs." });
   }
-}
+};
 
 const deleteUser = async (req: Request, res: Response) => {
   try {
@@ -221,15 +263,27 @@ const deleteUser = async (req: Request, res: Response) => {
     const user = await User.findByPk(userId);
     if (user !== null) {
       await user.destroy();
-      return res.status(200).json({ message: "Suppression de l'utilisateur effectuée"});
+      return res.status(200).json({ message: "Suppression de l'utilisateur effectuée" });
     } else {
-      return res.status(404).json({ message: "Utilisateur non retrouvé"});
+      return res.status(404).json({ message: "Utilisateur non retrouvé" });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erreur rencontré en essayant de supprimer l'utilisateur"});
+    return res.status(500).json({ message: "Erreur rencontré en essayant de supprimer l'utilisateur" });
   }
-}
+};
 
-
-export {getUsersCreatedThisMonth,adminlogin,updateUser, register, login, adminAccess, logout, getUserById, getAllUsers, deleteUser };
+export {
+  resetPassword,
+  requestPasswordReset,
+  getUsersCreatedThisMonth,
+  adminlogin,
+  updateUser,
+  register,
+  login,
+  adminAccess,
+  logout,
+  getUserById,
+  getAllUsers,
+  deleteUser,
+};
