@@ -12,6 +12,7 @@ function Contact() {
   const [messageStatus, setMessageStatus] = useState("");
   const [isMessageSent, setIsMessageSent] = useState(false);
   const type = "received";
+  const concernedMsgId = 0;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -21,11 +22,11 @@ function Contact() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ fullName, email, message, type }),
+      body: JSON.stringify({ fullName, email, message, type, concernedMsgId }),
     });
 
     if (response.ok) {
-      setMessageStatus('Message sent successfully');
+      setMessageStatus('Message envoyé');
       setIsMessageSent(true);
       setfullName("");
       setEmail("");
@@ -47,12 +48,12 @@ function Contact() {
       <div className='containerContact'>
 
         <div className="contactForm">
-          <h3>Contact Us</h3>
+          <h3>Contactez Force de Coeur</h3>
           <form onSubmit={handleSubmit}>
             <input type="text" name="fullName" placeholder="Your full name" required value={fullName} onChange={e => setfullName(e.target.value)} />
             <input type="email" name="email" placeholder="Your Email" required value={email} onChange={e => setEmail(e.target.value)} />
             <textarea name="message" placeholder="Your Message" required value={message} onChange={e => setMessage(e.target.value)}></textarea>
-            <button type="submit">Send Message</button>
+            <button type="submit">Envoyer le Message</button>
           </form>
           {messageStatus && <div className={isMessageSent ? "messageStatus success" : "messageStatus failure"}>{messageStatus}</div>}
         </div>

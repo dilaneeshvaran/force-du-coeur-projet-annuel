@@ -29,9 +29,6 @@ Pour démarrer le client/backoffice, exécutez les commandes suivantes une aprè
 command to trigger successful payment :
 stripe trigger checkout.session.completed
 
---------------------------------------CLIENT----------------------------------------------------
-TODO
-//Contact
 --------------------------------------BACKEND---------------------------------------------------
 TODO
 //routes > authentification des tokens pour les routes, routes associées aux tables jointes
