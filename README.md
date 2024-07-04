@@ -34,20 +34,19 @@ TODO
 //Home screen add infos
 //équipes real data
 //mot de passe oublié
-//resultat votes + date invalide
 //div msg when logout
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
 //add search for members
-//task manage filter/search+real api
 //alerts with mail alert+ clean up
 //div msg when logout
---------------------------------------BACKEND--------------------------------------------------
+//content manage (filter finished and ongoing)
+//alerts if task is not success before deadline
+//alerts if new donation/new membership
+//mot de passe oublié
+--------------------------------------BACKEND---------------------------------------------------
 TODO
-  //routes > authentification des tokens pour les routes, routes associées aux tables jointes
- //participer : respect capacité+ quorum = nombre requis de participants pour que la réunion puisse se tenir
-   //conditions> events/votes enddate + results
-
-  //Alerts && Rappels (automatique) : prévenir un prochain payment mensuel>critical events> low inventory levels, or overdue tasks.
---------------------------------------JAVA--------------------------------------------------
+//routes > authentification des tokens pour les routes, routes associées aux tables jointes
+//participer : respect capacité+ quorum = nombre requis de participants pour que la réunion puisse se tenir
+--------------------------------------JAVA------------------------------------------------------
 ```

@@ -108,8 +108,21 @@ function FinanceInformation() {
                     {filteredDonations.map((donation, index) => (
                         <div className='dons-labels' key={donation.id}>
                             <p className='label-text'>Nom et Prénom: {donation.fullname}</p>
-                            <p className='label-text'>Date de don : {donation.donationDate?.toString()}</p>
-                            <p className='label-text'>Email: {donation.email}</p>
+                            <p className='label-text'>
+                                Date de don : {
+                                    donation.donationDate ? (
+                                        (() => {
+                                            const date = new Date(donation.donationDate);
+                                            const day = date.getDate().toString().padStart(2, '0');
+                                            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                                            const year = date.getFullYear().toString().slice(-2);
+                                            const hours = date.getHours().toString().padStart(2, '0');
+                                            const minutes = date.getMinutes().toString().padStart(2, '0');
+                                            return `${day}/${month}/${year} à : ${hours}h${minutes}`;
+                                        })()
+                                    ) : 'N/A'
+                                }
+                            </p>                            <p className='label-text'>Email: {donation.email}</p>
                             <p className='label-text'>Montant: {donation.amount}</p>
                             {donation.donatorId && users[donation.donatorId] && (
                                 <p className='label-text'>Membre adhéré: {users[donation.donatorId].firstname} {users[donation.donatorId].lastname} (email: {users[donation.donatorId].email})</p>
@@ -126,7 +139,19 @@ function FinanceInformation() {
                                 <p className='label-text'>Nom et Prénom: {users[membership.userId].firstname} {users[membership.userId].lastname} (email: {users[membership.userId].email})</p>
                             )}
                             <p className='label-text'>Montant: {membership.amount}</p>
-                            <p className='label-text'>Date de Payment: {membership.paymentDate?.toString()}</p>
+                            <p className='label-text'>Date de Payment: {
+                                membership.paymentDate ? (
+                                    (() => {
+                                        const date = new Date(membership.paymentDate);
+                                        const day = date.getDate().toString().padStart(2, '0');
+                                        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                                        const year = date.getFullYear().toString().slice(-2);
+                                        const hours = date.getHours().toString().padStart(2, '0');
+                                        const minutes = date.getMinutes().toString().padStart(2, '0');
+                                        return `${day}/${month}/${year} à : ${hours}h${minutes}`;
+                                    })()
+                                ) : 'N/A'
+                            }</p>
                         </div>
                     ))}
                 </div>

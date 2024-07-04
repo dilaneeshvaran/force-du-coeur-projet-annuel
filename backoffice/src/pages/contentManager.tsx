@@ -186,7 +186,7 @@ function ContentManager() {
             }
 
             setIsCreatingVote(false);
-            setConfirmationMessage('Vote and options created, refresh the page to display!');
+            setConfirmationMessage('Votes et Options ajoutées, rafrâichir la page pour les afficher!');
             setNewOptions([]);
             setNewVote({
                 title: '',

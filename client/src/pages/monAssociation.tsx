@@ -48,7 +48,7 @@ function MonAssociation() {
     return fetch(`http://localhost:8088/options/${voteId}`)
       .then(response => {
         if (!response.ok) {
-          console.log('No options found for this voteId');
+          console.log('no options for this vote');
         }
         return response.json();
       })

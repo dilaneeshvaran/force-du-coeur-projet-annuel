@@ -35,7 +35,7 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
         setIsLoggedIn(loggedIn);
 
         if (!loggedIn || !userId) {
-            navigate('/login');
+            navigate('/backofficeHome');
         }
     }, [navigate, userId]);
 

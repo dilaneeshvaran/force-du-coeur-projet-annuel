@@ -118,7 +118,7 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
     };
 
     if (!vote) {
-        return <div>Loading...</div>;
+        return <div>Chargement...</div>;
     }
 
     return (
@@ -128,11 +128,11 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
             </div>
             <div className="votebox-details">
                 <p>Description: {vote.description}</p>
-                <p>Start Date: {new Date(vote.startDate).toLocaleDateString()}</p>
-                <p>End Date: {new Date(vote.endDate).toLocaleDateString()}</p>
-                <p>Voting Type: {vote.votingType}</p>
-                <p>Ongoing Round: {vote.ongoingRound}</p>
-                <p>Voting Method: {vote.votingMethod}</p>
+                <p>Date Début: {new Date(vote.startDate).toLocaleDateString()}</p>
+                <p>Date Fin: {new Date(vote.endDate).toLocaleDateString()}</p>
+                <p>Type: {vote.votingType}</p>
+                <p>Tour en cours: {vote.ongoingRound}</p>
+                <p>Methode de Vote: {vote.votingMethod}</p>
             </div>
             <div className="votebox-options">
                 <h3>Options</h3>
@@ -159,8 +159,8 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
                         {showConfirm && (
                             <div className="confirm-box">
                                 <p>Etes vous sur de voter pour {selectedOption?.label}?</p>
-                                <button type="button" onClick={handleConfirm}>Yes</button>
-                                <button type="button" onClick={() => setShowConfirm(false)}>No</button>
+                                <button type="button" onClick={handleConfirm}>Oui</button>
+                                <button type="button" onClick={() => setShowConfirm(false)}>Non</button>
                             </div>
                         )}
                     </form>
