@@ -1,132 +1,132 @@
 .contentBoxRegister {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f2f2f2;
-    padding: 20px;
-    border-radius: 10px;
-    width: 38rem;
-    margin: 0 auto;
-    margin-top: 10rem;
-    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 10px;
+  width: 38rem;
+  margin: 0 auto;
+  margin-top: 10rem;
 }
 
 .registerForm {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .contentBoxRegister form label span {
-    width: 30%;
-    text-align: right;
-    margin-right: 10px;
+  width: 30%;
+  text-align: right;
+  margin-right: 10px;
 }
 
-
 .contentBoxRegister h3 {
-    color: #333;
-    margin-bottom: 10px;
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .contentBoxRegister form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .contentBoxRegister form label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.contentBoxRegister form label input, .contentBoxRegister form label select {
-    width: 68%;
+.contentBoxRegister form label input,
+.contentBoxRegister form label select {
+  width: 68%;
 }
 
 .contentBoxRegister form input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    padding: 5px; 
-    font-size: 14px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 14px;
 }
 .label-register {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-    font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-weight: bold;
 }
 
-.inputRegister, .selectRegister {
-    width: 20rem;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+.inputRegister,
+.selectRegister {
+  width: 20rem;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 .contentBoxRegister form input[type="submit"]:hover {
-    background-color: #45a049;
+  background-color: #45a049;
 }
 
 .contentBoxRegister button {
-    padding: 5px 10px; 
-    background-color: #f44336;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px; 
-    font-size: 14px; 
+  padding: 5px 10px;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 14px;
 }
 
 .contentBoxRegister button:hover {
-    background-color: #e33e33;
+  background-color: #ff0000;
 }
 
-.contentBoxRegister form input, .contentBoxRegister form select {
-    padding: 5px; 
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px; 
-    font-size: 14px; 
+.contentBoxRegister form input,
+.contentBoxRegister form select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
 .contentBoxRegister form input[type="submit"] {
-    background-color: #ad001a;
-    color: white;
-    cursor: pointer;
-    padding: 5px;
-    font-size: 14px;
+  background-color: #ff0000;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 14px;
 }
 
 .contentBoxRegister form input[type="submit"]:hover {
-    background-color: #6d0000;
+  background-color: #ff0000;
 }
 
 .contentBoxRegister button {
-    padding: 5px 10px;
-    background-color: #585858;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
-    font-size: 14px; 
+  padding: 5px 10px;
+  background-color: #585858;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 14px;
 }
 
 .contentBoxRegister button:hover {
-    background-color: #333333;
+  background-color: #333333;
 }
 
-.contentBoxRegister form label input, .contentBoxRegister form label select {
-    width: 68%;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 14px;
+.contentBoxRegister form label input,
+.contentBoxRegister form label select {
+  width: 68%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
-

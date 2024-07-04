@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import '../styles/navbar.css'
-import fdcLogo from '../assets/fdc-logo.png'
+import '../styles/Navbar.css'
+import fdcLogo from '../assets/logo2.png'
 import Logout from '../components/Logout';
 
 interface NavbarProps {
@@ -30,29 +30,27 @@ const Navbar: React.FC<NavbarProps> = ({ className, isLoggedIn, onLogout }) => {
             </a>
           </div>
           <NavLink className={`navbar-item ${location.pathname === '/home' ? 'is-active' : ''}`} to="/">
-            Accueil
+            ACCUEIL
           </NavLink>
 
           <NavLink className={`navbar-item ${location.pathname === '/evenements' ? 'is-active' : ''}`} to="/evenements">
-            Actualités De l'Asso
+            ACTUALITÉS DE L'ASSO
           </NavLink>
 
-
-
           <NavLink className={`navbar-item ${location.pathname === '/equipes' ? 'is-active' : ''}`} to="/equipes">
-            Nos équipes
+            NOTRE ÉQUIPE
           </NavLink>
 
           <NavLink className={`navbar-item ${location.pathname === '/contact' ? 'is-active' : ''}`} to="/contact">
-            Contact
+            CONTACT
           </NavLink>
 
           <NavLink className={`navbar-item ${location.pathname === '/soutenir' ? 'is-active' : ''}`} to="/soutenir">
-            Soutenir nos actions
+            SOUTENIR NOS ACTIONS
           </NavLink>
 
           <NavLink className={`navbar-item ${location.pathname === '/espaceMembres' ? 'is-active' : ''}`} to="/espaceMembres">
-            Espace Membres
+            ESPACE MEMBRES
           </NavLink>
         </div>
         <div className="logout-box">
