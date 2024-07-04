@@ -19,10 +19,10 @@ function MonAssociation() {
     setStatusFilter(event.target.value as 'ongoing' | 'ended');
   };
 
-  const isOngoing = (endDate: string) => {
+  const isOngoing = (endDate: string, status: string) => {
     const now = new Date();
     const end = new Date(endDate);
-    return end > now;
+    return status !== 'closed' && end > now;
   };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -30,31 +30,32 @@ function MonAssociation() {
   };
 
   const fetchVotes = async () => {
-    fetch('http://localhost:8088/votes')
-      .then(response => response.json())
-      .then(async (data) => {
-        setVotes(data);
-        const optionsPromises = data.map((vote: { id: number }) => fetchVoteOptions(vote.id));
-        const allOptions = await Promise.all(optionsPromises);
-        setVoteOptions(allOptions.flat());
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        setError(error);
-      });
+    try {
+      const response = await fetch('http://localhost:8088/votes');
+      if (!response.ok) throw new Error('Failed to fetch votes');
+      const data = await response.json();
+      setVotes(data);
+      const optionsPromises = data.map((vote: { id: number }) => fetchVoteOptions(vote.id));
+      const allOptions = await Promise.all(optionsPromises);
+      setVoteOptions(allOptions.flat());
+    } catch (error: any) {
+      console.error('Error:', error);
+      setError(error);
+    }
   };
 
   const fetchVoteOptions = async (voteId: number) => {
-    return fetch(`http://localhost:8088/options/${voteId}`)
-      .then(response => {
-        if (!response.ok) {
-          console.log('no options for this vote');
-        }
-        return response.json();
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    try {
+      const response = await fetch(`http://localhost:8088/options/${voteId}`);
+      if (!response.ok) {
+        console.log('No options for this vote');
+        return [];
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error:', error);
+      return [];
+    }
   };
 
   const fetchEvents = async () => {
@@ -79,8 +80,12 @@ function MonAssociation() {
   } else if (!votes || !voteOptions || !events) {
     return <div>Loading...</div>;
   } else {
-    const filteredVotes = votes.filter((vote: any) => statusFilter === 'ongoing' ? isOngoing(vote.endDate) : !isOngoing(vote.endDate));
-    const filteredEvents = events.filter((event: any) => event.membersOnly && (statusFilter === 'ongoing' ? isOngoing(event.endDate) : !isOngoing(event.endDate)));
+    const filteredVotes = votes.filter((vote: any) =>
+      statusFilter === 'ongoing' ? isOngoing(vote.endDate, vote.status) : !isOngoing(vote.endDate, vote.status)
+    );
+    const filteredEvents = events.filter((event: any) =>
+      event.membersOnly && (statusFilter === 'ongoing' ? isOngoing(event.endDate, event.status) : !isOngoing(event.endDate, event.status))
+    );
 
     return (
       <>

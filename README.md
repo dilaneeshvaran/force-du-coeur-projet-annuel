@@ -31,13 +31,9 @@ stripe trigger checkout.session.completed
 
 --------------------------------------CLIENT----------------------------------------------------
 TODO
-//mot de passe oublié
---------------------------------------BACKOFFICE------------------------------------------------
-TODO
-//mot de passe oublié
+//Contact
 --------------------------------------BACKEND---------------------------------------------------
 TODO
 //routes > authentification des tokens pour les routes, routes associées aux tables jointes
 //participer : respect capacité+ quorum = nombre requis de participants pour que la réunion puisse se tenir
---------------------------------------JAVA------------------------------------------------------
 ```
