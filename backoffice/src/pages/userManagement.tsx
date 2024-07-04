@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../styles/userManage.css";
 import AuthCheck from '../components/AuthCheck';
-import { FirstPage } from '@mui/icons-material';
 
 interface User {
     id: number;
@@ -21,6 +20,7 @@ interface User {
 function UserManagement() {
     const [users, setUsers] = useState<User[]>([]);
     const [filter, setFilter] = useState<'all' | 'banned' | 'admin' | 'user'>('all');
+    const [searchQuery, setSearchQuery] = useState('');
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [confirmationMessage, setConfirmationMessage] = useState('');
     const [actionToConfirm, setActionToConfirm] = useState<() => void>(() => { });
@@ -59,21 +59,30 @@ function UserManagement() {
         setConfirmationMessage(`Etes vous sur de ${newBanStatus ? 'ban' : 'unban'} ${firstname} ${lastname}?`);
         setActionToConfirm(() => () => updateUser(id, { isBan: newBanStatus }));
         setSelectedUserId(id);
-
         setShowConfirmation(true);
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+    };
+
     const filteredUsers = users.filter(user => {
-        switch (filter) {
-            case 'banned':
-                return user.isBan;
-            case 'admin':
-                return user.role === 'admin';
-            case 'user':
-                return user.role === 'user';
-            default:
-                return true;
-        }
+        const matchesFilter = (() => {
+            switch (filter) {
+                case 'banned':
+                    return user.isBan;
+                case 'admin':
+                    return user.role === 'admin';
+                case 'user':
+                    return user.role === 'user';
+                default:
+                    return true;
+            }
+        })();
+        const matchesSearch = user.firstname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.lastname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesFilter && matchesSearch;
     });
 
     function validateDateTime(inputDateTime: any): string {
@@ -96,15 +105,20 @@ function UserManagement() {
 
     return (
         <div className='contentBoxUsers'>
-
             <div className='content-users'>
                 <h2>Gestion des membres</h2>
                 <select onChange={(e) => setFilter(e.target.value as 'all' | 'banned' | 'admin' | 'user')}>
-                    <option value="all">All Users</option>
-                    <option value="banned">Banned Users</option>
+                    <option value="all">Tous les utilisateurs</option>
+                    <option value="banned">Utilisateurs Banni</option>
                     <option value="admin">Admins</option>
-                    <option value="user">Members</option>
+                    <option value="user">Membres</option>
                 </select>
+                <input
+                    type="text"
+                    placeholder="Recherche par nom, prénom ou email"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
 
                 {filteredUsers.map(user => (
                     <div className='userList' key={user.id}>
@@ -131,12 +145,14 @@ function UserManagement() {
                         <button className='userM-btn' onClick={() => toggleBanStatus(user.id, user.isBan, user.firstname, user.lastname)} disabled={false}>
                             {user.isBan ? 'Unban' : 'Ban'}
                         </button>
-                        <button className='userM-btn' onClick={() => changeRole(user.id, user.role === 'admin' ? 'user' : 'admin', user.firstname, user.lastname,)}>
+                        <button className='userM-btn' onClick={() => changeRole(user.id, user.role === 'admin' ? 'user' : 'admin', user.firstname, user.lastname)}>
                             Changer le role en {user.role === 'admin' ? 'membre' : 'admin'}
                         </button>
                     </div>
                 ))}
-
+                {filteredUsers.length === 0 && (
+                    <p>Aucun utilisateur trouvé.</p>
+                )}
             </div>
         </div>
     );

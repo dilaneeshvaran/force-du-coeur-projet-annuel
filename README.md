@@ -37,10 +37,7 @@ TODO
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
 //add search for members
-//alerts with mail alert+ clean up
-//div msg when logout
-//content manage (filter finished and ongoing)
-//alerts if task is not success before deadline/if new donation/new membership
+//alerts if task is not success before deadline/if new donation/new membership+with mail alert
 //mot de passe oublié
 --------------------------------------BACKEND---------------------------------------------------
 TODO
