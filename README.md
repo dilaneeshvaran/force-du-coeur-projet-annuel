@@ -31,12 +31,9 @@ stripe trigger checkout.session.completed
 
 --------------------------------------CLIENT---------------------------------------------------
 TODO
-//Home screen add infos
-//équipes real data
 //mot de passe oublié
 --------------------------------------BACKOFFICE------------------------------------------------
 TODO
-//add search for members
 //alerts if task is not success before deadline/if new donation/new membership+with mail alert
 //mot de passe oublié
 --------------------------------------BACKEND---------------------------------------------------

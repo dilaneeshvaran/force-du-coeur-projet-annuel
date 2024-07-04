@@ -1,8 +1,105 @@
-.alertBox {
+.contentBox {
     padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.h2-alert {
+    color: #333;
+    text-align: center;
     margin-bottom: 20px;
-    background-color: #FFA500;
-    border-radius: 5px;
-    box-shadow: 0 0 10px #FFA500;
-    color: white;
+}
+
+.archive-label{
+    margin-left: 22rem;
+}
+
+.filter-alert {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filter-alert label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.filter-alert select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.alertBox {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.alertBox:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.alertBox h3 {
+    margin: 0 0 10px;
+    color: #007BFF;
+}
+
+.alertBox p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.alertBox label {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.alertBox input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.alertBox button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.alertBox button:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.alertBox .confirmBox {
+    background-color: #f8d7da;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    color: #721c24;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alertBox .confirmBox button {
+    background-color: #721c24;
+    color: #fff;
+}
+
+.alertBox .confirmBox button:hover {
+    background-color: #a71d2a;
 }

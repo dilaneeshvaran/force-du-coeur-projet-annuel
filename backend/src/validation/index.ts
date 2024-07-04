@@ -13,3 +13,4 @@ export * from './user.validation';
 export * from './participation.validation';
 export * from './user_vote.validation';
 export * from './payment.validation';
+export * from './alert.validation';

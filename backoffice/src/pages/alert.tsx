@@ -1,91 +1,106 @@
 import React, { useEffect, useState } from 'react';
-import { differenceInDays, parseISO } from 'date-fns';
 import AuthCheck from '../components/AuthCheck';
 import '../styles/alerts.css';
 import '../styles/content.css';
 
-type Task = {
-    assignedTo: string;
-    assignedDate: string;
-    deadline: string;
-};
-
 type Alert = {
     id: number;
-    message: string;
+    label: string;
+    description: string;
     date: string;
-    task?: Task;
+    isArchived: boolean;
 };
 
 function Alerts() {
     const [alerts, setAlerts] = useState<Alert[]>([]);
+    const [filter, setFilter] = useState<'archived' | 'non-archived'>('non-archived');
+    const [showConfirm, setShowConfirm] = useState<null | number>(null);
 
     useEffect(() => {
-        // call api
-        const fetchedAlerts: Alert[] = [
-            { id: 1, message: 'Low inventory levels', date: '2022-01-01' },
-            { id: 2, message: 'Unusual website traffic', date: '2022-01-02' },
-            {
-                id: 3,
-                message: 'Tasks not done',
-                date: '2022-01-03',
-                task: {
-                    assignedTo: 'John Doe',
-                    assignedDate: '2022-01-01',
-                    deadline: '2022-01-10',
-                },
-            },
-        ];
-
-        // call api
-        const tasks: Task[] = [
-            // ... tasks ...
-        ];
-
-        // call api
-        const votingsAndSurveys: { id: number; endDate: string; }[] = [
-
-        ];
-
-        const today = new Date();
-
-        tasks.forEach(task => {
-            if (differenceInDays(parseISO(task.deadline), today) <= 3) {
-                fetchedAlerts.push({
-                    id: fetchedAlerts.length + 1,
-                    message: `Task deadline is near: ${task.assignedTo}`,
-                    date: task.deadline,
-                    task,
-                });
+        async function fetchAlerts() {
+            try {
+                const response = await fetch('http://localhost:8088/alerts');
+                const data: Alert[] = await response.json();
+                setAlerts(data);
+            } catch (error) {
+                console.error('Error fetching alerts:', error);
             }
-        });
+        }
 
-        votingsAndSurveys.forEach(votingOrSurvey => {
-            if (differenceInDays(parseISO(votingOrSurvey.endDate), today) <= 0) {
-                fetchedAlerts.push({
-                    id: fetchedAlerts.length + 1,
-                    message: `Voting or survey ended: ${votingOrSurvey.id}`,
-                    date: votingOrSurvey.endDate,
-                });
-            }
-        });
-
-        setAlerts(fetchedAlerts);
+        fetchAlerts();
     }, []);
+
+    const handleArchiveChange = (id: number, isArchived: boolean) => {
+        setAlerts(prevAlerts =>
+            prevAlerts.map(alert =>
+                alert.id === id ? { ...alert, isArchived } : alert
+            )
+        );
+
+        // Simulate API call
+        fetch(`http://localhost:8088/alerts/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isArchived }),
+        }).catch(error => console.error('Error updating alert:', error));
+    };
+
+    const handleDelete = async (id: number) => {
+        try {
+            await fetch(`http://localhost:8088/alerts/${id}`, {
+                method: 'DELETE',
+            });
+
+            setAlerts(prevAlerts => prevAlerts.filter(alert => alert.id !== id));
+        } catch (error) {
+            console.error('Error deleting alert:', error);
+        }
+    };
+
+    const confirmDelete = (id: number) => {
+        setShowConfirm(id);
+    };
+
+    const cancelDelete = () => {
+        setShowConfirm(null);
+    };
+
+    const filteredAlerts = alerts.filter(alert => {
+        return filter === 'archived' ? alert.isArchived : !alert.isArchived;
+    });
 
     return (
         <div className="contentBox">
             <div className="content">
-                <h2>Alerts</h2>
-                {alerts.map(alert => (
+                <h2 className='h2-alert'>Alerts</h2>
+                <div className='filter-alert'>
+                    <label htmlFor="filter">Filtrer: </label>
+                    <select id="filter" value={filter} onChange={e => setFilter(e.target.value as 'archived' | 'non-archived')}>
+                        <option value="non-archived">Alerts</option>
+                        <option value="archived">Alerts Archivé</option>
+                    </select>
+                </div>
+                {filteredAlerts.map(alert => (
                     <div key={alert.id} className="alertBox">
-                        <h3>{alert.message}</h3>
+                        <h3>{alert.label}</h3>
+                        <p>{alert.description}</p>
                         <p>{alert.date}</p>
-                        {alert.task && (
-                            <div>
-                                <p>Assigned to: {alert.task.assignedTo}</p>
-                                <p>Assigned date: {alert.task.assignedDate}</p>
-                                <p>Deadline: {alert.task.deadline}</p>
+                        <label className='archive-label'>
+                            <input
+                                type="checkbox"
+                                checked={alert.isArchived}
+                                onChange={e => handleArchiveChange(alert.id, e.target.checked)}
+                            />
+                            Archiver
+                        </label>
+                        <button onClick={() => confirmDelete(alert.id)}>Supprimer</button>
+                        {showConfirm === alert.id && (
+                            <div className="confirmBox">
+                                <p>Etes vous sur de supprimer l'alert?</p>
+                                <button onClick={() => handleDelete(alert.id)}>Oui</button>
+                                <button onClick={cancelDelete}>Non</button>
                             </div>
                         )}
                     </div>

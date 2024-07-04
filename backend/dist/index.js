@@ -25,6 +25,7 @@ app.use((req, res, next) => {
 app.use(middlewares_1.timeZoneFormatter);
 app.use(middlewares_1.winston);
 app.use(cors());
+app.use('/alerts', routers_1.alertsRouter);
 app.use('/documents', routers_1.documentsRouter);
 app.use('/donations', routers_1.donationsRouter);
 app.use('/events', routers_1.eventsRouter);

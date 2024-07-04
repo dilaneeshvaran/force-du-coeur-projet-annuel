@@ -27,3 +27,4 @@ __exportStar(require("./useOfResource.model"), exports);
 __exportStar(require("./user.model"), exports);
 __exportStar(require("./participation.model"), exports);
 __exportStar(require("./payment.model"), exports);
+__exportStar(require("./alert.model"), exports);

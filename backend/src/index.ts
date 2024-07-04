@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import rawBodyBuffer  from './middlewares/rawBodyBuffer'; 
 const cors = require('cors');
-import { paymentRouter, userVotesRouter,participationsRouter,uploadRouter,optionsRouter, documentsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter, resourcesRouter, useOfResourcesRouter, votesRouter, donationsRouter, usersRouter } from './routers';
+import {  alertsRouter, paymentRouter, userVotesRouter,participationsRouter,uploadRouter,optionsRouter, documentsRouter, membershipsRouter, eventsRouter, healthRouter, messagesRouter, tasksRouter, resourcesRouter, useOfResourcesRouter, votesRouter, donationsRouter, usersRouter } from './routers';
 import { errorHandler, logger, timeZoneFormatter, winston } from "./middlewares";
 import './global.data';
 
@@ -24,6 +24,7 @@ app.use(timeZoneFormatter);
 app.use(winston);
 app.use(cors());
 
+app.use('/alerts', alertsRouter);
 app.use('/documents', documentsRouter);
 app.use('/donations', donationsRouter);
 app.use('/events', eventsRouter);

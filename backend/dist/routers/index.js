@@ -7,7 +7,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.paymentRouter = exports.userVotesRouter = exports.participationsRouter = exports.uploadRouter = exports.usersRouter = exports.donationsRouter = exports.votesRouter = exports.optionsRouter = exports.useOfResourcesRouter = exports.resourcesRouter = exports.tasksRouter = exports.messagesRouter = exports.documentsRouter = exports.eventsRouter = exports.membershipsRouter = exports.healthRouter = void 0;
+exports.alertsRouter = exports.paymentRouter = exports.userVotesRouter = exports.participationsRouter = exports.uploadRouter = exports.usersRouter = exports.donationsRouter = exports.votesRouter = exports.optionsRouter = exports.useOfResourcesRouter = exports.resourcesRouter = exports.tasksRouter = exports.messagesRouter = exports.documentsRouter = exports.eventsRouter = exports.membershipsRouter = exports.healthRouter = void 0;
 var health_1 = require("./health");
 Object.defineProperty(exports, "healthRouter", { enumerable: true, get: function () { return health_1.router; } });
 var memberships_1 = require("./memberships");
@@ -40,3 +40,5 @@ var user_votes_1 = require("./user_votes");
 Object.defineProperty(exports, "userVotesRouter", { enumerable: true, get: function () { return __importDefault(user_votes_1).default; } });
 var payment_1 = require("./payment");
 Object.defineProperty(exports, "paymentRouter", { enumerable: true, get: function () { return payment_1.router; } });
+var alerts_1 = require("./alerts");
+Object.defineProperty(exports, "alertsRouter", { enumerable: true, get: function () { return alerts_1.router; } });
