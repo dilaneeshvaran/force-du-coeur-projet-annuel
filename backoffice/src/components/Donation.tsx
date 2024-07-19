@@ -19,10 +19,10 @@ type DonationProps = {
 function Donation({ donation }: DonationProps) {
     return (
         <div>
-            <p>Full Name: {donation.fullname}</p>
+            <p>Nom Complet: {donation.fullname}</p>
             <p>Email: {donation.email}</p>
-            <p>Donation Amount: {donation.amount}</p>
-            <p>Donator ID: {donation.donatorId}</p>
+            <p>Montant de don: {donation.amount}</p>
+            <p>id don: {donation.donatorId}</p>
         </div>
     );
 }

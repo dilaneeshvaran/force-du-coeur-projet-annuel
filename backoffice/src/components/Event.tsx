@@ -94,8 +94,8 @@ const Event: React.FC<EventProps> = ({ event }) => {
                     onChange={e => setUpdatedEvent({ ...updatedEvent, quota: parseInt(e.target.value) || null })}
                     placeholder="Quorum"
                 />
-                <button className='updateValidate' onClick={handleUpdate}>Validate</button>
-                <button onClick={() => setIsEditing(false)}>Cancel</button>
+                <button className='updateValidate' onClick={handleUpdate}>Valider</button>
+                <button onClick={() => setIsEditing(false)}>Annuler</button>
             </div>
         );
     }
@@ -123,8 +123,8 @@ const Event: React.FC<EventProps> = ({ event }) => {
             <p>Membres Uniquement : {event.membersOnly}</p>
             <p>Participations Total : {event.participations}</p>
             <p>Quorum : {event.quota ?? 'No Quorum'}</p>
-            <button onClick={() => setIsEditing(true)}>Update</button>
-            <button onClick={() => setShowConfirm(true)}>Delete</button>
+            <button onClick={() => setIsEditing(true)}>Mettre à jour</button>
+            <button onClick={() => setShowConfirm(true)}>Supprimer</button>
             {showConfirm && (
                 <div>
                     <p>Etes vous sur de supprimer l'évenement "{event.title}" ?</p>

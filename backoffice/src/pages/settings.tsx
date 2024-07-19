@@ -83,7 +83,7 @@ function Settings() {
                 {isEditingMembership && (
                     <>
                         {editingMembership && <Membership membership={editingMembership} onMembershipChange={handleMembershipChange} />}
-                        <button className='setting-return' onClick={() => setIsEditingMembership(false)}>Return</button>
+                        <button className='setting-return' onClick={() => setIsEditingMembership(false)}>Retour</button>
                     </>
                 )}
             </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import '../styles/menu.css';
-import fdcLogo from '../assets/fdc-logo.png';
+import fdcLogo from '../assets/favicon2.png';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
 import Diversity1Icon from '@mui/icons-material/Diversity1';

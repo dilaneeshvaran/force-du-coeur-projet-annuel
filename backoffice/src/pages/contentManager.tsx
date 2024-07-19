@@ -280,7 +280,7 @@ function ContentManager() {
                         <br />
                         <label>Quorum</label>
                         <input type="number" onChange={e => setNewEvent({ ...newEvent, quota: e.target.value ? parseInt(e.target.value, 10) : null })} />
-                        <button onClick={submitEvent} style={{ backgroundColor: isCreatingEvent === true ? 'green' : 'gray' }}>Validate</button>
+                        <button onClick={submitEvent} style={{ backgroundColor: isCreatingEvent === true ? 'green' : 'gray' }}>Valider</button>
                         <button onClick={() => setIsCreatingEvent(false)}>Annuler</button>
                     </div>
                 )}

@@ -32,7 +32,7 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(tempEmail || '')) {
-            setConfirmationMessage('email not valid');
+            setConfirmationMessage('email pas valide!');
             setShowConfirmation(true);
             setTimeout(() => setShowConfirmation(false), 2000);
             return;
@@ -74,7 +74,7 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
             onAccountChange(account.id, 'lastname', tempLastname);
         }
         setShowEditForm(false);
-        setConfirmationMessage('User info saved successfully!');
+        setConfirmationMessage('infos bien enregistrés!');
         setShowConfirmation(true);
         setTimeout(() => setShowConfirmation(false), 2000);
     };
@@ -117,7 +117,7 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
             onAccountChange(account.id, 'password', tempPassword);
         }
         setShowEditForm(false);
-        setConfirmationMessage('User info saved successfully!');
+        setConfirmationMessage('infos bien enregistrés!');
         setShowConfirmation(true);
         setTimeout(() => setShowConfirmation(false), 2000);
     };
@@ -130,16 +130,16 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
                     <p className="info-value">{account.email}</p>
                 </div>
                 <div className="info-item">
-                    <p className="info-title">Firstname:</p>
+                    <p className="info-title">Nom:</p>
                     <p className="info-value">{account.firstname}</p>
                 </div>
                 <div className="info-item">
-                    <p className="info-title">Lastname:</p>
+                    <p className="info-title">Prénom:</p>
                     <p className="info-value">{account.lastname}</p>
                 </div>
             </div>
             <button onClick={() => { setShowEditForm(!showEditForm); setShowPasswordInputs(showEditForm); }}>Mettre à jour les infos</button>
-            <button onClick={() => { setShowPasswordInputs(!showPasswordInputs); setShowEditForm(showPasswordInputs); }}>Change Password</button>
+            <button onClick={() => { setShowPasswordInputs(!showPasswordInputs); setShowEditForm(showPasswordInputs); }}>Changer MDP</button>
 
             {
                 showEditForm && (
@@ -148,14 +148,14 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
                             Email: <input type="email" value={tempEmail || ''} onChange={(e) => setTempEmail(e.target.value)} />
                         </p>
                         <p>
-                            Firstname:
+                            Nom:
                             <input type="text" value={tempFirstname} onChange={(e) => setTempFirstname(e.target.value)} />
                         </p>
                         <p>
-                            Lastname:
+                            Prénom:
                             <input type="text" value={tempLastname || ''} onChange={(e) => setTempLastname(e.target.value)} />
                         </p>
-                        <button onClick={() => setShowEditForm(false)}>Cancel</button>
+                        <button onClick={() => setShowEditForm(false)}>Annuler</button>
 
                         <button onClick={handleUserInfoSave}>Enregistrer</button>
                     </div>
@@ -172,7 +172,7 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
                             confirmer le mot de passe:
                             <input type="password" onChange={(e) => setTempConfirmPassword(e.target.value)} required />
                         </p>
-                        <button onClick={() => setShowPasswordInputs(false)}>Cancel</button>
+                        <button onClick={() => setShowPasswordInputs(false)}>Annuler</button>
                         <button onClick={handlePasswordSave}>Enregistrer</button>
 
                     </>

@@ -81,8 +81,8 @@ function Task({ task, onUpdate, onDelete }: TaskProps) {
                     <p>Assigné à: {getUserNameById(task.assignedTo)}</p>
                     <p>Date Assigné: {task.assigned_date ? task.assigned_date.toLocaleDateString() : 'Not set'}</p>
                     <p>Status: {task.status}</p>
-                    <button className='task-edit-btn' onClick={() => setIsEditing(true)}>Edit</button>
-                    <button className='task-delete-btn' onClick={onDelete}>Delete</button>
+                    <button className='task-edit-btn' onClick={() => setIsEditing(true)}>Modifier</button>
+                    <button className='task-delete-btn' onClick={onDelete}>Supprimer</button>
                 </>
             )}
 

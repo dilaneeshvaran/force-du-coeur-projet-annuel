@@ -367,9 +367,9 @@ const Vote: React.FC<VoteProps> = ({ vote }) => {
                     <p>Total Votes: {options.reduce((acc, option) => acc + (option.votes ? option.votes : 0), 0)}</p>
                 </>
             )}
-            <button onClick={() => setIsEditing(true)}>Update Vote</button>
-            <button onClick={() => setIsEditingOptions(true)}>Update Options</button>
-            <button onClick={() => setShowConfirm(true)}>Delete</button>
+            <button onClick={() => setIsEditing(true)}>Mettre à jour le vote</button>
+            <button onClick={() => setIsEditingOptions(true)}>Mettre à jour les Options</button>
+            <button onClick={() => setShowConfirm(true)}>Supprimer</button>
             {showConfirm && (
                 <div>
                     <p>Etes vous sur de supprimer le vote "{vote.title}" ?</p>

@@ -114,14 +114,14 @@ const Messages: React.FC = () => {
     return (
         <div className="contentBox">
             <div className='msg-options'>
-                <button onClick={() => setTab('sent')} style={{ backgroundColor: tab === "sent" ? 'gray' : ' #007bff' }}>Sent</button>
-                <button onClick={() => setTab('received')} style={{ backgroundColor: tab === "received" ? 'gray' : ' #007bff' }}>Received</button>
-                <button onClick={() => setTab('replied')} style={{ backgroundColor: tab === "replied" ? 'gray' : ' #007bff' }}>Replied</button>
+                <button onClick={() => setTab('sent')} style={{ backgroundColor: tab === "sent" ? 'gray' : ' #007bff' }}>Envoyé</button>
+                <button onClick={() => setTab('received')} style={{ backgroundColor: tab === "received" ? 'gray' : ' #007bff' }}>Reçu</button>
+                <button onClick={() => setTab('replied')} style={{ backgroundColor: tab === "replied" ? 'gray' : ' #007bff' }}>Répondu</button>
             </div>
             {tab === 'reply' && (
                 <form className='msgReplyForm' onSubmit={handleSubmit}>
                     <label>
-                        Receiver:
+                        Destinataire:
                         <input
                             type="email"
                             value={receiver}
@@ -130,7 +130,7 @@ const Messages: React.FC = () => {
                         />
                     </label>
                     <label>
-                        Subject:
+                        Sujet:
                         <input
                             type="text"
                             value={subject}
@@ -165,7 +165,7 @@ const Messages: React.FC = () => {
                             </div>
                         ))
                     ) : (
-                        <p>No messages sent yet.</p>
+                        <p>Pas de message envoyé.</p>
                     )}
                 </div>
             )}
@@ -179,11 +179,11 @@ const Messages: React.FC = () => {
                                 <p>Objet : {message.subject}</p>
                                 <p>Message : {message.message}</p>
                                 <p> Message Envoyé le : {message.createdAt}</p>
-                                <button className='btn-reply' onClick={() => { setTab('reply'); setSelectedMessageId(message.id); setReceiver(message.email); }}>Reply</button>
+                                <button className='btn-reply' onClick={() => { setTab('reply'); setSelectedMessageId(message.id); setReceiver(message.email); }}>Répondre</button>
                             </div>
                         ))
                     ) : (
-                        <p>No messages received yet.</p>
+                        <p>Pas de message reçu.</p>
                     )}
                 </div>
             )}
@@ -200,7 +200,7 @@ const Messages: React.FC = () => {
                             </div>
                         ))
                     ) : (
-                        <p>No messages replied to yet.</p>
+                        <p>Pas de message de réponse</p>
                     )}
                 </div>
             )}
