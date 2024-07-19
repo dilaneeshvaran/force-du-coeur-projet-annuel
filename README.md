@@ -34,3 +34,12 @@ TODO
 //routes > authentification des tokens pour les routes, routes associées aux tables jointes
 //participer : respect capacité+ quorum = nombre requis de participants pour que la réunion puisse se tenir
 ```
+
+
+//update options when null crash the app
+//create event with date in past
+//future event in past section
+//past events in actualités
+//end date and start date of vote error
+//doc download
+//change logo

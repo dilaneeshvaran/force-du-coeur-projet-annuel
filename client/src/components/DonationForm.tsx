@@ -55,20 +55,20 @@ export const DonationForm: React.FC<DonationFormProps> = ({ handleCloseClick }) 
             <h3>Faire un don</h3>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Name:
+                    Nom Prénom:
                     <input type="text" name="name" required onChange={e => setName(e.target.value)} />
                 </label><br></br>
                 <label>
-                    Amount:
+                    Montant:
                     <input type="number" name="amount" required onChange={e => setAmount(Number(e.target.value))} />
                 </label><br></br>
                 <label>
                     Email:
                     <input type="email" name="email" required onChange={e => setEmail(e.target.value)} />
                 </label><br></br>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Valider" />
             </form>
-            <button onClick={handleCloseClick}>Close</button>
+            <button onClick={handleCloseClick}>Fermer</button>
         </div>
     );
 }

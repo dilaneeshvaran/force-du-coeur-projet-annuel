@@ -67,7 +67,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ onClose }) => {
                     <label>Email:</label>
                     <input type="email" className='inputRejoindre' value={email} onChange={e => setEmail(e.target.value)} required />
                 </div>
-                <input type="submit" className='submitRejoindre' value="Submit" />
+                <input type="submit" className='submitRejoindre' value="Valider" />
             </form>
             {message && <div className="success-message">{message}</div>}
             {error && <div className="error-message">{error}</div>}

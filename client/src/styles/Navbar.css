@@ -41,7 +41,7 @@
   transition: filter 300ms;
 }
 .logofdc:hover {
-  filter: drop-shadow(0 0 2em #ff5900);
+  filter: drop-shadow(0 0 3em #ffb3b3);
 }
 
 .logofdc {

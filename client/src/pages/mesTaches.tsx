@@ -6,11 +6,11 @@ interface Tache {
     id: number;
     title: string;
     description?: string;
-    deadline: Date;
-    assignedDate: Date;
+    deadline: string | null;
+    assigned_date: string | null;
     status: 'ongoing' | 'completed' | 'failed';
-    completedDate?: Date | null;
-    failedDate?: Date | null;
+    completedDate?: string | null;
+    failedDate?: string | null;
     assignedTo: number;
     createdBy: number;
 }
@@ -43,9 +43,9 @@ const MesTaches = () => {
                 let updatedFailedDate = null;
 
                 if (newStatus === 'completed' && !isUnchecking) {
-                    updatedCompletedDate = new Date();
+                    updatedCompletedDate = new Date().toISOString();
                 } else if (newStatus === 'failed' && !isUnchecking) {
-                    updatedFailedDate = new Date();
+                    updatedFailedDate = new Date().toISOString();
                 }
 
                 return { ...tache, status: updatedStatus, completedDate: updatedCompletedDate, failedDate: updatedFailedDate };
@@ -55,7 +55,6 @@ const MesTaches = () => {
 
         setTaches(updatedTaches);
 
-        // Find the task that was updated
         const taskToUpdate = updatedTaches.find(tache => tache.id === id);
         if (taskToUpdate) {
             fetch(`http://localhost:8088/tasks/${id}`, {
@@ -65,8 +64,8 @@ const MesTaches = () => {
                 },
                 body: JSON.stringify({
                     status: taskToUpdate.status,
-                    completedDate: taskToUpdate.completedDate ? taskToUpdate.completedDate.toISOString() : null,
-                    failedDate: taskToUpdate.failedDate ? taskToUpdate.failedDate.toISOString() : null
+                    completedDate: taskToUpdate.completedDate,
+                    failedDate: taskToUpdate.failedDate,
                 }),
             })
                 .then(response => response.json())

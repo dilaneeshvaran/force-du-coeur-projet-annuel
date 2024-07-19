@@ -45,7 +45,6 @@ function MesDocuments() {
             .then(() => {
                 setDocuments(currentDocuments => currentDocuments.map(document => documentId === documentId ? { ...document, isArchieved: true } : document));
             });
-        console.log(":::::::::docId", documentId);
     };
 
     const unarchiveDocument = (documentId: number) => {
@@ -87,19 +86,19 @@ function MesDocuments() {
                 <a href='#' className={`nav-ged-link ${selectedLink === 'archived' ? 'nav-ged-link-selected' : ''}`} onClick={() => handleLinkClick('archived')}>Documents Archivés</a>
             </div>
             <div className='doc-list'>
-                <div className='searchbar-ged'><input type="text" value={searchTerm} onChange={event => setSearchTerm(event.target.value)} placeholder="Search documents..." /></div>
+                <div className='searchbar-ged'><input type="text" value={searchTerm} onChange={event => setSearchTerm(event.target.value)} placeholder="Rechercher..." /></div>
 
                 {(selectedLink === 'received' &&
                     <div>
                         {
-                            documents.filter(document => !document.isArchieved && document.title.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 ? <p>No documents</p> : <div>
+                            documents.filter(document => !document.isArchieved && document.title.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 ? <p>pas de documents</p> : <div>
                                 {
                                     documents.filter(document => !document.isArchieved && document.title.toLowerCase().includes(searchTerm.toLowerCase())).map(document => (
                                         <div key={document.id}>
                                             <h2>{document.title}</h2>
                                             <p>{document.description}</p>
-                                            <button onClick={() => downloadDoc(document)}>Download</button>
-                                            <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archive
+                                            <button onClick={() => downloadDoc(document)}>Télécharger</button>
+                                            <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archiver
                                         </div>
                                     ))
                                 }
@@ -110,14 +109,14 @@ function MesDocuments() {
                 {(selectedLink === 'archived' &&
                     <div>
                         {
-                            documents.filter(document => document.isArchieved && document.title.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 ? <p>No archived documents</p> : <div>
+                            documents.filter(document => document.isArchieved && document.title.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 ? <p>Pas de documents archivé</p> : <div>
                                 {
                                     documents.filter(document => document.isArchieved && document.title.toLowerCase().includes(searchTerm.toLowerCase())).map(document => (
                                         <div key={document.id}>
                                             <h2>{document.title}</h2>
                                             <p>{document.description}</p>
-                                            <button onClick={() => downloadDoc(document)}>Download</button>
-                                            <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archive
+                                            <button onClick={() => downloadDoc(document)}>Télécharger</button>
+                                            <input type="checkbox" checked={document.isArchieved} onChange={() => document.isArchieved ? unarchiveDocument(document.id) : archiveDocument(document.id)} /> Archiver
                                         </div>
                                     ))
                                 }

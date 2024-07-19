@@ -34,8 +34,8 @@ const Sidebar: React.FC<SidebarProps> = ({ setCurrentMenuParent, className }) =>
           menuList.map((menu, index) => (
             <div style={
               {
-                backgroundColor: currentMenu === menu ? '#f5f5f5' : 'rgb(255, 229, 198)',
-                borderLeft: currentMenu === menu ? '5px solid orange' : '5px solid white',
+                backgroundColor: currentMenu === menu ? '#f5f5f5' : '#ffaeae',
+                borderLeft: currentMenu === menu ? '5px solid red' : '5px solid white',
                 cursor: 'pointer'
               }
             }

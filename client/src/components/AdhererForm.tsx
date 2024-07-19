@@ -124,7 +124,7 @@ export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) =>
                     <input className='inputRegister' type="password" name="confirmPassword" required onChange={handleConfirmPasswordChange} />
                 </label><br />
                 <label className='label-register'>
-                    téléphone:
+                    Téléphone:
                     <input className='inputRegister'
                         type="tel"
                         name="phoneNumber"
@@ -148,10 +148,10 @@ export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) =>
                 <label className='label-register'>
                     Adhésion:
                     <select className='selectRegister' value={selectedAmount} onChange={handleAmountChange}>
-                        <option value="10">10€/mois ADHesion</option>
-                        <option value="30">30€/mois ADHesion famille</option>
-                        <option value="50">50€/mois ADHesion soutien</option>
-                        <option value="100">100€/mois ADHesion bienfaiteur</option>
+                        <option value="10">10€/mois Adhésion</option>
+                        <option value="30">30€/mois Adhésion famille</option>
+                        <option value="50">50€/mois Adhésion soutien</option>
+                        <option value="100">100€/mois Adhésion bienfaiteur</option>
                     </select>
                 </label><br />
                 {errors.length > 0 && (
@@ -161,7 +161,7 @@ export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) =>
                         ))}
                     </div>
                 )}
-                <input className='submitRegister' type="submit" value="Submit" />
+                <input className='submitRegister' type="submit" value="Adhérer" />
             </form>
             <button className='btn-register-close' onClick={handleCloseClick}>Fermer</button>
         </div>

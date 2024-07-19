@@ -57,15 +57,15 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
-                    <label>email:</label>
+                    <label>Email:</label>
                     <input type="text" className='inputRejoindre' value={email} onChange={e => setEmail(e.target.value)} required />
                 </div>
 
                 <div className="input-group">
-                    <label>mot de passe:</label>
+                    <label>Mot de passe:</label>
                     <input type="password" className='inputRejoindre' value={password} onChange={e => setPassword(e.target.value)} required />
                 </div>
-                <input type="submit" className='submitRejoindre' value="Submit" />
+                <input type="submit" className='submitRejoindre' value="Login" />
             </form>
             {errorMessage && <div className="error-message">{errorMessage}</div>}
             <button className='pwdResetBtn' onClick={() => setShowReset(true)}>Mot de passe oublié?</button>

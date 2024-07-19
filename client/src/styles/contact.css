@@ -13,7 +13,7 @@
 }
 
 .messageStatus.success {
-  background-color: rgb(128, 0, 0);
+  background-color: rgb(152, 0, 0);
 }
 
 .messageStatus.failure {
@@ -52,7 +52,7 @@
 }
 
 .contactForm button:hover {
-  background-color: #a40000;
+  background-color: #ff0000;
 }
 
 .socialmedia-box {
@@ -72,5 +72,5 @@
 }
 
 .sm-link:hover{
-  color: #a40000;
+  color: #ff0000;
 }

@@ -29,7 +29,7 @@ function Evenements() {
           <h2>{event.title}</h2>
           <p>{event.description}</p>
           <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-          <p>Location: {event.location}</p>
+          <p>Lieu: {event.location}</p>
         </div>
       ))}
     </div>

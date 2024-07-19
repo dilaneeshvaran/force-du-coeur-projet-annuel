@@ -1,7 +1,7 @@
 .ged{
     clear: both;
     margin-top: 120px;
-    background-color: rgb(255, 193, 127);
+    background-color: rgb(255, 127, 127);
     width: 1200px;
     height: 500px;
     display:flex;
@@ -10,12 +10,12 @@
 .nav-ged{
     position: relative;
     top: 30px;
-    background-color: brown;
+    background-color: rgb(255, 0, 0);
     height: 120px;
     width: 150px;
 }
 
-.nav-ged-link{
+.nav-ged-link{  
     color: white;
     text-decoration: none;
     font-size: 15px;
@@ -74,5 +74,5 @@
   }
 
   .nav-ged-link-selected {
-    background-color: #00e034; 
+    background-color: #b7b7b7; 
 }   

@@ -155,7 +155,7 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
                                 </label>
                             </div>
                         ))}
-                        <button type="button" onClick={handleVote}>Vote</button>
+                        <button type="button" onClick={handleVote}>Voter</button>
                         {showConfirm && (
                             <div className="confirm-box">
                                 <p>Etes vous sur de voter pour {selectedOption?.label}?</p>
@@ -176,7 +176,7 @@ const VoteBox: React.FC<VoteBoxProps> = ({ vote, options }) => {
             </div>
             {vote.status === 'closed' && (
                 <div className="votebox-result">
-                    <h3>Result</h3>
+                    <h3>Résultat</h3>
                     <p>{winner?.label}</p>
                 </div>
             )}

@@ -80,7 +80,7 @@ const PasswordResetPage: React.FC = () => {
                         required
                     />
                 </div>
-                <input type="submit" className='submitRejoindre' value="Submit" />
+                <input type="submit" className='submitRejoindre' value="Valider" />
             </form>
             {message && <div className="success-message">{message}</div>}
             {error && <div className="error-message">{error}</div>}

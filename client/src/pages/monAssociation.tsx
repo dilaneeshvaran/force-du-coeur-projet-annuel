@@ -76,9 +76,9 @@ function MonAssociation() {
   }, []);
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Erreur: {error.message}</div>;
   } else if (!votes || !voteOptions || !events) {
-    return <div>Loading...</div>;
+    return <div>Chargement...</div>;
   } else {
     const filteredVotes = votes.filter((vote: any) =>
       statusFilter === 'ongoing' ? isOngoing(vote.endDate, vote.status) : !isOngoing(vote.endDate, vote.status)

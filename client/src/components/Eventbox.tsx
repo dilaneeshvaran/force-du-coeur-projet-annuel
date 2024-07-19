@@ -81,8 +81,8 @@ const EventBox: React.FC<EventBoxProps> = ({ event }) => {
             <h2>{event.title}</h2>
             <p>{event.description}</p>
             <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-            <p>Location: {event.location}</p>
-            <p>Available Spots: {availableSpots}</p>
+            <p>Lieu: {event.location}</p>
+            <p>Places Dispo: {availableSpots}</p>
             {userId && (
                 <div className="button-container">
                     <button
@@ -90,7 +90,7 @@ const EventBox: React.FC<EventBoxProps> = ({ event }) => {
                         onClick={handleParticipation}
                         className={isParticipating ? 'participating' : ''}
                     >
-                        {isParticipating ? 'Cancel Participation' : 'Participate'}
+                        {isParticipating ? 'Annuler la Participation' : 'Participer'}
                     </button>
                 </div>
             )}

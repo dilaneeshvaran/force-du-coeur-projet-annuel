@@ -4,7 +4,6 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
 
-
 function Contact() {
   const [fullName, setfullName] = useState("");
   const [email, setEmail] = useState("");
@@ -32,7 +31,7 @@ function Contact() {
       setEmail("");
       setMessage("");
     } else {
-      setMessageStatus('Failed to send message');
+      setMessageStatus('Message non envoyé');
       setIsMessageSent(false);
     }
 
@@ -50,9 +49,9 @@ function Contact() {
         <div className="contactForm">
           <h3>Contactez Force de Coeur</h3>
           <form onSubmit={handleSubmit}>
-            <input type="text" name="fullName" placeholder="Your full name" required value={fullName} onChange={e => setfullName(e.target.value)} />
-            <input type="email" name="email" placeholder="Your Email" required value={email} onChange={e => setEmail(e.target.value)} />
-            <textarea name="message" placeholder="Your Message" required value={message} onChange={e => setMessage(e.target.value)}></textarea>
+            <input type="text" name="fullName" placeholder="Nom et Prénom" required value={fullName} onChange={e => setfullName(e.target.value)} />
+            <input type="email" name="email" placeholder="Email" required value={email} onChange={e => setEmail(e.target.value)} />
+            <textarea name="message" placeholder="Message" required value={message} onChange={e => setMessage(e.target.value)}></textarea>
             <button type="submit">Envoyer le Message</button>
           </form>
           {messageStatus && <div className={isMessageSent ? "messageStatus success" : "messageStatus failure"}>{messageStatus}</div>}
