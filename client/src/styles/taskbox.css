@@ -8,6 +8,8 @@
     width: 300px;
 }
 
+
+
 .task-box:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     transform: translateY(-10px);

@@ -18,6 +18,7 @@ interface Tache {
 const MesTaches = () => {
     const [taches, setTaches] = useState<Tache[]>([]);
     const [selectedType, setSelectedType] = useState('ongoing');
+    const [message, setMessage] = useState<string | null>(null);
 
     useEffect(() => {
         const userId = Number(localStorage.getItem('userId'));
@@ -69,23 +70,32 @@ const MesTaches = () => {
                 }),
             })
                 .then(response => response.json())
+                .then(() => {
+                    setMessage(`Tache mis à jour`);
+                    setTimeout(() => setMessage(null), 3000);
+                })
                 .catch(error => console.error('Error:', error));
         }
     };
 
     return (
-        <div className="taches-box">
-            <div className='nav-taches'>
-                <a href='#' className={`nav-taches-link ${selectedType === 'ongoing' ? 'nav-taches-link-selected' : ''}`} onClick={() => handleTypeClick('ongoing')}>Tâches à faire</a>
-                <a href='#' className={`nav-taches-link ${selectedType === 'completed' ? 'nav-taches-link-selected' : ''}`} onClick={() => handleTypeClick('completed')}>Tâches fait</a>
-                <a href='#' className={`nav-taches-link ${selectedType === 'failed' ? 'nav-taches-link-selected' : ''}`} onClick={() => handleTypeClick('failed')}>Tâches échoués</a>
+        <>
+            <div className="taches-box">
+                <div className='nav-taches'>
+                    <a href='#' className={`nav-taches-link ${selectedType === 'ongoing' ? 'nav-taches-link-selected' : ''}`} onClick={() => handleTypeClick('ongoing')}>Tâches à faire</a>
+                    <a href='#' className={`nav-taches-link ${selectedType === 'completed' ? 'nav-taches-link-selected' : ''}`} onClick={() => handleTypeClick('completed')}>Tâches fait</a>
+                    <a href='#' className={`nav-taches-link ${selectedType === 'failed' ? 'nav-taches-link-selected' : ''}`} onClick={() => handleTypeClick('failed')}>Tâches échoués</a>
+                </div>
+
+                <div className='taches-list'>
+                    {taches.filter(tache => tache.status === selectedType).map((tache) => (
+                        <TaskBox key={tache.id} tache={tache} handleCheckboxChange={handleCheckboxChange} />
+                    ))}
+                </div>
+
+                {message && <div className='message-conf'>{message}</div>}
             </div>
-            <div className='taches-list'>
-                {taches.filter(tache => tache.status === selectedType).map((tache) =>
-                    <TaskBox key={tache.id} tache={tache} handleCheckboxChange={handleCheckboxChange} />
-                )}
-            </div>
-        </div>
+        </>
     );
 };
 

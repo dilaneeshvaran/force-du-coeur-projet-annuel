@@ -18,12 +18,10 @@ import PasswordReset from './components/PasswordReset';
 import PasswordResetPage from './components/PasswordResetPage';
 
 function Logout() {
-  const navigate = useNavigate();
 
 
   const handleLogout = () => {
     localStorage.setItem('isLoggedIn', 'false');
-    navigate('/espaceMembres');
   };
 
   return (
@@ -42,9 +40,8 @@ function App() {
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', 'false');
-
+    setIsLoggedIn(false);
   };
 
   return (
