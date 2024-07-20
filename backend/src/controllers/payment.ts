@@ -176,8 +176,8 @@ export const processPayment = async (req: Request, res: Response) => {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:5173/espaceMembres',
-      cancel_url: 'http://localhost:5173/espaceMembres',
+      success_url: 'http://localhost:5173/soutenir',
+      cancel_url: 'http://localhost:5173/soutenir',
       metadata: {
         userId: req.body.userId,
         email: req.body.email,
@@ -214,8 +214,8 @@ export const processMembership = async (req: Request, res: Response) => {
         },
       ],
       mode: 'subscription',
-      success_url: 'http://localhost:5173/espaceMembres?session_id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'http://localhost:5173/espaceMembres',
+      success_url: 'http://localhost:5173/soutenir?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'http://localhost:5173/soutenir',
       metadata: {
         userId: req.body.userId,
         membershipId: req.body.membershipId,
@@ -253,8 +253,8 @@ export const processRegister = async (req: Request, res: Response) => {
         },
       ],
       mode: 'subscription',
-      success_url: 'http://localhost:5173/espaceMembres?session_id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'http://localhost:5173/espaceMembres',
+      success_url: 'http://localhost:5173/soutenir?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'http://localhost:5173/soutenir',
       metadata: {
         amount: req.body.amount,
         firstName: req.body.firstName,

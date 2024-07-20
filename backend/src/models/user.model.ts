@@ -21,7 +21,7 @@ export class User extends Model {
   public role!: "user" | "admin";
   public memberSince!: Date;
   public dateOfBirth!: Date;
-  public phoneNumber!:number
+  public phoneNumber!:number;
   public country!: string;
   public city!: string;
   public address!: string;
@@ -101,7 +101,8 @@ User.init({
   dateOfBirth: {
     type: DataTypes.DATE,
     allowNull: false
-  },  phoneNumber: {
+  },
+  phoneNumber: {
     type: DataTypes.INTEGER,
     allowNull: true
   },

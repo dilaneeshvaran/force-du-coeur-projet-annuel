@@ -13,7 +13,7 @@ const userValidation = joi_1.default.object({
     lastname: joi_1.default.string().trim().optional(),
     dateOfBirth: joi_1.default.date().optional(),
     role: joi_1.default.string().valid('user', 'admin').optional(),
-    phoneNumber: joi_1.default.string().optional(),
+    phoneNumber: joi_1.default.string().pattern(/^[0-9]+$/).min(10).max(15).required(),
     country: joi_1.default.string().trim().optional(),
     city: joi_1.default.string().trim().optional(),
     address: joi_1.default.string().trim().optional(),

@@ -86,7 +86,8 @@ User.init({
     dateOfBirth: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false
-    }, phoneNumber: {
+    },
+    phoneNumber: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: true
     },

@@ -2,8 +2,19 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 100px;
-  padding: 20px;
+  gap: 80px;
+  padding: 10px;
   background-color: #ff0000;
   color: #ffffff;
+}
+
+.member-block {
+  text-align: center;
+}
+
+.separator {
+  width: 1px;
+  height: 80px; /* Adjust the height to match the member block */
+  background-color: #ffffff; /* Color of the separator line */
+  align-self: center; /* Aligns the separator vertically in the middle */
 }

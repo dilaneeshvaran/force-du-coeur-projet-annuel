@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import '../styles/adhererForm.css'
+import '../styles/adhererForm.css';
 
 interface AdhererFormProps {
     handleCloseClick: () => void;
 }
+
 const stripePromise = loadStripe('pk_test_51PScAqGc0PhuZBe9Uqm7XP3iXPKio8QNqbt4iNfSINUE06VzAPldOUwEgVn94rLLmQKd8STxK6fj12YKwBeiMRbS00DCyPSNGY');
 
 export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) => {
@@ -29,12 +30,21 @@ export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) =>
     const validatePassword = (password: string, confirmPassword: string) => {
         const errors = [];
         if (password.length < 8 || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
-            errors.push("Mot de passe doit avoir au moins 8 characteres, avoir minimum une lettre majuscule, et un chiffre.");
+            errors.push("Mot de passe doit avoir au moins 8 caractères, avoir minimum une lettre majuscule, et un chiffre.");
         }
         if (password !== confirmPassword) {
-            errors.push("Mot de passe ne concordent pas.");
+            errors.push("Les mots de passe ne concordent pas.");
         }
         return errors;
+    };
+
+    const validatePhoneNumber = (phoneNumber: string) => {
+        const phoneErrors = [];
+        const phonePattern = /^\+?\d{10,15}$/;
+        if (!phonePattern.test(phoneNumber)) {
+            phoneErrors.push("Le numéro de téléphone doit être entre 10 et 15 chiffres et peut commencer par '+' pour le code du pays.");
+        }
+        return phoneErrors;
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,9 +58,11 @@ export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) =>
     const handleValidateClick = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        const validationErrors = validatePassword(password, confirmPassword);
-        if (validationErrors.length > 0) {
-            setErrors(validationErrors);
+        const passwordErrors = validatePassword(password, confirmPassword);
+        const phoneErrors = validatePhoneNumber(phoneNumber);
+
+        if (passwordErrors.length > 0 || phoneErrors.length > 0) {
+            setErrors([...passwordErrors, ...phoneErrors]);
             return;
         }
 
@@ -94,7 +106,6 @@ export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) =>
         }
     };
 
-
     return (
         <div className='contentBoxRegister'>
             <h3>Adhérer à 'Force du Coeur'</h3>
@@ -109,7 +120,12 @@ export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) =>
                 </label><br />
                 <label className='label-register'>
                     Date de naissance:
-                    <input className='inputRegister' type="date" name="dob" required onChange={e => setDob(e.target.value)} />
+                    <input className='inputRegister'
+                        type="date"
+                        name="dob"
+                        required
+                        max="2020-12-31"
+                        onChange={e => setDob(e.target.value)} />
                 </label><br />
                 <label className='label-register'>
                     Email:
@@ -131,7 +147,8 @@ export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) =>
                         required
                         onChange={e => setPhoneNumber(e.target.value)}
                         pattern="\+?\d{10,15}"
-                        title="Le numéro de téléphone doit commencer avec '0' ou '+(code pays).'" />
+                        placeholder='Ex: 0612345678'
+                        title="Le numéro de téléphone doit commencer avec '0' ou '+(code pays)'" />
                 </label><br />
                 <label className='label-register'>
                     Pays:
@@ -166,6 +183,6 @@ export const AdhererForm: React.FC<AdhererFormProps> = ({ handleCloseClick }) =>
             <button className='btn-register-close' onClick={handleCloseClick}>Fermer</button>
         </div>
     );
-}
+};
 
 export default AdhererForm;

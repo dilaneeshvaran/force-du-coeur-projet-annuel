@@ -11,7 +11,7 @@ import { Op } from 'sequelize';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
+ 
 const requestPasswordReset = async (req: Request, res: Response) => {
   const { email } = req.body;
 

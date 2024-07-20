@@ -8,7 +8,7 @@ const userValidation = joi.object ({
   lastname: joi.string().trim().optional(),
   dateOfBirth: joi.date().optional(),
   role: joi.string().valid('user', 'admin').optional(),
-  phoneNumber: joi.string().optional(),
+  phoneNumber: joi.string().pattern(/^[0-9]+$/).min(10).max(15).required(),
   country: joi.string().trim().optional(),
   city: joi.string().trim().optional(),
   address: joi.string().trim().optional(),
