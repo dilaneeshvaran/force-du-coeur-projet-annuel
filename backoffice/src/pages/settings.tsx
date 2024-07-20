@@ -79,7 +79,6 @@ function Settings() {
                         }}>Modifier l'adhésion</button>
                     ))
                 )}
-
                 {isEditingMembership && (
                     <>
                         {editingMembership && <Membership membership={editingMembership} onMembershipChange={handleMembershipChange} />}

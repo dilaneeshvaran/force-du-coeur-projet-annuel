@@ -98,3 +98,7 @@
 {"level":"error","message":"\"email\" must be a valid email","timestamp":"2024-07-18T22:12:45+02:00"}
 {"level":"error","message":{"name":"SequelizeConnectionRefusedError","original":{"code":"ECONNREFUSED","fatal":true},"parent":{"code":"ECONNREFUSED","fatal":true}},"timestamp":"2024-07-19T08:52:18+02:00"}
 {"level":"error","message":{"name":"SequelizeConnectionRefusedError","original":{"code":"ECONNREFUSED","fatal":true},"parent":{"code":"ECONNREFUSED","fatal":true}},"timestamp":"2024-07-19T08:52:18+02:00"}
+{"level":"error","message":"\"quota\" must be a number","timestamp":"2024-07-20T10:24:23+02:00"}
+{"level":"error","message":"\"label\" is not allowed to be empty","timestamp":"2024-07-20T10:29:07+02:00"}
+{"level":"error","message":"\"label\" is not allowed to be empty","timestamp":"2024-07-20T10:34:42+02:00"}
+{"level":"error","message":"\"label\" is not allowed to be empty","timestamp":"2024-07-20T10:36:05+02:00"}

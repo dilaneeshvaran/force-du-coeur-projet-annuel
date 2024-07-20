@@ -1,9 +1,18 @@
 .eventContainer{
-margin-top: 10rem;
+margin-top: 0rem;
 justify-content: center;
 display: flex ;
 flex-direction: column;
 align-items: center;
+}
+
+.title-event{
+font-size: 2rem;
+}
+
+.content-event{
+justify-content: center;
+margin-top: 13rem;
 }
 
 .eventbox {

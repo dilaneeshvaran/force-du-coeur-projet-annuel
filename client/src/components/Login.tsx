@@ -36,15 +36,15 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     setErrorMessage('');
                 } else {
                     console.error('Failed to login');
-                    setErrorMessage('Email or password is incorrect');
+                    setErrorMessage('Email ou mdp incorrecte');
                 }
             } else {
                 console.error('Failed to login');
-                setErrorMessage('Email or password is incorrect');
+                setErrorMessage('Email ou mdp incorrecte');
             }
         } catch (error) {
             console.error('An error occurred:', error);
-            setErrorMessage('An error occurred. Please try again.');
+            setErrorMessage('Erreur est survenue, réessayez!.');
         }
     };
 

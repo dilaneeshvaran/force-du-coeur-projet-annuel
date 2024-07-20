@@ -60,7 +60,7 @@ export const DonationForm: React.FC<DonationFormProps> = ({ handleCloseClick }) 
                 </label><br></br>
                 <label>
                     Montant:
-                    <input type="number" name="amount" required onChange={e => setAmount(Number(e.target.value))} />
+                    <input type="number" name="amount" required min="0" onChange={e => setAmount(Number(e.target.value))} />
                 </label><br></br>
                 <label>
                     Email:

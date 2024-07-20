@@ -29,6 +29,11 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
 
     const userId = localStorage.getItem('userId');
 
+    function isPasswordSecure(password: any) {
+        const regex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        return regex.test(password);
+    }
+
     const handleUserInfoSave = async () => {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -90,6 +95,12 @@ const Account: React.FC<AccountProps> = ({ account, onAccountChange }) => {
         }
         if (tempPassword != tempConfirmPassword) {
             setConfirmationMessage('mot de passe ne concordent pas!');
+            setShowConfirmation(true);
+            setTimeout(() => setShowConfirmation(false), 2000);
+            return;
+        }
+        if (!isPasswordSecure(tempPassword)) {
+            setConfirmationMessage('mot de passe doit contenir au moins 8 caractères, une lettre majuscule et un chiffre');
             setShowConfirmation(true);
             setTimeout(() => setShowConfirmation(false), 2000);
             return;

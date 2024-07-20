@@ -11,9 +11,9 @@ const MessageParser: React.FC<MessageParserProps> = ({ children, actions }) => {
         const lowerCaseMessage = message.toLowerCase();
 
 
-        const greetingKeywords = ['bonjour', 'hello', 'bonsoir', 'slt', 'salut'];
-        const donationKeywords = ['don', 'adher', 'adhér', 'soutenir', 'aide', 'soutien', 'inscrire', 'inscription'];
-        const contactKeywords = ['contact', 'parler', 'parl', 'discuter', 'écrire', 'message', 'mail', 'email', 'appeler', 'telephone', 'téléphone'];
+        const greetingKeywords = ['hi', 'bonjour', 'hello', 'bonsoir', 'slt', 'salut'];
+        const donationKeywords = ['compte', 'adhésion', 'adhesion', 'don', 'adher', 'adhér', 'soutenir', 'aide', 'soutien', 'inscrire', 'inscription'];
+        const contactKeywords = ['address', 'adresse', 'adress', 'addresse', 'contact', 'parler', 'parl', 'discuter', 'écrire', 'message', 'mail', 'email', 'appeler', 'telephone', 'téléphone'];
         const voteKeywords = ['vote', 'voté', 'voter', 'sondage', 'choix', 'choisir', 'élection'];
         const eventKeywords = ['evenement', 'évenement', 'évènement', 'évènement', 'mission', 'activit', 'actualit', 'news'];
         const thanksKeywords = ['merci', 'thank', 'remerci', 'gratitud'];

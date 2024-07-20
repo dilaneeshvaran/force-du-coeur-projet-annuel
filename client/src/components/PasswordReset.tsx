@@ -40,7 +40,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ onClose }) => {
                     import.meta.env.VITE_REACT_APP_EMAILJS_PUBLIC_KEY!
                 )
                     .then(() => {
-                        setMessage('un email avec le lien pour réinitiliser votre mot de passe a vien été envoyé.');
+                        setMessage('Un email vous sera envoyé pour réinitialiser votre mot de passe si votre compte existe.');
                         setError('');
                     })
                     .catch((error) => {
@@ -49,12 +49,12 @@ const PasswordReset: React.FC<PasswordResetProps> = ({ onClose }) => {
                         setMessage('');
                     });
             } else {
-                setError('EUne erreur est survenue ! Essayez plus tard.');
+                setMessage('Un email vous sera envoyé pour réinitialiser votre mot de passe si votre compte existe.');
                 setMessage('');
             }
         } catch (error) {
             console.error('Error processing your request:', error);
-            setError('Une erreur est survenue ! Essayez plus tard.');
+            setMessage('Un email vous sera envoyé pour réinitialiser votre mot de passe si votre compte existe.');
             setMessage('');
         }
     };

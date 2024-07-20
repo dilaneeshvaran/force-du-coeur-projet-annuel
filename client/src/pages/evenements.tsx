@@ -16,23 +16,28 @@ function Evenements() {
     const fetchEvents = async () => {
       const response = await fetch('http://localhost:8088/events/nonMembersOnly');
       const data = await response.json();
-      setEvents(data);
+      const futureEvents = data.filter((event: Event) => new Date(event.date) > new Date());
+      setEvents(futureEvents);
     };
 
     fetchEvents();
   }, []);
 
   return (
-    <><div className='eventContainer'>
-      {events.map((event, index) => (
-        <div key={index} className="eventbox">
-          <h2>{event.title}</h2>
-          <p>{event.description}</p>
-          <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-          <p>Lieu: {event.location}</p>
+    <>
+      <div className='content-event'>
+        <h1 className='title-event'>Evenements</h1>
+        <div className='eventContainer'>
+          {events.map((event, index) => (
+            <div key={index} className="eventbox">
+              <h2>{event.title}</h2>
+              <p>{event.description}</p>
+              <p>Date: {new Date(event.date).toLocaleDateString()}</p>
+              <p>Lieu: {event.location}</p>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
     </>
   )
 }
