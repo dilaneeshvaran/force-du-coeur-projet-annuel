@@ -10,7 +10,7 @@ Pour démarrer le client/backoffice, exécutez les commandes suivantes une aprè
 (or cd backoffice)
 
 2) npm install
-
+:
 3) npm run dev
 
 ```
@@ -35,11 +35,3 @@ TODO
 //participer : respect capacité+ quorum = nombre requis de participants pour que la réunion puisse se tenir
 ```
 
-
-//update options when null crash the app
-//create event with date in past
-//future event in past section
-//past events in actualités
-//end date and start date of vote error
-//doc download
-//change logo

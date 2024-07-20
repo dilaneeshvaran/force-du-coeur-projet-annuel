@@ -19,10 +19,10 @@ function MonAssociation() {
     setStatusFilter(event.target.value as 'ongoing' | 'ended');
   };
 
-  const isOngoing = (endDate: string, status: string) => {
+  const isOngoing = (endDate: string) => {
     const now = new Date();
     const end = new Date(endDate);
-    return status !== 'closed' && end > now;
+    return end >= now;
   };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -75,17 +75,26 @@ function MonAssociation() {
     fetchEvents();
   }, []);
 
+  useEffect(() => {
+    console.log('Votes:', votes);
+    console.log('Events:', events);
+    console.log('Vote Options:', voteOptions);
+  }, [votes, events, voteOptions]);
+
   if (error) {
     return <div>Erreur: {error.message}</div>;
   } else if (!votes || !voteOptions || !events) {
     return <div>Chargement...</div>;
   } else {
     const filteredVotes = votes.filter((vote: any) =>
-      statusFilter === 'ongoing' ? isOngoing(vote.endDate, vote.status) : !isOngoing(vote.endDate, vote.status)
+      statusFilter === 'ongoing' ? isOngoing(vote.endDate) : !isOngoing(vote.endDate)
     );
     const filteredEvents = events.filter((event: any) =>
-      event.membersOnly && (statusFilter === 'ongoing' ? isOngoing(event.endDate, event.status) : !isOngoing(event.endDate, event.status))
+      statusFilter === 'ongoing' ? isOngoing(event.date) : !isOngoing(event.date)
     );
+
+    console.log('Filtered Votes:', filteredVotes);
+    console.log('Filtered Events:', filteredEvents);
 
     return (
       <>
