@@ -6,3 +6,5 @@ backend/dist/
 backend/logs/
 .env
 backend/logs/index.log
+backend/uploads/
+backend/uploads/*

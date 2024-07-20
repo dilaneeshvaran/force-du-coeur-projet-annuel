@@ -39,6 +39,7 @@ const Event: React.FC<EventProps> = ({ event }) => {
                 throw new Error('Network response was not ok');
             }
 
+
             setIsEditing(false);
         } catch (error) {
             console.error('Failed to update event:', error);
@@ -74,7 +75,6 @@ const Event: React.FC<EventProps> = ({ event }) => {
             console.error('Invalid date format:', e.target.value);
         }
     };
-
 
     if (isEditing) {
         return (
@@ -120,7 +120,7 @@ const Event: React.FC<EventProps> = ({ event }) => {
             <p>Date : {formattedDate}</p>
             <p>Lieu : {event.location}</p>
             <p>Nb de Places Max : {event.availableSpots}</p>
-            <p>Membres Uniquement : {event.membersOnly}</p>
+            <p>Membres Uniquement : {event.membersOnly ? 'Oui' : 'Non'}</p>
             <p>Participations Total : {event.participations}</p>
             <p>Quorum : {event.quota ?? 'No Quorum'}</p>
             <button onClick={() => setIsEditing(true)}>Mettre à jour</button>

@@ -121,6 +121,7 @@ function ContentManager() {
                 setConfirmationMessage('Evenement crée, rafraichissez la page pour l\'afficher !');
                 setShowConfirmation(true);
                 setTimeout(() => setShowConfirmation(false), 5000);
+                //window.location.reload();
             })
             .catch((error) => {
                 setConfirmationMessage('échec de création !');
@@ -130,13 +131,34 @@ function ContentManager() {
             });
     }
 
+
+
     async function createVote() {
+        const { startDate, endDate } = newVote;
+
+        if (!validateDate(startDate, endDate)) {
+            setConfirmationMessage('Dates invalides ! Date de début ne peut pas être dans le passé et Date de fin ne peut pas être avant Date de début.');
+            setShowConfirmation(true);
+            setTimeout(() => setShowConfirmation(false), 5000);
+            return;
+        }
+
         if (newOptions.length < 2) {
             setConfirmationMessage('Il faut ajouter minimum 2 options !');
             setShowConfirmation(true);
             setTimeout(() => setShowConfirmation(false), 5000);
             return;
         }
+
+        for (const option of newOptions) {
+            if (!option.label || option.label.trim() === '') {
+                setConfirmationMessage('Les options ne peuvent pas être vides !');
+                setShowConfirmation(true);
+                setTimeout(() => setShowConfirmation(false), 5000);
+                return;
+            }
+        }
+
         try {
             const voteResponse = await fetch('http://localhost:8088/votes', {
                 method: 'POST',
@@ -194,6 +216,7 @@ function ContentManager() {
             });
             setShowConfirmation(true);
             setTimeout(() => setShowConfirmation(false), 5000);
+            //window.location.reload();
         } catch (error) {
             console.error('Error:', error);
         }
@@ -203,6 +226,13 @@ function ContentManager() {
         const inputDate = new Date(inputDateTime);
         const currentDate = new Date();
         return inputDate >= currentDate;
+    }
+
+    function validateDate(startDateTime: any, endDateTime: any) {
+        const startDate = new Date(startDateTime);
+        const endDate = new Date(endDateTime);
+        const currentDate = new Date();
+        return startDate >= currentDate && endDate >= startDate;
     }
 
     const filteredEvents = events.filter(event =>
@@ -256,7 +286,7 @@ function ContentManager() {
                             }}
                             required
                         />
-                        {inputErrors.date && <span className="error-message">Date est vide</span>}
+                        {inputErrors.date && <span className="error-message">la Date ne peux pas etre dans le passé</span>}
                         <br />
                         <label>Lieu</label>
                         <input
@@ -276,11 +306,23 @@ function ContentManager() {
                         {inputErrors.availableSpots && <span className="error-message">places doivent etre superieur à 0</span>}
                         <br />
                         <label>Membres Uniquement</label>
-                        <input type="checkbox" onChange={e => setNewEvent({ ...newEvent, membersOnly: e.target.checked })} />
+                        <input
+                            type="checkbox"
+                            checked={newEvent.membersOnly}
+                            onChange={e => setNewEvent({ ...newEvent, membersOnly: e.target.checked })}
+                        />
                         <br />
                         <label>Quorum</label>
-                        <input type="number" onChange={e => setNewEvent({ ...newEvent, quota: e.target.value ? parseInt(e.target.value, 10) : null })} />
-                        <button onClick={submitEvent} style={{ backgroundColor: isCreatingEvent === true ? 'green' : 'gray' }}>Valider</button>
+                        <input
+                            type="number"
+                            onChange={e => setNewEvent({ ...newEvent, quota: e.target.value ? parseInt(e.target.value, 10) : null })}
+                            required />
+                        <button
+                            onClick={submitEvent}
+                            style={{ backgroundColor: isCreatingEvent === true ? 'green' : 'gray' }}
+                        >
+                            Valider
+                        </button>
                         <button onClick={() => setIsCreatingEvent(false)}>Annuler</button>
                     </div>
                 )}
@@ -305,7 +347,7 @@ function ContentManager() {
                                     style={{ marginLeft: '10px', marginRight: '10px' }}
                                     value={option.label || ''}
                                     onChange={e => handleOptionChange(index, e.target.value)}
-                                />
+                                    required />
                                 <button className='dlt-options' onClick={() => handleRemoveOption(index)}>Supprimer Option</button>
                             </div>
                         ))}

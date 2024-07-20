@@ -17,7 +17,7 @@ async function createAlert(req: Request, res: Response) {
   } catch (error) {
     logger.error('Error creating alert:', error);
     return res.status(500).json({ message: 'Error creating alert.' });
-  }
+  } 
 }
 
 async function getAllAlerts(req: Request, res: Response) {

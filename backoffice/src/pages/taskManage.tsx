@@ -86,9 +86,46 @@ function TaskManager() {
         return inputDate >= currentDate;
     };
 
+    const isValidDate = (dateString: any) => {
+        const date = new Date(dateString);
+        return !isNaN(date.getTime());
+    };
+
     const handleCreate = () => {
+        if (newTask.title.trim() === '') {
+            setMessage('Le titre ne peut pas être vide.');
+            setMessageType('error');
+            setShowMessage(true);
+            setTimeout(() => setShowMessage(false), 5000);
+            return;
+        }
+
+        if (newTask.description.trim() === '') {
+            setMessage('La description ne peut pas être vide.');
+            setMessageType('error');
+            setShowMessage(true);
+            setTimeout(() => setShowMessage(false), 5000);
+            return;
+        }
+
+        if (!isValidDate(newTask.deadline)) {
+            setMessage('Date limite invalide.');
+            setMessageType('error');
+            setShowMessage(true);
+            setTimeout(() => setShowMessage(false), 5000);
+            return;
+        }
+
         if (!validateDateTime(newTask.deadline)) {
-            setMessage('Deadline dois etre dans le future.');
+            setMessage('La date limite doit être dans le futur.');
+            setMessageType('error');
+            setShowMessage(true);
+            setTimeout(() => setShowMessage(false), 5000);
+            return;
+        }
+
+        if (newTask.assignedTo === 0) {
+            setMessage('L\'utilisateur doit être assigné.');
             setMessageType('error');
             setShowMessage(true);
             setTimeout(() => setShowMessage(false), 5000);
@@ -132,13 +169,14 @@ function TaskManager() {
                 setTimeout(() => setShowMessage(false), 5000);
             })
             .catch(error => {
-                setMessage('échec de création de la tâche.');
+                setMessage('Échec de création de la tâche.');
                 setMessageType('error');
                 setShowMessage(true);
                 setTimeout(() => setShowMessage(false), 5000);
                 console.error('Error creating task:', error);
             });
     };
+
 
     const handleUpdate = (updatedTask: TaskType) => {
         const currentDate = new Date();
@@ -283,7 +321,17 @@ function TaskManager() {
                         <h2>Créer une tâche</h2>
                         Titre: <input className='input-task' value={newTask.title} onChange={e => setNewTask({ ...newTask, title: e.target.value })} />
                         Description: <input className='input-task' value={newTask.description} onChange={e => setNewTask({ ...newTask, description: e.target.value })} />
-                        Deadline: <input className='input-task' type="date" value={newTask.deadline.toISOString().split('T')[0]} onChange={e => setNewTask({ ...newTask, deadline: new Date(e.target.value) })} />
+                        Deadline: <input
+                            className='input-task'
+                            type="date"
+                            value={newTask.deadline.toISOString().split('T')[0]}
+                            onChange={e => {
+                                const value = e.target.value;
+                                if (isValidDate(value)) {
+                                    setNewTask({ ...newTask, deadline: new Date(value) });
+                                }
+                            }}
+                        />
                         Assigner :
                         <select className='select-task-user' value={newTask.assignedTo} onChange={e => setNewTask({ ...newTask, assignedTo: Number(e.target.value) })}>
                             <option value="">Choisir l'utilisateur</option>
